@@ -1,25 +1,27 @@
 package com.example.budgettracker.utils
 
+import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
 
 object DateUtils {
-    
+
     private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     private val displayFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy")
     private val monthFormatter = DateTimeFormatter.ofPattern("yyyy-MM")
-    
+
     fun getCurrentDate(): String {
         return LocalDate.now().format(dateFormatter)
     }
-    
+
     fun getCurrentMonthId(): String {
         return YearMonth.now().format(monthFormatter)
     }
-    
+
     fun formatDateForDisplay(isoDate: String): String {
         return try {
             val date = LocalDate.parse(isoDate, dateFormatter)
@@ -28,7 +30,7 @@ object DateUtils {
             isoDate
         }
     }
-    
+
     fun getMonthName(monthId: String): String {
         return try {
             val yearMonth = YearMonth.parse(monthId, monthFormatter)
@@ -39,36 +41,53 @@ object DateUtils {
             monthId
         }
     }
-    
+
     fun getMonthStartDate(monthId: String): String {
         val yearMonth = YearMonth.parse(monthId, monthFormatter)
         return yearMonth.atDay(1).toString()
     }
-    
+
     fun getMonthEndDate(monthId: String): String {
         val yearMonth = YearMonth.parse(monthId, monthFormatter)
         return yearMonth.atEndOfMonth().toString()
     }
-    
+
     fun isToday(isoDate: String): Boolean {
         return isoDate == getCurrentDate()
     }
-    
+
     fun isYesterday(isoDate: String): Boolean {
         val yesterday = LocalDate.now().minusDays(1).format(dateFormatter)
         return isoDate == yesterday
     }
+
+    /**
+     * ➕ ADDED
+     * Converts epoch millis (from MaterialDatePicker)
+     * into ISO date string (yyyy-MM-dd)
+     *
+     * SAFE:
+     * - Uses java.time
+     * - Respects system timezone
+     * - Matches existing date format
+     */
+    fun millisToIsoDate(millis: Long): String {
+        return Instant.ofEpochMilli(millis)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+            .format(dateFormatter)
+    }
 }
 
 object CurrencyUtils {
-    
+
     /**
      * Format amount with currency symbol (ZAR - South African Rand)
      */
     fun format(amount: Double): String {
         return String.format("R%.2f", amount)
     }
-    
+
     /**
      * Format amount without decimal if it's a whole number
      */
@@ -79,7 +98,7 @@ object CurrencyUtils {
             String.format("R%.2f", amount)
         }
     }
-    
+
     /**
      * Parse currency string to double
      */
@@ -93,11 +112,11 @@ object CurrencyUtils {
 }
 
 object PercentageUtils {
-    
+
     fun format(percentage: Double): String {
         return String.format("%.1f%%", percentage)
     }
-    
+
     fun formatWhole(percentage: Double): String {
         return String.format("%.0f%%", percentage)
     }

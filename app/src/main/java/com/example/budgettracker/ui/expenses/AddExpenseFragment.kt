@@ -16,6 +16,7 @@ import com.example.budgettracker.data.repository.ExpenseRepository
 import com.example.budgettracker.data.repository.GamificationRepository
 import com.example.budgettracker.utils.DateUtils
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
@@ -47,12 +48,18 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
         val saveButton: MaterialButton = view.findViewById(R.id.button_save)
         val cancelButton: MaterialButton = view.findViewById(R.id.button_cancel)
 
+        // Initial date display
         dateButton.text = formatDateForButton(selectedDate)
 
-        // Load categories FIRST (spinner depends on this)
+        // 📅 Date picker
+        dateButton.setOnClickListener {
+            showDatePicker(dateButton)
+        }
+
+        // Load categories FIRST
         loadCategories(categorySpinner)
 
-        // If editing, load existing expense AFTER categories
+        // Edit mode
         if (editingExpenseId != -1L) {
             viewLifecycleOwner.lifecycleScope.launch {
                 val expense = viewModel.getExpenseById(editingExpenseId)
@@ -73,15 +80,9 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
             val description = descriptionInput.text.toString()
 
             when {
-                amountStr.isBlank() ->
-                    toast("Enter amount")
-
-                description.isBlank() ->
-                    toast("Enter description")
-
-                selectedCategoryId == 0L ->
-                    toast("Select category")
-
+                amountStr.isBlank() -> toast("Enter amount")
+                description.isBlank() -> toast("Enter description")
+                selectedCategoryId == 0L -> toast("Select category")
                 else -> {
                     val amount = amountStr.toDoubleOrNull()
                     if (amount == null || amount <= 0) {
@@ -122,6 +123,21 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
         }
     }
 
+    private fun showDatePicker(dateButton: MaterialButton) {
+
+        val picker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select expense date")
+            .build()
+
+        picker.addOnPositiveButtonClickListener { millis ->
+            val date = DateUtils.millisToIsoDate(millis)
+            selectedDate = date
+            dateButton.text = formatDateForButton(date)
+        }
+
+        picker.show(parentFragmentManager, "EXPENSE_DATE_PICKER")
+    }
+
     private fun loadCategories(spinner: Spinner) {
         val database = AppDatabase.getInstance(requireContext())
         val repository = CategoryRepository(database.categoryDao())
@@ -154,10 +170,9 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
                     }
                 }
 
-            // IMPORTANT: restore spinner selection when editing
+            // Restore selection in edit mode
             if (editingExpenseId != -1L && selectedCategoryId != 0L) {
-                val index =
-                    categories.indexOfFirst { it.id == selectedCategoryId }
+                val index = categories.indexOfFirst { it.id == selectedCategoryId }
                 if (index >= 0) spinner.setSelection(index)
             } else if (categories.isNotEmpty()) {
                 selectedCategoryId = categories[0].id
