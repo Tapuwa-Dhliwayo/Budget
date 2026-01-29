@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.budgettracker.ui.dashboard.DashboardFragment"
+        android:label="Dashboard" />
+
+    <fragment
+        android:id="@+id/expenseListFragment"
+        android:name="com.example.budgettracker.ui.expenses.ExpenseListFragment"
+        android:label="Expenses">
+        <action
+            android:id="@+id/action_expenseList_to_addExpense"
+            app:destination="@id/addExpenseFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.budgettracker.ui.expenses.AddExpenseFragment"
+        android:label="Add Expense" />
+
+    <fragment
+        android:id="@+id/categoryListFragment"
+        android:name="com.example.budgettracker.ui.categories.CategoryListFragment"
+        android:label="Categories" />
+
+    <fragment
+        android:id="@+id/summaryFragment"
+        android:name="com.example.budgettracker.ui.summary.SummaryFragment"
+        android:label="Summary" />
+
+</navigation>
