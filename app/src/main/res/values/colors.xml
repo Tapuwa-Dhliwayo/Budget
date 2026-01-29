@@ -2,4 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Budget status colors -->
+    <color name="budget_good">#4CAF50</color>
+    <color name="budget_warning">#FF9800</color>
+    <color name="budget_over">#F44336</color>
+
+    <!-- Category colors -->
+    <color name="category_groceries">#4CAF50</color>
+    <color name="category_entertainment">#E91E63</color>
+    <color name="category_transport">#2196F3</color>
+    <color name="category_bills">#FF9800</color>
+    <color name="category_healthcare">#F44336</color>
+    <color name="category_dining">#9C27B0</color>
+    <color name="category_shopping">#00BCD4</color>
+    <color name="category_other">#9E9E9E</color>
 </resources>

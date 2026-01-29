@@ -1,3 +1,51 @@
 <resources>
-    <string name="app_name">Budget Tracker</string>
+    <string name="app_name">MiniBudget</string>
+
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_expenses">Expenses</string>
+    <string name="nav_categories">Categories</string>
+    <string name="nav_summary">Summary</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Budget Dashboard</string>
+    <string name="monthly_overview">Monthly Overview</string>
+    <string name="category_progress">Category Budget Progress</string>
+
+    <!-- Expenses -->
+    <string name="add_expense">Add Expense</string>
+    <string name="expense_amount">Amount</string>
+    <string name="expense_description">Description</string>
+    <string name="expense_category">Category</string>
+    <string name="expense_date">Date</string>
+    <string name="no_expenses">No expenses yet.\nTap + to add your first expense!</string>
+
+    <!-- Categories -->
+    <string name="category_name">Category Name</string>
+    <string name="category_budget">Budget Limit</string>
+    <string name="no_categories">No categories</string>
+
+    <!-- Summary -->
+    <string name="monthly_summary">Monthly Summary</string>
+    <string name="category_breakdown">Category Breakdown</string>
+    <string name="top_categories">Top 3 Categories</string>
+    <string name="gamification_title">Your Progress</string>
+    <string name="current_streak">Current Streak: %d days 🔥</string>
+    <string name="badges_earned">Badges Earned: %d</string>
+
+    <!-- Actions -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+
+    <!-- Messages -->
+    <string name="expense_added">Expense added successfully</string>
+    <string name="expense_deleted">Expense deleted</string>
+    <string name="error_loading">Failed to load data</string>
+    <string name="error_saving">Failed to save</string>
+
+    <!-- Date shortcuts -->
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>
