@@ -1,91 +1,112 @@
 package com.example.budgettracker.ui.expenses
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.budgettracker.R
-import com.example.budgettracker.adapters.ExpenseAdapter
 import com.example.budgettracker.data.database.AppDatabase
+import com.example.budgettracker.data.model.ExpenseWithCategory
 import com.example.budgettracker.data.repository.ExpenseRepository
 import com.example.budgettracker.data.repository.GamificationRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
 
     private val viewModel: ExpenseViewModel by viewModels {
-        val database = AppDatabase.getInstance(requireContext())
-        val expenseRepository = ExpenseRepository(
-            database.expenseDao(),
-            database.categoryDao()
+        val db = AppDatabase.getInstance(requireContext())
+        ExpenseViewModelFactory(
+            ExpenseRepository(db.expenseDao(), db.categoryDao()),
+            GamificationRepository(db.gamificationDao())
         )
-        val gamificationRepository = GamificationRepository(database.gamificationDao())
-        ExpenseViewModelFactory(expenseRepository, gamificationRepository)
     }
 
-    private lateinit var adapter: ExpenseAdapter
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_expenses)
-        val emptyText: TextView = view.findViewById(R.id.text_empty)
-        val fab: FloatingActionButton = view.findViewById(R.id.fab_add_expense)
+        val container: LinearLayout =
+            view.findViewById(R.id.layout_expenses)
 
-        // Setup RecyclerView
-        adapter = ExpenseAdapter(
-            onExpenseClick = { expense ->
-                // Could navigate to edit screen
-            },
-            onExpenseLongClick = { expense ->
-                showDeleteDialog(expense)
-                true
-            }
-        )
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val emptyText: TextView =
+            view.findViewById(R.id.text_empty_expenses)
 
-        // FAB click
-        fab.setOnClickListener {
-            findNavController().navigate(R.id.action_expenseList_to_addExpense)
+        val fabAddExpense: FloatingActionButton =
+            view.findViewById(R.id.fab_add_expense)
+
+        fabAddExpense.setOnClickListener {
+            findNavController().navigate(R.id.addExpenseFragment)
         }
 
-        // Observe expenses
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    adapter.submitList(state.expenses)
+            viewModel.uiState.collect { state ->
+                container.removeAllViews()
 
-                    emptyText.visibility = if (state.expenses.isEmpty()) View.VISIBLE else View.GONE
-                    recyclerView.visibility = if (state.expenses.isEmpty()) View.GONE else View.VISIBLE
+                if (state.expenses.isEmpty()) {
+                    emptyText.visibility = View.VISIBLE
+                    return@collect
+                } else {
+                    emptyText.visibility = View.GONE
+                }
 
-                    state.error?.let { error ->
-                        Snackbar.make(view, error, Snackbar.LENGTH_LONG).show()
-                        viewModel.clearError()
+                state.expenses.forEach { expense ->
+                    val card = layoutInflater.inflate(
+                        R.layout.item_expense,
+                        container,
+                        false
+                    )
+
+                    card.findViewById<TextView>(R.id.text_description)
+                        .text = expense.description
+
+                    card.findViewById<TextView>(R.id.text_date)
+                        .text = expense.date
+
+                    card.findViewById<TextView>(R.id.text_amount)
+                        .text = "-${expense.amount}"
+
+                    // ✏️ Edit
+                    card.setOnClickListener {
+                        navigateToEdit(expense.expenseId)
                     }
+
+                    // 🗑️ Delete
+                    card.setOnLongClickListener {
+                        confirmDelete(expense)
+                        true
+                    }
+
+                    container.addView(card)
                 }
             }
         }
     }
 
-    private fun showDeleteDialog(expense: com.example.budgettracker.data.model.ExpenseWithCategory) {
+    private fun navigateToEdit(expenseId: Long) {
+        val bundle = Bundle().apply {
+            putLong("expenseId", expenseId)
+        }
+        findNavController().navigate(
+            R.id.addExpenseFragment,
+            bundle
+        )
+    }
+
+    private fun confirmDelete(expense: ExpenseWithCategory) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Delete Expense")
-            .setMessage("Delete ${expense.description}?")
+            .setTitle("Delete expense?")
+            .setMessage("This cannot be undone.")
             .setPositiveButton("Delete") { _, _ ->
-                viewModel.deleteExpense(expense)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewModel.deleteExpense(expense)
+                }
             }
             .setNegativeButton("Cancel", null)
             .show()
     }
+
 }

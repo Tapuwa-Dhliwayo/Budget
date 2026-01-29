@@ -9,12 +9,6 @@ import com.example.budgettracker.data.repository.GamificationRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-data class ExpenseUiState(
-    val expenses: List<ExpenseWithCategory> = emptyList(),
-    val isLoading: Boolean = false,
-    val error: String? = null
-)
-
 class ExpenseViewModel(
     private val expenseRepository: ExpenseRepository,
     private val gamificationRepository: GamificationRepository
@@ -47,7 +41,7 @@ class ExpenseViewModel(
         }
     }
 
-    /** ✅ SUSPEND = TESTABLE */
+    /** ➕ ADD */
     suspend fun addExpense(
         amount: Double,
         description: String,
@@ -74,10 +68,36 @@ class ExpenseViewModel(
         }
     }
 
+    /** ✏️ EDIT */
+    suspend fun updateExpense(expense: ExpenseEntity) {
+        try {
+            expenseRepository.updateExpense(expense)
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(
+                error = "Failed to update expense: ${e.message}"
+            )
+        }
+    }
+
+    /** 🔍 LOAD SINGLE */
+    suspend fun getExpenseById(id: Long): ExpenseEntity? {
+        return try {
+            expenseRepository.getExpenseById(id)
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(
+                error = "Failed to load expense: ${e.message}"
+            )
+            null
+        }
+    }
+
+    /** 🗑️ DELETE */
     fun deleteExpense(expense: ExpenseWithCategory) {
         viewModelScope.launch {
             try {
-                val expenseEntity = expenseRepository.getExpenseById(expense.expenseId)
+                val expenseEntity =
+                    expenseRepository.getExpenseById(expense.expenseId)
+
                 if (expenseEntity != null) {
                     expenseRepository.deleteExpense(expenseEntity)
                 }
