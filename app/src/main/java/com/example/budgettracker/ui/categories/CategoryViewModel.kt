@@ -4,94 +4,42 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.budgettracker.data.entity.CategoryEntity
 import com.example.budgettracker.data.repository.CategoryRepository
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-
-data class CategoryUiState(
-    val categories: List<CategoryEntity> = emptyList(),
-    val isLoading: Boolean = false,
-    val error: String? = null
-)
 
 class CategoryViewModel(
     private val repository: CategoryRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CategoryUiState())
+    private val _uiState = MutableStateFlow(CategoryUiState(isLoading = true))
     val uiState: StateFlow<CategoryUiState> = _uiState.asStateFlow()
 
-    init {
+    fun loadCategories() {
+        viewModelScope.launch {
+            try {
+                val categories = repository.getAllCategories()
+                _uiState.value = CategoryUiState(categories = categories)
+            } catch (e: Exception) {
+                _uiState.value =
+                    CategoryUiState(error = "Failed to load categories")
+            }
+        }
+    }
+
+    suspend fun addCategory(category: CategoryEntity) {
+        repository.insertCategory(category)
         loadCategories()
     }
 
-    private fun loadCategories() {
-        viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
-            
-            repository.observeAllCategories()
-                .catch { e ->
-                    _uiState.value = _uiState.value.copy(
-                        isLoading = false,
-                        error = "Failed to load categories: ${e.message}"
-                    )
-                }
-                .collect { categories ->
-                    _uiState.value = CategoryUiState(
-                        categories = categories,
-                        isLoading = false
-                    )
-                }
-        }
+    suspend fun updateCategory(category: CategoryEntity) {
+        repository.updateCategory(category)
+        loadCategories()
     }
 
-    fun addCategory(
-        name: String,
-        color: Int,
-        icon: String,
-        budgetLimit: Double
-    ) {
-        viewModelScope.launch {
-            try {
-                val category = CategoryEntity(
-                    name = name,
-                    color = color,
-                    icon = icon,
-                    budgetLimit = budgetLimit
-                )
-                repository.insertCategory(category)
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    error = "Failed to add category: ${e.message}"
-                )
-            }
-        }
-    }
-
-    fun updateCategory(category: CategoryEntity) {
-        viewModelScope.launch {
-            try {
-                repository.updateCategory(category)
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    error = "Failed to update category: ${e.message}"
-                )
-            }
-        }
-    }
-
-    fun deleteCategory(id: Long) {
-        viewModelScope.launch {
-            try {
-                repository.deleteCategory(id)
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    error = "Failed to delete category: ${e.message}"
-                )
-            }
-        }
-    }
-
-    fun clearError() {
-        _uiState.value = _uiState.value.copy(error = null)
+    suspend fun deleteCategory(id: Long) {
+        repository.deleteCategory(id)
+        loadCategories()
     }
 }
