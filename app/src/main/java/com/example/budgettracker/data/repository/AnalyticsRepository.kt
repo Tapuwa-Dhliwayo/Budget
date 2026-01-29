@@ -1,5 +1,7 @@
 package com.example.budgettracker.data.repository
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.budgettracker.data.dao.CategoryDao
 import com.example.budgettracker.data.dao.ExpenseDao
 import com.example.budgettracker.data.dao.MonthlyBudgetDao
@@ -13,12 +15,13 @@ class AnalyticsRepository(
     private val expenseDao: ExpenseDao,
     private val categoryDao: CategoryDao,
     private val monthlyBudgetDao: MonthlyBudgetDao
-) {
+) : AnalyticsDataSource {
     
     /**
      * Get spending breakdown by category for a month
      */
-    suspend fun getCategorySpending(monthId: String): List<CategorySpending> {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun getCategorySpending(monthId: String): List<CategorySpending> {
         val (startDate, endDate) = getMonthDateRange(monthId)
         val categories = categoryDao.getAllCategories()
         
@@ -52,7 +55,8 @@ class AnalyticsRepository(
     /**
      * Get monthly overview with total budget vs spending
      */
-    suspend fun getMonthlyOverview(monthId: String): MonthlyOverview {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun getMonthlyOverview(monthId: String): MonthlyOverview {
         val (startDate, endDate) = getMonthDateRange(monthId)
         val monthlyBudget = monthlyBudgetDao.getMonth(monthId)
         
@@ -108,6 +112,7 @@ class AnalyticsRepository(
     /**
      * Helper to get start and end dates for a month
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getMonthDateRange(monthId: String): Pair<String, String> {
         val yearMonth = YearMonth.parse(monthId, DateTimeFormatter.ofPattern("yyyy-MM"))
         val startDate = yearMonth.atDay(1).toString()

@@ -72,13 +72,15 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
                 else -> {
                     val amount = amountStr.toDoubleOrNull()
                     if (amount != null && amount > 0) {
-                        viewModel.addExpense(
-                            amount = amount,
-                            description = description,
-                            date = selectedDate,
-                            categoryId = selectedCategoryId
-                        )
-                        findNavController().navigateUp()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            viewModel.addExpense(
+                                amount = amount,
+                                description = description,
+                                date = selectedDate,
+                                categoryId = selectedCategoryId
+                            )
+                            findNavController().navigateUp()
+                        }
                     } else {
                         Toast.makeText(requireContext(), "Invalid amount", Toast.LENGTH_SHORT).show()
                     }

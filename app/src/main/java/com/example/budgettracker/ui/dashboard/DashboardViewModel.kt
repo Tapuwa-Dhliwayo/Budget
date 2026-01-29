@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.budgettracker.data.model.CategorySpending
 import com.example.budgettracker.data.model.MonthlyOverview
+import com.example.budgettracker.data.repository.AnalyticsDataSource
 import com.example.budgettracker.data.repository.AnalyticsRepository
 import com.example.budgettracker.data.repository.BudgetRepository
 import com.example.budgettracker.utils.DateUtils
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 data class DashboardUiState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val monthlyOverview: MonthlyOverview? = null,
     val categorySpending: List<CategorySpending> = emptyList(),
     val error: String? = null
@@ -21,15 +22,11 @@ data class DashboardUiState(
 
 class DashboardViewModel(
     private val budgetRepository: BudgetRepository,
-    private val analyticsRepository: AnalyticsRepository
+    private val analyticsRepository: AnalyticsDataSource
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
-
-    init {
-        loadDashboard()
-    }
 
     fun loadDashboard(monthId: String = DateUtils.getCurrentMonthId()) {
         viewModelScope.launch {

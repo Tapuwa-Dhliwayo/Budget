@@ -30,7 +30,7 @@ class ExpenseViewModel(
     private fun loadExpenses() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
-            
+
             expenseRepository.observeExpensesWithCategory()
                 .catch { e ->
                     _uiState.value = _uiState.value.copy(
@@ -47,33 +47,30 @@ class ExpenseViewModel(
         }
     }
 
-    fun addExpense(
+    /** ✅ SUSPEND = TESTABLE */
+    suspend fun addExpense(
         amount: Double,
         description: String,
         date: String,
         categoryId: Long,
         photoPath: String? = null
     ) {
-        viewModelScope.launch {
-            try {
-                val expense = ExpenseEntity(
-                    amount = amount,
-                    description = description,
-                    date = date,
-                    categoryId = categoryId,
-                    photoPath = photoPath
-                )
-                
-                expenseRepository.insertExpense(expense)
-                
-                // Update gamification streak
-                gamificationRepository.updateStreakForNewExpense(date)
-                
-            } catch (e: Exception) {
-                _uiState.value = _uiState.value.copy(
-                    error = "Failed to add expense: ${e.message}"
-                )
-            }
+        try {
+            val expense = ExpenseEntity(
+                amount = amount,
+                description = description,
+                date = date,
+                categoryId = categoryId,
+                photoPath = photoPath
+            )
+
+            expenseRepository.insertExpense(expense)
+            gamificationRepository.updateStreakForNewExpense(date)
+
+        } catch (e: Exception) {
+            _uiState.value = _uiState.value.copy(
+                error = "Failed to add expense: ${e.message}"
+            )
         }
     }
 
