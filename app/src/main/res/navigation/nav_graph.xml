@@ -7,7 +7,13 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.budgettracker.ui.dashboard.DashboardFragment"
-        android:label="Dashboard" />
+        android:label="Dashboard">
+
+        <!-- ✅ ADD THIS ACTION -->
+        <action
+            android:id="@+id/action_dashboard_to_analytics"
+            app:destination="@id/analyticsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/expenseListFragment"
@@ -32,5 +38,10 @@
         android:id="@+id/summaryFragment"
         android:name="com.example.budgettracker.ui.summary.SummaryFragment"
         android:label="Summary" />
+
+    <fragment
+        android:id="@+id/analyticsFragment"
+        android:name="com.example.budgettracker.ui.analytics.AnalyticsFragment"
+        android:label="Analytics" />
 
 </navigation>

@@ -2,75 +2,85 @@ package com.example.budgettracker.ui.dashboard
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.findNavController
 import com.example.budgettracker.R
-import com.example.budgettracker.adapters.CategorySpendingAdapter
 import com.example.budgettracker.data.database.AppDatabase
 import com.example.budgettracker.data.repository.AnalyticsRepository
 import com.example.budgettracker.data.repository.BudgetRepository
-import com.example.budgettracker.utils.CurrencyUtils
-import com.example.budgettracker.utils.DateUtils
-import com.example.budgettracker.utils.PercentageUtils
-import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.example.budgettracker.data.repository.GamificationRepository
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlinx.coroutines.launch
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
     private val viewModel: DashboardViewModel by viewModels {
-        val database = AppDatabase.getInstance(requireContext())
-        val budgetRepository = BudgetRepository(database.monthlyBudgetDao())
-        val analyticsRepository = AnalyticsRepository(
-            database.expenseDao(),
-            database.categoryDao(),
-            database.monthlyBudgetDao()
+        val db = AppDatabase.getInstance(requireContext())
+        DashboardViewModelFactory(
+            BudgetRepository(db.monthlyBudgetDao()),
+            AnalyticsRepository(db.expenseDao(), db.categoryDao(), db.monthlyBudgetDao()),
+            GamificationRepository(db.gamificationDao())
         )
-        DashboardViewModelFactory(budgetRepository, analyticsRepository)
     }
 
-    private lateinit var adapter: CategorySpendingAdapter
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        // Initialize views
-        val monthText: TextView = view.findViewById(R.id.text_month)
-        val totalBudgetText: TextView = view.findViewById(R.id.text_total_budget)
-        val totalSpentText: TextView = view.findViewById(R.id.text_total_spent)
-        val remainingText: TextView = view.findViewById(R.id.text_remaining)
-        val overallProgress: LinearProgressIndicator = view.findViewById(R.id.progress_overall)
-        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_category_spending)
+        val progress: CircularProgressIndicator =
+            view.findViewById(R.id.progress_budget)
+        val summary: TextView =
+            view.findViewById(R.id.text_budget_summary)
+        val categoriesLayout: LinearLayout =
+            view.findViewById(R.id.layout_top_categories)
+        val emptyCategories: TextView =
+            view.findViewById(R.id.text_empty_categories)
+        val topCategoriesHeader: TextView =
+            view.findViewById(R.id.text_top_categories)
 
-        // Setup RecyclerView
-        adapter = CategorySpendingAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        topCategoriesHeader.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_dashboard_to_analytics
+            )
+        }
 
-        // Observe UI state
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    if (!state.isLoading) {
-                        state.monthlyOverview?.let { overview ->
-                            monthText.text = DateUtils.getMonthName(overview.monthId)
-                            totalBudgetText.text = "Budget: ${CurrencyUtils.format(overview.totalBudget)}"
-                            totalSpentText.text = "Spent: ${CurrencyUtils.format(overview.totalSpent)}"
-                            remainingText.text = "Remaining: ${CurrencyUtils.format(overview.remaining)}"
+            viewModel.uiState.collect { state ->
+                if (state.isLoading) return@collect
 
-                            val progress = overview.percentageUsed.coerceIn(0.0, 100.0).toInt()
-                            overallProgress.progress = progress
-                        }
+                // Progress (clamp 0–100)
+                val progressValue = state.percentageUsed.coerceIn(0.0, 100.0)
+                progress.setProgress(progressValue.toInt(), true)
 
-                        adapter.submitList(state.categorySpending)
+                // Over-budget visual
+                progress.setIndicatorColor(
+                    if (state.isOverBudget)
+                        requireContext().getColor(R.color.red_700)
+                    else
+                        requireContext().getColor(R.color.teal_700)
+                )
+
+                summary.text =
+                    "Spent ${state.totalSpent} / ${state.totalBudget}\nRemaining ${state.remaining}"
+
+                categoriesLayout.removeAllViews()
+
+                if (state.topCategories.isEmpty()) {
+                    emptyCategories.visibility = View.VISIBLE
+                } else {
+                    emptyCategories.visibility = View.GONE
+                    state.topCategories.forEach {
+                        val tv = TextView(requireContext())
+                        tv.text = "${it.categoryIcon} ${it.categoryName}: ${it.totalSpent}"
+                        categoriesLayout.addView(tv)
                     }
                 }
             }
         }
+
+        viewModel.loadDashboard()
     }
+
 }
