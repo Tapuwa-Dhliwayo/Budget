@@ -8,6 +8,7 @@ import com.example.budgettracker.data.dao.MonthlyBudgetDao
 import com.example.budgettracker.data.model.CategorySpending
 import com.example.budgettracker.data.model.CategorySummary
 import com.example.budgettracker.data.model.MonthlyOverview
+import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
@@ -80,6 +81,7 @@ class AnalyticsRepository(
     /**
      * Get category summaries for text-based analytics
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getCategorySummaries(monthId: String): List<CategorySummary> {
         val categorySpending = getCategorySpending(monthId)
         val totalSpent = categorySpending.sumOf { it.totalSpent }
@@ -105,8 +107,65 @@ class AnalyticsRepository(
     /**
      * Get top N spending categories
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getTopSpendingCategories(monthId: String, limit: Int = 3): List<CategorySummary> {
         return getCategorySummaries(monthId).take(limit)
+    }
+
+    /**
+     * Get daily spending for last N days (for trend chart)
+     */
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun getDailySpendingTrend(monthId: String, days: Int = 7): List<Pair<String, Double>> {
+        val today = LocalDate.now()
+        val results = mutableListOf<Pair<String, Double>>()
+
+        for (i in (days - 1) downTo 0) {
+            val date = today.minusDays(i.toLong())
+            val dateString = date.toString()
+            val spending = expenseDao.getTotalSpendingForPeriod(dateString, dateString) ?: 0.0
+            results.add(dateString to spending)
+        }
+
+        return results
+    }
+
+    /**
+     * Compare current month with previous month
+     */
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun compareWithPreviousMonth(monthId: String): MonthComparison {
+        val currentOverview = getMonthlyOverview(monthId)
+
+        val yearMonth = YearMonth.parse(monthId, DateTimeFormatter.ofPattern("yyyy-MM"))
+        val previousMonth = yearMonth.minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM"))
+
+        val previousOverview = try {
+            getMonthlyOverview(previousMonth)
+        } catch (e: Exception) {
+            null
+        }
+
+        val difference = if (previousOverview != null) {
+            currentOverview.totalSpent - previousOverview.totalSpent
+        } else {
+            0.0
+        }
+
+        val percentageChange = if (previousOverview != null && previousOverview.totalSpent > 0) {
+            ((currentOverview.totalSpent - previousOverview.totalSpent) / previousOverview.totalSpent) * 100
+        } else {
+            0.0
+        }
+
+        return MonthComparison(
+            currentMonth = currentOverview,
+            previousMonth = previousOverview,
+            difference = difference,
+            percentageChange = percentageChange
+        )
     }
     
     /**
@@ -119,4 +178,15 @@ class AnalyticsRepository(
         val endDate = yearMonth.atEndOfMonth().toString()
         return startDate to endDate
     }
+
+    /**
+     * Data class for month comparison
+     */
+
+    data class MonthComparison(
+        val currentMonth: MonthlyOverview,
+        val previousMonth: MonthlyOverview?,
+        val difference: Double,
+        val percentageChange: Double
+    )
 }
