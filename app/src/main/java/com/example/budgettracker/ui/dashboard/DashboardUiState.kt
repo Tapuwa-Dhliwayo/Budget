@@ -14,5 +14,9 @@ data class DashboardUiState(
     val topCategories: List<CategorySpending> = emptyList(),
     val streak: Int = 0,
     val badges: List<Badge> = emptyList(),
-    val error: String? = null
+    val error: String? = null,
+    val dailySpendingTrend: List<Pair<String, Double>> = emptyList(),
+    val categoryBreakdown: List<CategorySpending> = emptyList(),
+    val previousMonthComparison: String = "",
+    val userName: String = "User"
 )
