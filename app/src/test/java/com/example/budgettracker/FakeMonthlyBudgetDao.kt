@@ -19,7 +19,17 @@ class FakeMonthlyBudgetDao : MonthlyBudgetDao {
         return data[monthId]
     }
 
+    override suspend fun updateMonth(month: MonthlyBudgetEntity) {
+        data[month.monthId] = month
+        flow.value = data.values.toList()
+    }
+
     override fun observeAllMonths(): Flow<List<MonthlyBudgetEntity>> {
         return flow
+    }
+
+    fun clear() {
+        data.clear()
+        flow.value = emptyList()
     }
 }

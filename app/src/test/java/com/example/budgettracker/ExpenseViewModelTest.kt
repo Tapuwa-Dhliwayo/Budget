@@ -44,7 +44,7 @@ class ExpenseViewModelTest {
             )
         )
 
-        // ✅ Now we can await
+        //Now we can await
         viewModel.addExpense(
             amount = 450.0,
             description = "Weekly shopping",
