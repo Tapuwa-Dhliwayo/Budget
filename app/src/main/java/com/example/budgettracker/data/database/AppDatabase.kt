@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.budgettracker.data.dao.*
 import com.example.budgettracker.data.entity.*
@@ -16,9 +17,10 @@ import kotlinx.coroutines.launch
         MonthlyBudgetEntity::class,
         CategoryEntity::class,
         ExpenseEntity::class,
-        GamificationEntity::class
+        GamificationEntity::class,
+        UserProfileEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -26,10 +28,35 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun expenseDao(): ExpenseDao
     abstract fun gamificationDao(): GamificationDao
+    abstract fun userProfileDao(): UserProfileDao
 
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
+
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Create user_profile table
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS user_profile (
+                        id INTEGER PRIMARY KEY NOT NULL,
+                        firstName TEXT NOT NULL,
+                        lastName TEXT NOT NULL,
+                        createdDate TEXT NOT NULL
+                    )
+                    """.trimIndent()
+                )
+
+                // Insert default user
+                db.execSQL(
+                    """
+                    INSERT INTO user_profile (id, firstName, lastName, createdDate) 
+                    VALUES (1, 'User', '', date('now'))
+                    """.trimIndent()
+                )
+            }
+        }
 
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -38,6 +65,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "budget_tracker.db"
                 )
+                    .addMigrations(MIGRATION_1_2)
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
@@ -84,6 +112,15 @@ abstract class AppDatabase : RoomDatabase() {
                     lastLoggedDate = null,
                     badgesEarned = "",
                     totalExpensesLogged = 0
+                )
+            )
+
+            database.userProfileDao().insertUser(
+                UserProfileEntity(
+                    id = 1,
+                    firstName = "User",
+                    lastName = "",
+                    createdDate = java.time.LocalDate.now().toString()
                 )
             )
         }
