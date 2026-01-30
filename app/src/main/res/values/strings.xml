@@ -6,11 +6,15 @@
     <string name="nav_expenses">Expenses</string>
     <string name="nav_categories">Categories</string>
     <string name="nav_summary">Summary</string>
+    <string name="nav_profile">Profile</string>
 
     <!-- Dashboard -->
     <string name="dashboard_title">Budget Dashboard</string>
     <string name="monthly_overview">Monthly Overview</string>
     <string name="category_progress">Category Budget Progress</string>
+    <string name="edit_budget">Edit Budget</string>
+    <string name="daily_spending_trend">Daily Spending Trend</string>
+    <string name="category_breakdown_chart">Category Breakdown</string>
 
     <!-- Expenses -->
     <string name="add_expense">Add Expense</string>
@@ -33,11 +37,28 @@
     <string name="current_streak">Current Streak: %d days 🔥</string>
     <string name="badges_earned">Badges Earned: %d</string>
 
+    <!-- Profile -->
+    <string name="profile_title">User Profile</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="exit_app">Exit App</string>
+    <string name="profile_updated">Profile updated successfully!</string>
+    <string name="exit_confirmation">Are you sure you want to exit MiniBudget Tracker?</string>
+    <string name="first_name_required">First name cannot be empty</string>
+
+    <!-- Budget Editing -->
+    <string name="edit_budget_title">Edit Monthly Budget</string>
+    <string name="starting_funds">Starting Funds</string>
+    <string name="starting_funds_hint">Enter the total amount of money you have available for this month.</string>
+    <string name="budget_updated">Budget updated successfully!</string>
+
     <!-- Actions -->
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="exit">Exit</string>
 
     <!-- Messages -->
     <string name="expense_added">Expense added successfully</string>
@@ -48,4 +69,7 @@
     <!-- Date shortcuts -->
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+
+    <!-- Header -->
+    <string name="hello_user">Hello, %s!</string>
 </resources>
