@@ -100,6 +100,9 @@ class SummaryFragment : Fragment(R.layout.fragment_summary) {
     override fun onResume() {
         super.onResume()
 
+        // Refresh the summary data when returning to this screen
+        viewModel.refreshSummary()
+
         viewLifecycleOwner.lifecycleScope.launch {
             val db = AppDatabase.getInstance(requireContext())
             val userRepo = UserProfileRepository(db.userProfileDao())
