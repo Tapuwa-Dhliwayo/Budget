@@ -9,10 +9,13 @@
         android:name="com.example.budgettracker.ui.dashboard.DashboardFragment"
         android:label="Dashboard">
 
-        <!-- ✅ ADD THIS ACTION -->
         <action
             android:id="@+id/action_dashboard_to_analytics"
             app:destination="@id/analyticsFragment" />
+
+        <action
+            android:id="@+id/action_dashboard_to_profile"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -22,6 +25,10 @@
         <action
             android:id="@+id/action_expenseList_to_addExpense"
             app:destination="@id/addExpenseFragment" />
+
+        <action
+            android:id="@+id/action_expenses_to_profile"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -32,16 +39,31 @@
     <fragment
         android:id="@+id/categoryListFragment"
         android:name="com.example.budgettracker.ui.categories.CategoryListFragment"
-        android:label="Categories" />
+        android:label="Categories">
+
+        <action
+            android:id="@+id/action_categories_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/summaryFragment"
         android:name="com.example.budgettracker.ui.summary.SummaryFragment"
-        android:label="Summary" />
+        android:label="Summary">
+
+        <action
+            android:id="@+id/action_summary_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/analyticsFragment"
         android:name="com.example.budgettracker.ui.analytics.AnalyticsFragment"
         android:label="Analytics" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.budgettracker.ui.profile.ProfileFragment"
+        android:label="Profile" />
 
 </navigation>

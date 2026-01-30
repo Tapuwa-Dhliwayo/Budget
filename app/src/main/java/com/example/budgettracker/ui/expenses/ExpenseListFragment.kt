@@ -2,6 +2,7 @@ package com.example.budgettracker.ui.expenses
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -14,6 +15,7 @@ import com.example.budgettracker.data.database.AppDatabase
 import com.example.budgettracker.data.model.ExpenseWithCategory
 import com.example.budgettracker.data.repository.ExpenseRepository
 import com.example.budgettracker.data.repository.GamificationRepository
+import com.example.budgettracker.data.repository.UserProfileRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -28,15 +30,33 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val container: LinearLayout =
-            view.findViewById(R.id.layout_expenses)
+        // Header components
+        val headerTitle: TextView = view.findViewById(R.id.header_title)
+        val headerProfileBtn: ImageButton = view.findViewById(R.id.header_profile_btn)
+        val headerUserName: TextView = view.findViewById(R.id.header_user_name)
 
-        val emptyText: TextView =
-            view.findViewById(R.id.text_empty_expenses)
+        // Expense list components
+        val container: LinearLayout = view.findViewById(R.id.layout_expenses)
+        val emptyText: TextView = view.findViewById(R.id.text_empty_expenses)
+        val fabAddExpense: FloatingActionButton = view.findViewById(R.id.fab_add_expense)
 
-        val fabAddExpense: FloatingActionButton =
-            view.findViewById(R.id.fab_add_expense)
+        // Set header title
+        headerTitle.text = "Expenses"
+
+        //Navigate to profile
+        headerProfileBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_expenses_to_profile)
+        }
+
+        //Load user name for header
+        viewLifecycleOwner.lifecycleScope.launch {
+            val db = AppDatabase.getInstance(requireContext())
+            val userRepo = UserProfileRepository(db.userProfileDao())
+            val user = userRepo.getOrCreateUser()
+            headerUserName.text = "Hello, ${user.firstName}!"
+        }
 
         fabAddExpense.setOnClickListener {
             findNavController().navigate(R.id.addExpenseFragment)
