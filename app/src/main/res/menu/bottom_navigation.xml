@@ -16,4 +16,9 @@
         android:id="@+id/summaryFragment"
         android:title="Summary"
         android:icon="@android:drawable/ic_menu_view" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
 </menu>

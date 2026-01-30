@@ -31,14 +31,27 @@ class DashboardViewModel(
             _uiState.value = DashboardUiState(isLoading = true, monthId = monthId)
 
             try {
-                // Ensure month exists
-                budgetRepository.loadOrCreateMonth(monthId, 0.0)
+                // Users should set their budget via Edit Budget dialog
+                val existingMonth = budgetRepository.getMonth(monthId)
+                if (existingMonth == null) {
+                    // Create month with 0.0 - user must set budget via Edit Budget
+                    budgetRepository.loadOrCreateMonth(monthId, 0.0)
+                }
+
+                // Get user name
+                val user = userProfileRepository.getOrCreateUser()
+                val userName = user.firstName
 
                 // Analytics
                 val overview = analyticsRepository.getMonthlyOverview(monthId)
                 val topCategories =
                     analyticsRepository.getCategorySpending(monthId).take(3)
+                val allCategories = analyticsRepository.getCategorySpending(monthId)
+
+                //Get Daily spending Trends
                 val dailyTrend = analyticsRepository.getDailySpendingTrend(monthId, 7)
+
+                // Get month comparison
                 val comparison = analyticsRepository.compareWithPreviousMonth(monthId)
                 val comparisonText = if (comparison.previousMonth != null) {
                     val diff = comparison.difference
@@ -62,7 +75,11 @@ class DashboardViewModel(
                     isOverBudget = overview.isOverBudget,
                     topCategories = topCategories,
                     streak = gamification.currentStreak,
-                    badges = gamification.badgesEarned
+                    badges = gamification.badgesEarned,
+                    dailySpendingTrend = dailyTrend,
+                    categoryBreakdown = allCategories,
+                    previousMonthComparison = comparisonText,
+                    userName = userName
                 )
 
             } catch (e: Exception) {

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.budgettracker.R
 import com.example.budgettracker.data.database.AppDatabase
 import com.example.budgettracker.data.repository.UserProfileRepository
+import com.example.budgettracker.ui.common.configureToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
@@ -33,7 +34,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val saveButton: Button = view.findViewById(R.id.btn_save_profile)
         val exitButton: Button = view.findViewById(R.id.btn_exit_app)
 
-        // Observe UI state
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->
                 if (!state.isLoading) {
@@ -46,17 +46,22 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                             "Profile updated successfully!",
                             Toast.LENGTH_SHORT
                         ).show()
+
+                        findNavController().navigateUp()
                         viewModel.clearSaveSuccess()
                     }
 
                     state.error?.let { error ->
-                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            error,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
 
-        // Save profile
         saveButton.setOnClickListener {
             val firstName = firstNameInput.text.toString().trim()
             val lastName = lastNameInput.text.toString().trim()
@@ -73,12 +78,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             viewModel.updateProfile(firstName, lastName)
         }
 
-        // Exit app with confirmation
         exitButton.setOnClickListener {
             showExitConfirmation()
         }
 
-        // Handle back button
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -86,6 +89,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     findNavController().navigateUp()
                 }
             }
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        configureToolbar(
+            title = "Profile",
+            subtitle = null,
+            menuRes = null
         )
     }
 

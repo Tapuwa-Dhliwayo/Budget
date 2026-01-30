@@ -60,9 +60,7 @@ class AnalyticsRepository(
     override suspend fun getMonthlyOverview(monthId: String): MonthlyOverview {
         val (startDate, endDate) = getMonthDateRange(monthId)
         val monthlyBudget = monthlyBudgetDao.getMonth(monthId)
-        
-        val categories = categoryDao.getAllCategories()
-        val totalBudget = categories.sumOf { it.budgetLimit }
+        val totalBudget = monthlyBudget?.startingFunds ?: 0.0
         
         val totalSpent = expenseDao.getTotalSpendingForPeriod(startDate, endDate) ?: 0.0
         val remaining = totalBudget - totalSpent

@@ -14,6 +14,7 @@ import com.example.budgettracker.data.entity.ExpenseEntity
 import com.example.budgettracker.data.repository.CategoryRepository
 import com.example.budgettracker.data.repository.ExpenseRepository
 import com.example.budgettracker.data.repository.GamificationRepository
+import com.example.budgettracker.ui.common.configureToolbar
 import com.example.budgettracker.utils.DateUtils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -48,18 +49,14 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
         val saveButton: MaterialButton = view.findViewById(R.id.button_save)
         val cancelButton: MaterialButton = view.findViewById(R.id.button_cancel)
 
-        // Initial date display
         dateButton.text = formatDateForButton(selectedDate)
 
-        // 📅 Date picker
         dateButton.setOnClickListener {
             showDatePicker(dateButton)
         }
 
-        // Load categories FIRST
         loadCategories(categorySpinner)
 
-        // Edit mode
         if (editingExpenseId != -1L) {
             viewLifecycleOwner.lifecycleScope.launch {
                 val expense = viewModel.getExpenseById(editingExpenseId)
@@ -73,7 +70,6 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
             }
         }
 
-        // Save
         saveButton.setOnClickListener {
 
             val amountStr = amountInput.text.toString()
@@ -93,7 +89,6 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
                     viewLifecycleOwner.lifecycleScope.launch {
 
                         if (editingExpenseId == -1L) {
-                            // ➕ ADD
                             viewModel.addExpense(
                                 amount = amount,
                                 description = description,
@@ -101,7 +96,6 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
                                 categoryId = selectedCategoryId
                             )
                         } else {
-                            // ✏️ EDIT
                             val expense = ExpenseEntity(
                                 id = editingExpenseId,
                                 amount = amount,
@@ -121,6 +115,19 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
         cancelButton.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val title =
+            if (editingExpenseId == -1L) "Add Expense" else "Edit Expense"
+
+        configureToolbar(
+            title = title,
+            subtitle = null,
+            menuRes = null
+        )
     }
 
     private fun showDatePicker(dateButton: MaterialButton) {
@@ -170,7 +177,6 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
                     }
                 }
 
-            // Restore selection in edit mode
             if (editingExpenseId != -1L && selectedCategoryId != 0L) {
                 val index = categories.indexOfFirst { it.id == selectedCategoryId }
                 if (index >= 0) spinner.setSelection(index)
