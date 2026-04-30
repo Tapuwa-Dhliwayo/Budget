@@ -78,7 +78,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 )
 
                 summary.text =
-                    "Spent ${state.totalSpent} / ${state.totalBudget}\nRemaining ${state.remaining}"
+                    "Spent ${com.example.budgettracker.utils.CurrencyUtils.format(state.totalSpent)} / ${com.example.budgettracker.utils.CurrencyUtils.format(state.totalBudget)}\nRemaining ${com.example.budgettracker.utils.CurrencyUtils.format(state.remaining)}"
 
                 categoriesLayout.removeAllViews()
                 if (state.topCategories.isEmpty()) {
@@ -87,7 +87,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     emptyCategories.visibility = View.GONE
                     state.topCategories.forEach {
                         val tv = TextView(requireContext())
-                        tv.text = "${it.categoryIcon} ${it.categoryName}: ${it.totalSpent}"
+                        tv.text = "${it.categoryIcon} ${it.categoryName}: ${com.example.budgettracker.utils.CurrencyUtils.format(it.totalSpent)}"
                         tv.textSize = 16f
                         tv.setPadding(0, 8, 0, 8)
                         categoriesLayout.addView(tv)
@@ -97,7 +97,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 trendContainer.removeAllViews()
                 state.dailySpendingTrend.forEach { (date, amount) ->
                     val tv = TextView(requireContext())
-                    tv.text = "$date: R${String.format("%.2f", amount)}"
+                    tv.text = "$date: ${com.example.budgettracker.utils.CurrencyUtils.format(amount)}"
                     tv.textSize = 14f
                     tv.setPadding(0, 4, 0, 4)
                     trendContainer.addView(tv)

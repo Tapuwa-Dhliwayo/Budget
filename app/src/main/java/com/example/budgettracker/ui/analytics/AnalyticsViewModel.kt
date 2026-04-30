@@ -23,11 +23,20 @@ class AnalyticsViewModel(
         viewModelScope.launch {
             _uiState.value = AnalyticsUiState(isLoading = true)
             try {
-                val data = analyticsRepository.getCategorySpending(monthId)
-                _uiState.value = AnalyticsUiState(categories = data)
+                val categories = analyticsRepository.getCategorySpending(monthId)
+                val monthlyOverview = analyticsRepository.getMonthlyOverview(monthId)
+                val topCategory = categories.firstOrNull { it.totalSpent > 0 }
+
+                _uiState.value = AnalyticsUiState(
+                    categories = categories,
+                    totalSpent = monthlyOverview.totalSpent,
+                    totalBudget = monthlyOverview.totalBudget,
+                    overBudgetCount = categories.count { it.isOverBudget },
+                    topCategoryName = topCategory?.categoryName,
+                    topCategoryAmount = topCategory?.totalSpent ?: 0.0
+                )
             } catch (e: Exception) {
-                _uiState.value =
-                    AnalyticsUiState(error = "Failed to load analytics")
+                _uiState.value = AnalyticsUiState(error = "Failed to load analytics")
             }
         }
     }
