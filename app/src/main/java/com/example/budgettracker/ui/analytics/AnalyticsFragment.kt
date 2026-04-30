@@ -2,14 +2,18 @@ package com.example.budgettracker.ui.analytics
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.budgettracker.R
+import com.example.budgettracker.adapters.CategorySpendingAdapter
 import com.example.budgettracker.data.database.AppDatabase
 import com.example.budgettracker.data.repository.AnalyticsRepository
+import com.example.budgettracker.utils.CurrencyUtils
 import kotlinx.coroutines.launch
 
 class AnalyticsFragment : Fragment(R.layout.fragment_analytics) {
@@ -26,23 +30,44 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val layout: LinearLayout = view.findViewById(R.id.layout_categories)
+        val adapter = CategorySpendingAdapter()
+        val recycler: RecyclerView = view.findViewById(R.id.recycler_categories)
+        val emptyView: TextView = view.findViewById(R.id.text_empty_analytics)
+        val totalSpent: TextView = view.findViewById(R.id.text_total_spent)
+        val budgetHealth: TextView = view.findViewById(R.id.text_budget_health)
+        val topInsight: TextView = view.findViewById(R.id.text_top_insight)
+
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+        recycler.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->
-                layout.removeAllViews()
+                adapter.submitList(state.categories)
 
-                state.categories.forEach {
-                    val tv = TextView(requireContext())
-                    tv.text =
-                        "${it.categoryIcon} ${it.categoryName} — ${it.totalSpent}/${it.budgetLimit}"
-                    if (it.isOverBudget) {
-                        tv.setTextColor(
-                            requireContext().getColor(R.color.red_700)
-                        )
-                    }
-                    layout.addView(tv)
+                val utilization = if (state.totalBudget > 0) {
+                    (state.totalSpent / state.totalBudget) * 100
+                } else 0.0
+
+                totalSpent.text = "Total spent this month: ${CurrencyUtils.format(state.totalSpent)}"
+                budgetHealth.text = when {
+                    state.totalBudget <= 0 -> "Set a monthly budget to enable budget health analytics."
+                    state.overBudgetCount > 0 -> "${state.overBudgetCount} categories are over budget · ${"%.1f".format(utilization)}% used"
+                    else -> "On track · ${"%.1f".format(utilization)}% of monthly budget used"
                 }
+                budgetHealth.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        if (state.overBudgetCount > 0) R.color.budget_over else R.color.budget_good
+                    )
+                )
+
+                topInsight.text = if (state.topCategoryName != null) {
+                    "Top spend category: ${state.topCategoryName} (${CurrencyUtils.format(state.topCategoryAmount)})"
+                } else {
+                    "Add expenses to reveal your biggest spending category."
+                }
+
+                emptyView.visibility = if (state.categories.isEmpty()) View.VISIBLE else View.GONE
             }
         }
 
