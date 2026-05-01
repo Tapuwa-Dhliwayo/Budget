@@ -73,4 +73,10 @@
         <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
 
+    <style name="RaFab" parent="Widget.Material3.FloatingActionButton">
+        <item name="backgroundTint">@color/ra_primary</item>
+        <item name="tint">@color/ra_bg</item>
+        <item name="rippleColor">@color/ra_primary_soft</item>
+    </style>
+
 </resources>

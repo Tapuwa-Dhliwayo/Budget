@@ -113,3 +113,16 @@
 
 ### Notes
 - This pass is primarily theme/styles; it should not alter existing flows.
+
+## 2026-05-01 — Recovery Arcade Component Unification (FAB + Progress)
+
+### Changed
+- Added a Recovery Arcade FAB style (`RaFab`) and applied it via theme so all screens use consistent primary-blue FABs.
+- Normalized the Recovery Level progress indicator to use `ra_primary` on dark track.
+
+### Why
+- Keeps primary actions (FABs) visually consistent and easy to spot.
+- Ensures progress indicators match the Recovery Arcade palette.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).

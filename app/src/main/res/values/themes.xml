@@ -45,6 +45,9 @@
         <!-- Text fields -->
         <item name="textInputStyle">@style/RaTextInputLayout</item>
         <item name="editTextStyle">@style/RaEditText</item>
+
+        <!-- FAB -->
+        <item name="floatingActionButtonStyle">@style/RaFab</item>
     </style>
 
     <style name="Theme.BudgetTracker" parent="Theme.BudgetTracker.RecoveryArcade" />
