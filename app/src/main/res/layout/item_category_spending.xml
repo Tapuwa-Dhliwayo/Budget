@@ -50,7 +50,7 @@
                 android:layout_height="8dp"
                 android:max="100"
                 android:progress="75"
-                android:progressTint="@color/budget_good"
+                android:progressTint="@color/ra_primary"
                 android:layout_marginBottom="4dp" />
 
             <TextView

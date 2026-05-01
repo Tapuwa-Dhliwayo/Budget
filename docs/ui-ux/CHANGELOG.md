@@ -126,3 +126,16 @@
 
 ### Tests
 - Not run in this environment (Gradle dependency resolution blocked).
+
+## 2026-05-01 — Recovery Arcade Finish (Normalization + Agent Guidance)
+
+### Changed
+- Normalized Analytics category progress bars to use `ra_primary` (general progress, not budget-status).
+- Added a concise style summary for future changes.
+- Updated `AGENTS.md` to require reading `docs/UI_UX_Guideline.md` for any UI/UX work.
+
+### Why
+- Locks in consistent HUD-style visuals and prevents agents from reintroducing light-theme tokens.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
