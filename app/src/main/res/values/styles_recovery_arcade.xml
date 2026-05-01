@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RaText.ScreenTitle">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ra_text</item>
+    </style>
+
+    <style name="RaText.SectionTitle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textColor">@color/ra_text_muted</item>
+    </style>
+
+    <style name="RaText.Body">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/ra_text</item>
+    </style>
+
+    <style name="RaText.Muted">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/ra_text_muted</item>
+    </style>
+
+    <style name="RaContainer.Card">
+        <item name="android:background">@drawable/ra_card_bg</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="RaChip">
+        <item name="android:background">@drawable/ra_chip_bg</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/ra_text_muted</item>
+    </style>
+
+</resources>
+

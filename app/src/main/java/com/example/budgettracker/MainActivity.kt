@@ -50,8 +50,10 @@ class MainActivity : AppCompatActivity() {
 
         bottomNav.setupWithNavController(navController)
 
-        // Status bar icons (white on teal)
+        // System bars: keep light icons (Recovery Arcade is dark)
         WindowCompat.getInsetsController(window, window.decorView)
             .isAppearanceLightStatusBars = false
+        WindowCompat.getInsetsController(window, window.decorView)
+            .isAppearanceLightNavigationBars = false
     }
 }

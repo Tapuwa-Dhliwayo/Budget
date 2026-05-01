@@ -39,4 +39,23 @@
     <color name="accent_blue_soft">#ECEFF3</color>
     <color name="accent_mint_soft">#EEF2F4</color>
 
+    <!-- Recovery Arcade (single theme direction) -->
+    <color name="ra_bg">#111827</color>
+    <color name="ra_surface_deep">#1F2937</color>
+    <color name="ra_surface_card">#273449</color>
+    <color name="ra_surface_elevated">#334155</color>
+    <color name="ra_primary">#38BDF8</color>
+    <color name="ra_primary_soft">#7DD3FC</color>
+    <color name="ra_accent">#FBBF24</color>
+    <color name="ra_success">#34D399</color>
+    <color name="ra_warning">#F59E0B</color>
+    <color name="ra_danger">#F87171</color>
+    <color name="ra_text">#F9FAFB</color>
+    <color name="ra_text_muted">#CBD5E1</color>
+    <color name="ra_text_subtle">#94A3B8</color>
+    <color name="ra_border">#334155</color>
+
+    <!-- Note: Android colors.xml cannot represent rgba() directly. -->
+    <color name="ra_border_glow">#5938BDF8</color>
+
 </resources>
