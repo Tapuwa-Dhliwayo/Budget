@@ -50,3 +50,18 @@
 
 ### Notes
 - No screen logic changed; layout/drawables only.
+
+## 2026-05-01 — Recovery Arcade Pass (Debt + Goals)
+
+### Changed
+- Updated Debt Boss and Goals screens to the Recovery Arcade canvas and text palette.
+- Adjusted Goals section naming to align with Recovery Arcade language (Resource Vault).
+
+### Why
+- Debt and Goals are core “recovery loop” motivators; they should feel cohesive with the dashboard HUD aesthetic.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- This pass is layout-only; no repository/model logic was changed.
