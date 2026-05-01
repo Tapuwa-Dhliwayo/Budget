@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_canvas"
+    android:background="@color/ra_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,9 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Expense"
-            android:textColor="@color/ink_primary"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            style="@style/RaText.ScreenTitle"
             android:layout_marginBottom="24dp" />
 
         <!-- Amount -->
@@ -32,7 +30,7 @@
                 android:id="@+id/input_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -48,7 +46,7 @@
                 android:id="@+id/input_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -59,7 +57,7 @@
             android:layout_height="wrap_content"
             android:text="Category"
             android:textSize="16sp"
-            android:textColor="@color/ink_primary"
+            android:textColor="@color/ra_text"
             android:layout_marginBottom="8dp" />
 
         <Spinner
@@ -86,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Recurring expense"
-            android:textColor="@color/ink_primary"
+            android:textColor="@color/ra_text"
             android:layout_marginBottom="24dp" />
 
         <!-- Actions -->

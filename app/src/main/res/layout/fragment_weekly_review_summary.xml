@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_canvas"
+    android:background="@color/ra_bg"
     android:padding="16dp">
 
     <LinearLayout
@@ -15,16 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Weekly Review Summary"
-            android:textColor="@color/ink_primary"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            style="@style/RaText.ScreenTitle" />
 
         <TextView
             android:id="@+id/text_weekly_review_overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:textColor="@color/ink_primary"
+            android:textColor="@color/ra_text"
             android:textSize="16sp" />
 
         <TextView
@@ -32,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:textColor="@color/ink_secondary"
+            android:textColor="@color/ra_text_muted"
             android:textSize="14sp" />
 
         <TextView
@@ -40,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:textColor="@color/ink_secondary"
+            android:textColor="@color/ra_text_muted"
             android:textSize="14sp" />
 
         <TextView
@@ -48,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:textColor="@color/ink_secondary"
+            android:textColor="@color/ra_text_muted"
             android:textSize="14sp" />
 
         <TextView
@@ -56,9 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="Historical Trend"
-            android:textColor="@color/ink_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            style="@style/RaText.SectionTitle"
+            android:textAllCaps="false" />
 
         <LinearLayout
             android:id="@+id/layout_weekly_trend"

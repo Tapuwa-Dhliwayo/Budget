@@ -81,3 +81,19 @@
 
 ### Notes
 - This pass is layout-only.
+
+## 2026-05-01 — Recovery Arcade Cleanup (Removing Light Theme Leftovers)
+
+### Changed
+- Converted remaining screens (Data Ownership, Extra Income, Gamification, Profile, Net Worth, Add Expense, Expenses list panels) to Recovery Arcade background and text palette.
+- Updated shared fragment header toolbar to Recovery Arcade surfaces/text.
+- Updated key dialogs (weekly allowance/review, edit budget, category) to Recovery Arcade surfaces/text.
+
+### Why
+- Eliminates cross-screen theme shifts and ensures the app reads as one cohesive Recovery Arcade HUD.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- Focused on resource and layout references; underlying feature logic remains unchanged.
