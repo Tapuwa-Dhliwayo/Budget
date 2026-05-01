@@ -31,6 +31,12 @@ interface ExpenseDao {
     // Analytics queries
     @Query("SELECT SUM(amount) FROM expenses WHERE date BETWEEN :startDate AND :endDate")
     suspend fun getTotalSpendingForPeriod(startDate: String, endDate: String): Double?
+
+    @Query("SELECT SUM(amount) FROM expenses WHERE isRecurring = 0 AND date BETWEEN :startDate AND :endDate")
+    suspend fun getNonRecurringSpendingForPeriod(startDate: String, endDate: String): Double?
+
+    @Query("SELECT * FROM expenses WHERE isRecurring = 0 AND date BETWEEN :startDate AND :endDate")
+    suspend fun getNonRecurringExpensesForPeriod(startDate: String, endDate: String): List<ExpenseEntity>
     
     @Query("SELECT SUM(amount) FROM expenses WHERE categoryId = :categoryId AND date BETWEEN :startDate AND :endDate")
     suspend fun getCategorySpendingForPeriod(categoryId: Long, startDate: String, endDate: String): Double?

@@ -4,7 +4,7 @@
     android:id="@+id/topAppBar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/teal_700"
+    android:background="@color/surface_panel"
     android:theme="@style/ThemeOverlay.Material3.ActionBar"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dashboard"
-            android:textColor="@android:color/white"
+            android:textColor="@color/ink_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hello, User!"
-            android:textColor="@android:color/white"
+            android:textColor="@color/ink_secondary"
             android:textSize="13sp"
             android:layout_marginTop="2dp" />
     </LinearLayout>

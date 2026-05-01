@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/input_debt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Debt name" />
+
+        <Spinner
+            android:id="@+id/spinner_debt_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/input_debt_starting_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Starting balance"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/input_debt_interest_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Interest rate %"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/input_debt_minimum_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Minimum monthly payment"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/input_debt_due_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Payment due day"
+            android:inputType="number" />
+
+        <Spinner
+            android:id="@+id/spinner_debt_strategy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/checkbox_debt_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Under debt review" />
+
+        <CheckBox
+            android:id="@+id/checkbox_interest_applies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Interest or fees may still apply" />
+
+        <EditText
+            android:id="@+id/input_debt_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Notes"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+    </LinearLayout>
+</ScrollView>

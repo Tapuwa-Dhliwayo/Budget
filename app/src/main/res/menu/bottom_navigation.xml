@@ -13,12 +13,12 @@
         android:title="Categories"
         android:icon="@android:drawable/ic_menu_sort_by_size" />
     <item
-        android:id="@+id/summaryFragment"
-        android:title="Summary"
-        android:icon="@android:drawable/ic_menu_view" />
+        android:id="@+id/debtBossFragment"
+        android:title="Debts"
+        android:icon="@android:drawable/ic_menu_manage" />
 
     <item
-        android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_profile"
-        android:title="Profile" />
+        android:id="@+id/moreFragment"
+        android:icon="@android:drawable/ic_menu_more"
+        android:title="More" />
 </menu>

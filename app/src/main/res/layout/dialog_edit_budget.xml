@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/surface_panel"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -14,12 +15,14 @@
             android:id="@+id/edit_budget_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/ink_primary"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:text="Enter the total amount of money you have available for this month."
         android:textSize="12sp"
+        android:textColor="@color/ink_secondary"
         android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -34,6 +34,7 @@ class ExpenseAdapter(
         private val descriptionText: TextView = itemView.findViewById(R.id.text_description)
         private val categoryText: TextView = itemView.findViewById(R.id.text_category)
         private val dateText: TextView = itemView.findViewById(R.id.text_date)
+        private val recurringText: TextView = itemView.findViewById(R.id.text_recurring)
         private val photoIndicator: ImageView = itemView.findViewById(R.id.icon_photo)
 
         fun bind(expense: ExpenseWithCategory) {
@@ -51,6 +52,7 @@ class ExpenseAdapter(
             }
 
             photoIndicator.visibility = if (expense.photoPath != null) View.VISIBLE else View.GONE
+            recurringText.visibility = if (expense.isRecurring) View.VISIBLE else View.GONE
 
             itemView.setOnClickListener { onExpenseClick(expense) }
             itemView.setOnLongClickListener { onExpenseLongClick(expense) }

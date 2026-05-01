@@ -10,5 +10,6 @@ data class GamificationEntity(
     val longestStreak: Int = 0,
     val lastLoggedDate: String? = null, // YYYY-MM-DD
     val badgesEarned: String = "", // Comma-separated badge IDs
-    val totalExpensesLogged: Int = 0
+    val totalExpensesLogged: Int = 0,
+    val totalXp: Int = 0
 )

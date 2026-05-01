@@ -24,6 +24,7 @@ data class ExpenseEntity(
     val description: String,
     val date: String, // ISO format: YYYY-MM-DD
     val categoryId: Long,
+    val isRecurring: Boolean = false,
     val photoPath: String? = null, // Local file path to receipt photo
     val createdAt: Long = System.currentTimeMillis()
 )

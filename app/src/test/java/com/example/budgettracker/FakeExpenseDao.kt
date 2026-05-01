@@ -54,6 +54,20 @@ class FakeExpenseDao : ExpenseDao {
             .takeIf { it > 0 }
     }
 
+    override suspend fun getNonRecurringSpendingForPeriod(startDate: String, endDate: String): Double? {
+        return expenses
+            .filter { !it.isRecurring && it.date >= startDate && it.date <= endDate }
+            .sumOf { it.amount }
+            .takeIf { it > 0 }
+    }
+
+    override suspend fun getNonRecurringExpensesForPeriod(
+        startDate: String,
+        endDate: String
+    ): List<ExpenseEntity> {
+        return expenses.filter { !it.isRecurring && it.date >= startDate && it.date <= endDate }
+    }
+
     override suspend fun getCategorySpendingForPeriod(
         categoryId: Long,
         startDate: String,

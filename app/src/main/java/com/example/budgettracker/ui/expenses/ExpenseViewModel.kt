@@ -47,6 +47,7 @@ class ExpenseViewModel(
         description: String,
         date: String,
         categoryId: Long,
+        isRecurring: Boolean = false,
         photoPath: String? = null
     ) {
         try {
@@ -55,6 +56,7 @@ class ExpenseViewModel(
                 description = description,
                 date = date,
                 categoryId = categoryId,
+                isRecurring = isRecurring,
                 photoPath = photoPath
             )
 

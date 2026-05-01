@@ -15,6 +15,7 @@ import com.example.budgettracker.data.entity.CategoryEntity
 import com.example.budgettracker.data.repository.CategoryRepository
 import com.example.budgettracker.data.repository.UserProfileRepository
 import com.example.budgettracker.ui.common.configureToolbar
+import com.example.budgettracker.utils.CurrencyUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -50,7 +51,7 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
                     item.findViewById<TextView>(R.id.text_icon).text = category.icon
                     item.findViewById<TextView>(R.id.text_name).text = category.name
                     item.findViewById<TextView>(R.id.text_limit).text =
-                        "Limit: ${category.budgetLimit}"
+                        "Monthly limit: ${CurrencyUtils.format(category.budgetLimit)}"
 
                     item.setOnClickListener {
                         showCategoryDialog(category)

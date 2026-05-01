@@ -46,6 +46,7 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
         val descriptionInput: TextInputEditText = view.findViewById(R.id.input_description)
         val categorySpinner: Spinner = view.findViewById(R.id.spinner_category)
         val dateButton: MaterialButton = view.findViewById(R.id.button_date)
+        val recurringCheckBox: CheckBox = view.findViewById(R.id.checkbox_recurring)
         val saveButton: MaterialButton = view.findViewById(R.id.button_save)
         val cancelButton: MaterialButton = view.findViewById(R.id.button_cancel)
 
@@ -65,6 +66,7 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
                     descriptionInput.setText(it.description)
                     selectedCategoryId = it.categoryId
                     selectedDate = it.date
+                    recurringCheckBox.isChecked = it.isRecurring
                     dateButton.text = formatDateForButton(it.date)
                 }
             }
@@ -93,7 +95,8 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
                                 amount = amount,
                                 description = description,
                                 date = selectedDate,
-                                categoryId = selectedCategoryId
+                                categoryId = selectedCategoryId,
+                                isRecurring = recurringCheckBox.isChecked
                             )
                         } else {
                             val expense = ExpenseEntity(
@@ -101,7 +104,8 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
                                 amount = amount,
                                 description = description,
                                 date = selectedDate,
-                                categoryId = selectedCategoryId
+                                categoryId = selectedCategoryId,
+                                isRecurring = recurringCheckBox.isChecked
                             )
                             viewModel.updateExpense(expense)
                         }

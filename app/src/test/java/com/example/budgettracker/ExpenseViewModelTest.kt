@@ -49,13 +49,15 @@ class ExpenseViewModelTest {
             amount = 450.0,
             description = "Weekly shopping",
             date = "2026-01-29",
-            categoryId = categoryId
+            categoryId = categoryId,
+            isRecurring = true
         )
 
         val expenses = fakeExpenseDao.getAllExpenses()
         assertEquals(1, expenses.size)
         assertEquals(450.0, expenses[0].amount, 0.01)
         assertEquals("Weekly shopping", expenses[0].description)
+        assertTrue(expenses[0].isRecurring)
     }
 
 }

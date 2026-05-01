@@ -4,9 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="16dp"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/surface_panel"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="8dp"
+    app:strokeColor="@color/surface_border"
+    app:strokeWidth="1dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -22,8 +25,8 @@
             android:layout_height="48dp"
             android:gravity="center"
             android:textSize="24sp"
-            android:background="?attr/colorSecondaryContainer"
-            android:textColor="?attr/colorOnSecondaryContainer"
+            android:background="@drawable/bg_expense_icon"
+            android:textColor="@color/ink_primary"
             android:layout_marginEnd="16dp" />
 
         <!-- Description + Meta -->
@@ -37,23 +40,38 @@
                 android:id="@+id/text_description"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface"
+                android:textColor="@color/ink_primary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/text_category"
                 android:textSize="14sp"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="@color/ink_tertiary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/text_date"
                 android:textSize="12sp"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="@color/ink_tertiary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/text_recurring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/bg_expense_badge_recurring"
+                android:text="Recurring"
+                android:textColor="@color/accent_blue"
+                android:textSize="12sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <!-- Amount + Photo -->
@@ -67,7 +85,7 @@
                 android:id="@+id/text_amount"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorError"
+                android:textColor="@color/red_700"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -78,7 +96,7 @@
                 android:layout_marginTop="4dp"
                 android:src="@drawable/ic_photo"
                 android:visibility="gone"
-                app:tint="?attr/colorOnSurfaceVariant" />
+                app:tint="@color/ink_tertiary" />
         </LinearLayout>
 
     </LinearLayout>

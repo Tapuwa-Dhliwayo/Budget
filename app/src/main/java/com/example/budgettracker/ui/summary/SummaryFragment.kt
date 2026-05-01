@@ -70,6 +70,7 @@ class SummaryFragment : Fragment(R.layout.fragment_summary) {
                                             "${CurrencyUtils.format(summary.amount)} " +
                                             "(${PercentageUtils.format(summary.percentage)})"
                                 textSize = 16f
+                                setTextColor(requireContext().getColor(R.color.ink_secondary))
                                 setPadding(0, 8, 0, 8)
                             }
                             categoriesContainer.addView(categoryText)

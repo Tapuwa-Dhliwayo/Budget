@@ -18,9 +18,21 @@ import kotlinx.coroutines.launch
         CategoryEntity::class,
         ExpenseEntity::class,
         GamificationEntity::class,
-        UserProfileEntity::class
+        UserProfileEntity::class,
+        WeeklyAllowanceEntity::class,
+        WeeklyReviewEntity::class,
+        WeeklyCategoryAllowanceEntity::class,
+        WeeklyRecoveryActionEntity::class,
+        DebtEntity::class,
+        DebtPaymentEntity::class,
+        AssetEntity::class,
+        NetWorthSnapshotEntity::class,
+        ExtraIncomeEntity::class,
+        GoalEntity::class,
+        GoalContributionEntity::class,
+        GamificationEventEntity::class
     ],
-    version = 2,
+    version = 11,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -29,6 +41,18 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun expenseDao(): ExpenseDao
     abstract fun gamificationDao(): GamificationDao
     abstract fun userProfileDao(): UserProfileDao
+    abstract fun weeklyAllowanceDao(): WeeklyAllowanceDao
+    abstract fun weeklyReviewDao(): WeeklyReviewDao
+    abstract fun weeklyCategoryAllowanceDao(): WeeklyCategoryAllowanceDao
+    abstract fun weeklyRecoveryActionDao(): WeeklyRecoveryActionDao
+    abstract fun debtDao(): DebtDao
+    abstract fun debtPaymentDao(): DebtPaymentDao
+    abstract fun assetDao(): AssetDao
+    abstract fun netWorthSnapshotDao(): NetWorthSnapshotDao
+    abstract fun extraIncomeDao(): ExtraIncomeDao
+    abstract fun goalDao(): GoalDao
+    abstract fun goalContributionDao(): GoalContributionDao
+    abstract fun gamificationEventDao(): GamificationEventDao
 
     companion object {
         @Volatile
@@ -58,6 +82,244 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE expenses ADD COLUMN isRecurring INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS weekly_allowance (
+                        weekStartDate TEXT PRIMARY KEY NOT NULL,
+                        weekEndDate TEXT NOT NULL,
+                        allowanceAmount REAL NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+            }
+        }
+
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS weekly_review (
+                        weekStartDate TEXT PRIMARY KEY NOT NULL,
+                        weekEndDate TEXT NOT NULL,
+                        wentWell TEXT NOT NULL,
+                        challenge TEXT NOT NULL,
+                        nextWeekAdjustment TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+            }
+        }
+
+        val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS weekly_category_allowance (
+                        weekStartDate TEXT NOT NULL,
+                        weekEndDate TEXT NOT NULL,
+                        categoryId INTEGER NOT NULL,
+                        limitAmount REAL NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        PRIMARY KEY(weekStartDate, categoryId)
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS weekly_recovery_action (
+                        weekStartDate TEXT NOT NULL,
+                        weekEndDate TEXT NOT NULL,
+                        actionText TEXT NOT NULL,
+                        isCompleted INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        PRIMARY KEY(weekStartDate, actionText)
+                    )
+                    """.trimIndent()
+                )
+            }
+        }
+
+        val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS debts (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        name TEXT NOT NULL,
+                        debtType TEXT NOT NULL,
+                        startingBalance REAL NOT NULL,
+                        currentBalance REAL NOT NULL,
+                        interestRate REAL NOT NULL,
+                        minimumPayment REAL NOT NULL,
+                        paymentDueDay INTEGER NOT NULL,
+                        isUnderDebtReview INTEGER NOT NULL,
+                        interestStillApplies INTEGER NOT NULL,
+                        strategy TEXT NOT NULL,
+                        notes TEXT NOT NULL,
+                        createdDate TEXT NOT NULL,
+                        closedDate TEXT
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS debt_payments (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        debtId INTEGER NOT NULL,
+                        amount REAL NOT NULL,
+                        date TEXT NOT NULL,
+                        paymentType TEXT NOT NULL,
+                        notes TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        FOREIGN KEY(debtId) REFERENCES debts(id) ON DELETE CASCADE
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_debt_payments_debtId ON debt_payments(debtId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_debt_payments_date ON debt_payments(date)")
+            }
+        }
+
+        val MIGRATION_7_8 = object : Migration(7, 8) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS assets (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        name TEXT NOT NULL,
+                        assetType TEXT NOT NULL,
+                        currentValue REAL NOT NULL,
+                        notes TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        isActive INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS net_worth_snapshots (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        snapshotDate TEXT NOT NULL,
+                        totalAssets REAL NOT NULL,
+                        totalDebts REAL NOT NULL,
+                        netWorth REAL NOT NULL,
+                        notes TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_assets_isActive ON assets(isActive)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_net_worth_snapshots_snapshotDate ON net_worth_snapshots(snapshotDate)")
+            }
+        }
+
+        val MIGRATION_8_9 = object : Migration(8, 9) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS extra_income (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        source TEXT NOT NULL,
+                        incomeType TEXT NOT NULL,
+                        amount REAL NOT NULL,
+                        dateReceived TEXT NOT NULL,
+                        allocationType TEXT NOT NULL,
+                        linkedDebtId INTEGER,
+                        linkedGoalId INTEGER,
+                        notes TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_extra_income_dateReceived ON extra_income(dateReceived)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_extra_income_allocationType ON extra_income(allocationType)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_extra_income_linkedDebtId ON extra_income(linkedDebtId)")
+            }
+        }
+
+        val MIGRATION_9_10 = object : Migration(9, 10) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS goals (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        name TEXT NOT NULL,
+                        goalType TEXT NOT NULL,
+                        targetAmount REAL NOT NULL,
+                        currentAmount REAL NOT NULL,
+                        targetDate TEXT,
+                        monthlyContributionTarget REAL NOT NULL,
+                        priority TEXT NOT NULL,
+                        healthClassification TEXT NOT NULL,
+                        status TEXT NOT NULL,
+                        notes TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        completedAt TEXT
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS goal_contributions (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        goalId INTEGER NOT NULL,
+                        amount REAL NOT NULL,
+                        contributionDate TEXT NOT NULL,
+                        sourceType TEXT NOT NULL,
+                        linkedExtraIncomeId INTEGER,
+                        notes TEXT NOT NULL,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        FOREIGN KEY(goalId) REFERENCES goals(id) ON DELETE CASCADE
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_goals_status ON goals(status)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_goals_targetDate ON goals(targetDate)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_goals_goalType ON goals(goalType)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_goal_contributions_goalId ON goal_contributions(goalId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_goal_contributions_contributionDate ON goal_contributions(contributionDate)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_goal_contributions_linkedExtraIncomeId ON goal_contributions(linkedExtraIncomeId)")
+            }
+        }
+
+        val MIGRATION_10_11 = object : Migration(10, 11) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE gamification ADD COLUMN totalXp INTEGER NOT NULL DEFAULT 0")
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS gamification_events (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        eventType TEXT NOT NULL,
+                        xpEarned INTEGER NOT NULL,
+                        occurredDate TEXT NOT NULL,
+                        message TEXT NOT NULL,
+                        relatedId INTEGER,
+                        createdAt INTEGER NOT NULL
+                    )
+                    """.trimIndent()
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_gamification_events_eventType ON gamification_events(eventType)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_gamification_events_occurredDate ON gamification_events(occurredDate)")
+            }
+        }
+
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -65,7 +327,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "budget_tracker.db"
                 )
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11)
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)

@@ -30,6 +30,7 @@ class ExpenseRepository(
                     description = expense.description,
                     date = expense.date,
                     photoPath = expense.photoPath,
+                    isRecurring = expense.isRecurring,
                     categoryName = category.name,
                     categoryColor = category.color,
                     categoryIcon = category.icon

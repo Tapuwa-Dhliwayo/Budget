@@ -50,6 +50,13 @@ class AnalyticsRepositoryTest {
                 categoryId = categoryId
             )
         )
+        fakeMonthlyBudgetDao.insertMonth(
+            com.example.budgettracker.data.entity.MonthlyBudgetEntity(
+                monthId = "2026-01",
+                startDate = "2026-01-01",
+                startingFunds = 600.0
+            )
+        )
 
         // Act: Get monthly overview
         val overview = repository.getMonthlyOverview("2026-01")

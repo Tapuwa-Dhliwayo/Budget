@@ -2,6 +2,7 @@ package com.example.budgettracker.ui.dashboard
 
 import com.example.budgettracker.data.model.CategorySpending
 import com.example.budgettracker.data.model.Badge
+import com.example.budgettracker.data.model.WeeklyAllowanceSummary
 
 data class DashboardUiState(
     val isLoading: Boolean = false,
@@ -18,5 +19,7 @@ data class DashboardUiState(
     val dailySpendingTrend: List<Pair<String, Double>> = emptyList(),
     val categoryBreakdown: List<CategorySpending> = emptyList(),
     val previousMonthComparison: String = "",
-    val userName: String = "User"
+    val userName: String = "User",
+    val weeklyAllowance: WeeklyAllowanceSummary? = null,
+    val weeklyAllowanceHistory: List<WeeklyAllowanceSummary> = emptyList()
 )

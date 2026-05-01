@@ -4,6 +4,7 @@ import com.example.budgettracker.data.repository.AnalyticsRepository
 import com.example.budgettracker.data.repository.BudgetRepository
 import com.example.budgettracker.data.repository.GamificationRepository
 import com.example.budgettracker.data.repository.UserProfileRepository
+import com.example.budgettracker.data.repository.WeeklyAllowanceRepository
 import com.example.budgettracker.ui.dashboard.DashboardViewModel
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -33,12 +34,21 @@ class DashboardViewModelTest {
 
         val userProfileDao = FakeUserProfileDao()
         val userProfileRepository = UserProfileRepository(userProfileDao)
+        val weeklyAllowanceRepository = WeeklyAllowanceRepository(
+            weeklyAllowanceDao = FakeWeeklyAllowanceDao(),
+            weeklyReviewDao = FakeWeeklyReviewDao(),
+            weeklyCategoryAllowanceDao = FakeWeeklyCategoryAllowanceDao(),
+            weeklyRecoveryActionDao = FakeWeeklyRecoveryActionDao(),
+            expenseDao = FakeExpenseDao(),
+            categoryDao = FakeCategoryDao()
+        )
 
         val viewModel = DashboardViewModel(
             budgetRepository = budgetRepository,
             analyticsRepository = analyticsRepository,
             gamificationRepository = gamificationRepository,
-            userProfileRepository = userProfileRepository
+            userProfileRepository = userProfileRepository,
+            weeklyAllowanceRepository = weeklyAllowanceRepository
         )
 
         // Act
@@ -55,5 +65,6 @@ class DashboardViewModelTest {
         assertEquals(false, uiState.isLoading)
         assertEquals(null, uiState.error)
         assertEquals("2026-01", uiState.monthId)
+        assertEquals(false, uiState.weeklyAllowance?.allowanceSet)
     }
 }

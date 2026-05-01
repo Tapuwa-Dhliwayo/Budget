@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/input_asset_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Asset name"
+            android:inputType="textCapWords" />
+
+        <Spinner
+            android:id="@+id/spinner_asset_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <EditText
+            android:id="@+id/input_asset_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Current value"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/input_asset_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Notes"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+    </LinearLayout>
+</ScrollView>
