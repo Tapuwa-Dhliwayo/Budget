@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_canvas"
+    android:background="@color/ra_bg"
     android:orientation="vertical">
 
     <ScrollView
@@ -19,10 +19,8 @@
             <!-- Month -->
             <TextView
                 android:id="@+id/text_month"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/ink_primary"
-                android:layout_marginBottom="12dp"
+                style="@style/RaText.ScreenTitle"
+                android:layout_marginBottom="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -31,10 +29,10 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:cardBackgroundColor="@color/surface_panel"
-                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/ra_surface_card"
+                app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/surface_border"
+                app:strokeColor="@color/ra_border"
                 app:strokeWidth="1dp">
 
                 <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -43,8 +41,8 @@
                     android:layout_height="200dp"
                     app:indicatorSize="200dp"
                     app:trackThickness="12dp"
-                    app:indicatorColor="@color/accent_blue"
-                    app:trackColor="@color/gray_light"
+                    app:indicatorColor="@color/ra_primary"
+                    app:trackColor="@color/ra_surface_elevated"
                     android:layout_gravity="center_horizontal" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -54,7 +52,7 @@
                 android:layout_marginTop="12dp"
                 android:textAlignment="center"
                 android:textSize="16sp"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -75,16 +73,16 @@
                 android:layout_marginTop="16dp"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:textColor="@color/ink_secondary" />
+                android:textColor="@color/ra_text_muted" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/surface_panel"
-                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/ra_surface_card"
+                app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/surface_border"
+                app:strokeColor="@color/ra_border"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -97,24 +95,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Weekly Allowance"
-                        android:textColor="@color/ink_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        style="@style/RaText.SectionTitle"
+                        android:textAllCaps="false" />
 
                     <TextView
                         android:id="@+id/text_weekly_allowance_summary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/ink_primary"
-                        android:textSize="16sp" />
+                        android:textColor="@color/ra_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/text_weekly_allowance_guidance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/ink_secondary"
+                        android:textColor="@color/ra_text_muted"
                         android:textSize="14sp" />
 
                     <TextView
@@ -122,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/ink_secondary"
+                        android:textColor="@color/ra_text_muted"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -137,7 +135,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/ink_secondary"
+                        android:textColor="@color/ra_text_muted"
                         android:textSize="14sp" />
 
                     <TextView
@@ -145,7 +143,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:textColor="@color/ink_tertiary"
+                        android:textColor="@color/ra_text_subtle"
                         android:textSize="13sp" />
 
                     <LinearLayout
@@ -156,14 +154,14 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_weekly_review"
-                            style="@style/Widget.Material3.Button.TextButton"
+                            style="@style/RaButton.Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Complete Review" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_weekly_summary"
-                            style="@style/Widget.Material3.Button.TextButton"
+                            style="@style/RaButton.Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -179,14 +177,14 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_weekly_category_limits"
-                            style="@style/Widget.Material3.Button.TextButton"
+                            style="@style/RaButton.Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Category Limits" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_edit_weekly_allowance"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        style="@style/RaButton.Outlined"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -197,10 +195,9 @@
 
             <!-- ✅ Daily Spending Trend -->
             <TextView
-                android:text="Daily Spending (Last 7 Days)"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/ink_primary"
+                android:text="Recovery Trend"
+                style="@style/RaText.SectionTitle"
+                android:textAllCaps="false"
                 android:layout_marginTop="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -214,10 +211,9 @@
 
             <!-- ✅ Category Breakdown -->
             <TextView
-                android:text="Category Breakdown"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/ink_primary"
+                android:text="Spending Damage"
+                style="@style/RaText.SectionTitle"
+                android:textAllCaps="false"
                 android:layout_marginTop="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -232,19 +228,18 @@
             <!-- Top Categories -->
             <TextView
                 android:id="@+id/text_top_categories"
-                android:text="Top Categories"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/ink_primary"
+                android:text="Category Pressure"
+                style="@style/RaText.SectionTitle"
+                android:textAllCaps="false"
                 android:layout_marginTop="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/text_empty_categories"
-                android:text="No expenses yet"
+                android:text="No activity logged yet. Start today’s run by adding your first spend."
                 android:visibility="gone"
-                android:textColor="@color/ink_secondary"
+                android:textColor="@color/ra_text_muted"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

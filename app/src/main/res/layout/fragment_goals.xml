@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_canvas">
+    android:background="@color/ra_bg">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_expense_filter_panel"
                 android:padding="16dp"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 android:textSize="16sp" />
 
             <TextView
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:text="No goals yet. Create one when you are ready to plan a future need without losing sight of recovery."
-                android:textColor="@color/ink_secondary"
+                android:textColor="@color/ra_text_muted"
                 android:textSize="14sp"
                 android:visibility="gone" />
 
@@ -39,10 +39,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="Active goals"
-                android:textColor="@color/ink_primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:text="Resource Vault (Active)"
+                style="@style/RaText.SectionTitle"
+                android:textAllCaps="false" />
 
             <LinearLayout
                 android:id="@+id/layout_active_goals"
@@ -54,10 +53,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="Completed goals"
-                android:textColor="@color/ink_primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:text="Completed Vaults"
+                style="@style/RaText.SectionTitle"
+                android:textAllCaps="false" />
 
             <LinearLayout
                 android:id="@+id/layout_completed_goals"

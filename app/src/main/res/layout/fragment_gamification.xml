@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_canvas"
+    android:background="@color/ra_bg"
     android:padding="16dp">
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_expense_filter_panel"
             android:padding="16dp"
-            android:textColor="@color/ink_primary"
+            android:textColor="@color/ra_text"
             android:textSize="16sp" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -25,16 +25,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:trackColor="@color/surface_border" />
+            app:indicatorColor="@color/ra_primary"
+            app:trackColor="@color/ra_surface_elevated" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="Badges"
-            android:textColor="@color/ink_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            style="@style/RaText.SectionTitle"
+            android:textAllCaps="false" />
 
         <LinearLayout
             android:id="@+id/layout_recovery_badges"
@@ -50,9 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="Recent XP"
-            android:textColor="@color/ink_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            style="@style/RaText.SectionTitle"
+            android:textAllCaps="false" />
 
         <TextView
             android:id="@+id/text_empty_recovery_events"
@@ -60,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="No XP events yet. Useful recovery actions will appear here."
-            android:textColor="@color/ink_secondary"
+            android:textColor="@color/ra_text_muted"
             android:textSize="14sp"
             android:visibility="gone" />
 

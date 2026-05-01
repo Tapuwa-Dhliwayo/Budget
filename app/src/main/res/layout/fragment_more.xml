@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_canvas"
+    android:background="@color/ra_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,16 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Planning and review"
-            android:textColor="@color/ink_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            style="@style/RaText.SectionTitle"
+            android:textAllCaps="false" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Review progress, check patterns, and manage your local profile."
-            android:textColor="@color/ink_secondary"
+            android:textColor="@color/ra_text_muted"
             android:textSize="14sp" />
 
         <LinearLayout
@@ -38,93 +37,93 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_summary"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:gravity="center_vertical"
                 android:text="Monthly summary"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@android:drawable/ic_menu_month"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_weekly_review"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Weekly review"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@android:drawable/ic_menu_agenda"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_analytics"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Analytics"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@android:drawable/ic_menu_sort_by_size"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_net_worth"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Net worth"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@android:drawable/ic_menu_compass"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_extra_income"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Extra income"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@android:drawable/ic_menu_upload"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_goals"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Goals"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@android:drawable/ic_menu_myplaces"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_recovery_progress"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Recovery progress"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@android:drawable/ic_menu_upload"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
         </LinearLayout>
 
         <TextView
@@ -132,9 +131,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="Account and app"
-            android:textColor="@color/ink_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            style="@style/RaText.SectionTitle"
+            android:textAllCaps="false" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,28 +144,28 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_profile"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:gravity="center_vertical"
                 android:text="Profile"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@drawable/ic_profile"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_data_ownership"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/RaButton.Outlined"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Data ownership"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 app:icon="@android:drawable/ic_menu_save"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ink_secondary" />
+                app:iconTint="@color/ra_text_muted" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

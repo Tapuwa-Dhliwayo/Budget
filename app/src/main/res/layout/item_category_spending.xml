@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    app:cardBackgroundColor="@color/surface_panel"
+    app:cardBackgroundColor="@color/ra_surface_card"
     app:cardElevation="0dp"
-    app:strokeColor="@color/surface_border"
+    app:strokeColor="@color/ra_border"
     app:strokeWidth="1dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:textSize="20sp"
             android:gravity="center"
             android:background="@drawable/bg_expense_icon"
-            android:textColor="@color/ink_primary"
+            android:textColor="@color/ra_text"
             android:layout_marginEnd="12dp" />
 
         <LinearLayout
@@ -40,7 +40,7 @@
                 android:text="Groceries"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 android:layout_marginBottom="4dp" />
 
             <ProgressBar
@@ -50,7 +50,7 @@
                 android:layout_height="8dp"
                 android:max="100"
                 android:progress="75"
-                android:progressTint="@color/budget_good"
+                android:progressTint="@color/ra_primary"
                 android:layout_marginBottom="4dp" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="R450 / R600"
                 android:textSize="14sp"
-                android:textColor="@color/ink_secondary"
+                android:textColor="@color/ra_text_muted"
                 android:layout_marginBottom="2dp" />
 
             <TextView

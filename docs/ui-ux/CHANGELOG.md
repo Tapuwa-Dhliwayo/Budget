@@ -1,0 +1,141 @@
+# UI/UX Changelog
+
+## 2026-05-01 — UI/UX Audit + Token Baseline
+
+### Changed
+- Added a baseline UI audit document.
+- Documented the Recovery Arcade token palette and component sizing guidance.
+
+### Why
+- Establishes a single visual identity target before screen-by-screen styling.
+- Creates a reference for consistent colors/shape/spacing.
+
+### Tests
+- None (documentation only).
+
+### Notes
+- Build/tests cannot currently be executed in this environment due to missing access to Google Maven/AGP artifacts.
+
+## 2026-05-01 — Recovery Arcade Theme Foundations (App + Dashboard)
+
+### Changed
+- Added Recovery Arcade color tokens to Android resources.
+- Added base Recovery Arcade theme (`Theme.BudgetTracker.RecoveryArcade`) and set `Theme.BudgetTracker` to inherit from it.
+- Updated `activity_main.xml` surfaces for toolbar + bottom nav to match the dark “Recovery Arcade” background.
+- Updated `fragment_dashboard.xml` to use Recovery Arcade surfaces, section typography, and supportive empty-state copy.
+
+### Why
+- Establishes a single cohesive visual system (dark HUD-like surfaces, high contrast text) before restyling other screens.
+- Dashboard sets the tone for “recovery command center” language (trend + damage + pressure).
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- No functional logic was changed; layout + theme resources only.
+
+## 2026-05-01 — Recovery Arcade Pass (Expenses + Categories)
+
+### Changed
+- Updated Expenses list and Category list backgrounds to the Recovery Arcade dark canvas.
+- Restyled expense/category rows to use the Recovery Arcade card surface, border, and text colors.
+- Updated filter panels and recurring badges to match the same surface + border language.
+
+### Why
+- Expenses and Categories are high-traffic screens; they must feel cohesive with the new dashboard theme.
+- Reduces “light theme leftovers” that made screens feel disconnected.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- No screen logic changed; layout/drawables only.
+
+## 2026-05-01 — Recovery Arcade Pass (Debt + Goals)
+
+### Changed
+- Updated Debt Boss and Goals screens to the Recovery Arcade canvas and text palette.
+- Adjusted Goals section naming to align with Recovery Arcade language (Resource Vault).
+
+### Why
+- Debt and Goals are core “recovery loop” motivators; they should feel cohesive with the dashboard HUD aesthetic.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- This pass is layout-only; no repository/model logic was changed.
+
+## 2026-05-01 — Recovery Arcade Pass (Analytics + More)
+
+### Changed
+- Updated Analytics screen header, summary card surfaces, and empty state copy to match Recovery Arcade.
+- Updated Analytics category spending rows to match Recovery Arcade card surface + text colors.
+- Updated More screen canvas + section headers + button text/icon colors for consistent dark HUD styling.
+
+### Why
+- Analytics and More act as navigation + insight hubs; they must match the same visual language to avoid “screen-to-screen theme shifts”.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- This pass is layout-only.
+
+## 2026-05-01 — Recovery Arcade Cleanup (Removing Light Theme Leftovers)
+
+### Changed
+- Converted remaining screens (Data Ownership, Extra Income, Gamification, Profile, Net Worth, Add Expense, Expenses list panels) to Recovery Arcade background and text palette.
+- Updated shared fragment header toolbar to Recovery Arcade surfaces/text.
+- Updated key dialogs (weekly allowance/review, edit budget, category) to Recovery Arcade surfaces/text.
+
+### Why
+- Eliminates cross-screen theme shifts and ensures the app reads as one cohesive Recovery Arcade HUD.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- Focused on resource and layout references; underlying feature logic remains unchanged.
+
+## 2026-05-01 — Recovery Arcade Component Unification (Buttons + Forms)
+
+### Changed
+- Added Recovery Arcade component styles for buttons (`RaButton.*`) and applied them across high-traffic screens.
+- Added Recovery Arcade TextInput styles to improve contrast (outlined stroke + hint colors) on dark surfaces.
+
+### Why
+- Prevents “random Material defaults” from appearing across dialogs and forms.
+- Makes outlined/text buttons consistent and readable on dark surfaces.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- This pass is primarily theme/styles; it should not alter existing flows.
+
+## 2026-05-01 — Recovery Arcade Component Unification (FAB + Progress)
+
+### Changed
+- Added a Recovery Arcade FAB style (`RaFab`) and applied it via theme so all screens use consistent primary-blue FABs.
+- Normalized the Recovery Level progress indicator to use `ra_primary` on dark track.
+
+### Why
+- Keeps primary actions (FABs) visually consistent and easy to spot.
+- Ensures progress indicators match the Recovery Arcade palette.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+## 2026-05-01 — Recovery Arcade Finish (Normalization + Agent Guidance)
+
+### Changed
+- Normalized Analytics category progress bars to use `ra_primary` (general progress, not budget-status).
+- Added a concise style summary for future changes.
+- Updated `AGENTS.md` to require reading `docs/UI_UX_Guideline.md` for any UI/UX work.
+
+### Why
+- Locks in consistent HUD-style visuals and prevents agents from reintroducing light-theme tokens.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).

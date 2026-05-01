@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_canvas"
+    android:background="@color/ra_bg"
     android:orientation="vertical">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -33,7 +33,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/filter_all"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        style="@style/RaButton.Outlined"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -42,7 +42,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/filter_day"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        style="@style/RaButton.Outlined"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -51,7 +51,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/filter_week"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        style="@style/RaButton.Outlined"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -60,7 +60,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/filter_recurring"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        style="@style/RaButton.Outlined"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -78,7 +78,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_previous_period"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        style="@style/RaButton.Outlined"
                         android:layout_width="44dp"
                         android:layout_height="40dp"
                         android:text="&lt;"
@@ -86,7 +86,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_period"
-                        style="@style/Widget.Material3.Button.TextButton"
+                        style="@style/RaButton.Text"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -94,7 +94,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_next_period"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        style="@style/RaButton.Outlined"
                         android:layout_width="44dp"
                         android:layout_height="40dp"
                         android:text="&gt;"
@@ -122,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Total"
-                        android:textColor="@color/ink_secondary"
+                        android:textColor="@color/ra_text_muted"
                         android:textSize="12sp" />
 
                     <TextView
@@ -130,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="R0.00"
-                        android:textColor="@color/ink_primary"
+                        android:textColor="@color/ra_text"
                         android:textSize="22sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -147,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0 expenses"
-                        android:textColor="@color/ink_primary"
+                        android:textColor="@color/ra_text"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -156,17 +156,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="R0 monthly"
-                        android:textColor="@color/ink_secondary"
+                        android:textColor="@color/ra_text_muted"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/text_empty_expenses"
-                android:text="No expenses found"
+                android:text="No activity logged yet. Add your first spend to start this run."
                 android:visibility="gone"
                 android:textSize="16sp"
                 android:layout_marginTop="24dp"
+                android:textColor="@color/ra_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -192,7 +193,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_previous_page"
-                    style="@style/Widget.Material3.Button.TextButton"
+                    style="@style/RaButton.Text"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Previous" />
@@ -204,12 +205,12 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Page 1 of 1"
-                    android:textColor="@color/ink_secondary"
+                    android:textColor="@color/ra_text_muted"
                     android:textSize="12sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_next_page"
-                    style="@style/Widget.Material3.Button.TextButton"
+                    style="@style/RaButton.Text"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Next" />

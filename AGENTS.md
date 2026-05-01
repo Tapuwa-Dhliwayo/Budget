@@ -19,6 +19,11 @@ Current task docs:
 - Style direction / revamp work: `docs/STYLE_REVAMP_PLAN.md`
 - General improvement history: `docs/BUDGET_APP_IMPROVEMENT_PLAN.md`
 
+UI/UX work (styling, layout, copy tone on screens):
+
+- Always read `docs/UI_UX_Guideline.md` before making UI changes.
+- Use `docs/ui-ux/STYLE_SUMMARY.md` to match the current in-code Recovery Arcade tokens/styles.
+
 Some docs may refer to paths under `docs/mini-budget/`. In this repository, use the matching file directly under `docs/` unless the docs are later moved into that subfolder.
 
 ## Task 02 Rule

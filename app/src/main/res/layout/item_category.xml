@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="@color/surface_panel"
-    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@color/ra_surface_card"
+    app:cardCornerRadius="24dp"
     app:cardElevation="0dp"
-    app:strokeColor="@color/surface_border"
+    app:strokeColor="@color/ra_border"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:textSize="24sp"
             android:gravity="center"
             android:background="@drawable/bg_expense_icon"
-            android:textColor="@color/ink_primary"
+            android:textColor="@color/ra_text"
             android:layout_width="48dp"
             android:layout_height="48dp" />
 
@@ -37,14 +37,14 @@
                 android:id="@+id/text_name"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/text_limit"
                 android:textSize="14sp"
-                android:textColor="@color/ink_secondary"
+                android:textColor="@color/ra_text_muted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

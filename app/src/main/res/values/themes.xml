@@ -13,5 +13,42 @@
         <item name="android:windowBackground">@color/surface_canvas</item>
     </style>
 
-    <style name="Theme.BudgetTracker" parent="Base.Theme.BudgetTracker" />
+    <!-- Recovery Arcade theme (single style direction; no theme switching) -->
+    <style name="Theme.BudgetTracker.RecoveryArcade" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+
+        <!-- System bars: light icons on dark background -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+
+        <!-- Material color roles -->
+        <item name="colorPrimary">@color/ra_primary</item>
+        <item name="colorOnPrimary">@color/ra_bg</item>
+        <item name="colorSecondary">@color/ra_primary_soft</item>
+        <item name="colorOnSecondary">@color/ra_bg</item>
+        <item name="colorSurface">@color/ra_surface_card</item>
+        <item name="colorOnSurface">@color/ra_text</item>
+        <item name="android:colorBackground">@color/ra_bg</item>
+        <item name="android:windowBackground">@color/ra_bg</item>
+
+        <!-- Typography defaults -->
+        <item name="android:textColorPrimary">@color/ra_text</item>
+        <item name="android:textColorSecondary">@color/ra_text_muted</item>
+
+        <!-- Components: make forms/buttons readable on dark surfaces -->
+        <item name="colorOutline">@color/ra_border</item>
+        <item name="colorOutlineVariant">@color/ra_border</item>
+
+        <item name="colorError">@color/ra_danger</item>
+        <item name="colorOnError">@color/ra_bg</item>
+
+        <!-- Text fields -->
+        <item name="textInputStyle">@style/RaTextInputLayout</item>
+        <item name="editTextStyle">@style/RaEditText</item>
+
+        <!-- FAB -->
+        <item name="floatingActionButtonStyle">@style/RaFab</item>
+    </style>
+
+    <style name="Theme.BudgetTracker" parent="Theme.BudgetTracker.RecoveryArcade" />
 </resources>
