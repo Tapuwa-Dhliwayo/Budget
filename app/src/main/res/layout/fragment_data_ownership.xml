@@ -31,7 +31,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_create_local_backup"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="@style/RaButton.Outlined"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="14dp"

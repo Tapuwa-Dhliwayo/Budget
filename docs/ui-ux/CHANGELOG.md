@@ -97,3 +97,19 @@
 
 ### Notes
 - Focused on resource and layout references; underlying feature logic remains unchanged.
+
+## 2026-05-01 — Recovery Arcade Component Unification (Buttons + Forms)
+
+### Changed
+- Added Recovery Arcade component styles for buttons (`RaButton.*`) and applied them across high-traffic screens.
+- Added Recovery Arcade TextInput styles to improve contrast (outlined stroke + hint colors) on dark surfaces.
+
+### Why
+- Prevents “random Material defaults” from appearing across dialogs and forms.
+- Makes outlined/text buttons consistent and readable on dark surfaces.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- This pass is primarily theme/styles; it should not alter existing flows.

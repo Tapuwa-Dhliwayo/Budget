@@ -34,6 +34,17 @@
         <!-- Typography defaults -->
         <item name="android:textColorPrimary">@color/ra_text</item>
         <item name="android:textColorSecondary">@color/ra_text_muted</item>
+
+        <!-- Components: make forms/buttons readable on dark surfaces -->
+        <item name="colorOutline">@color/ra_border</item>
+        <item name="colorOutlineVariant">@color/ra_border</item>
+
+        <item name="colorError">@color/ra_danger</item>
+        <item name="colorOnError">@color/ra_bg</item>
+
+        <!-- Text fields -->
+        <item name="textInputStyle">@style/RaTextInputLayout</item>
+        <item name="editTextStyle">@style/RaEditText</item>
     </style>
 
     <style name="Theme.BudgetTracker" parent="Theme.BudgetTracker.RecoveryArcade" />
