@@ -33,3 +33,20 @@
 
 ### Notes
 - No functional logic was changed; layout + theme resources only.
+
+## 2026-05-01 — Recovery Arcade Pass (Expenses + Categories)
+
+### Changed
+- Updated Expenses list and Category list backgrounds to the Recovery Arcade dark canvas.
+- Restyled expense/category rows to use the Recovery Arcade card surface, border, and text colors.
+- Updated filter panels and recurring badges to match the same surface + border language.
+
+### Why
+- Expenses and Categories are high-traffic screens; they must feel cohesive with the new dashboard theme.
+- Reduces “light theme leftovers” that made screens feel disconnected.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- No screen logic changed; layout/drawables only.
