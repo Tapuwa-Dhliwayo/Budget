@@ -65,3 +65,19 @@
 
 ### Notes
 - This pass is layout-only; no repository/model logic was changed.
+
+## 2026-05-01 — Recovery Arcade Pass (Analytics + More)
+
+### Changed
+- Updated Analytics screen header, summary card surfaces, and empty state copy to match Recovery Arcade.
+- Updated Analytics category spending rows to match Recovery Arcade card surface + text colors.
+- Updated More screen canvas + section headers + button text/icon colors for consistent dark HUD styling.
+
+### Why
+- Analytics and More act as navigation + insight hubs; they must match the same visual language to avoid “screen-to-screen theme shifts”.
+
+### Tests
+- Not run in this environment (Gradle dependency resolution blocked).
+
+### Notes
+- This pass is layout-only.

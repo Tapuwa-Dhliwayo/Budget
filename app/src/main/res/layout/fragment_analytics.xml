@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_canvas"
+    android:background="@color/ra_bg"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -11,27 +11,25 @@
         android:id="@+id/text_analytics_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Spending analytics"
-        android:textColor="@color/ink_primary"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:text="Spending Damage"
+        style="@style/RaText.ScreenTitle" />
 
     <TextView
         android:id="@+id/text_analytics_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Understand where your budget is going"
-        android:textColor="@color/ink_secondary" />
+        android:text="See which categories are causing pressure this run"
+        android:textColor="@color/ra_text_muted" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:cardBackgroundColor="@color/surface_panel"
-        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/ra_surface_card"
+        app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
-        app:strokeColor="@color/surface_border"
+        app:strokeColor="@color/ra_border"
         app:strokeWidth="1dp">
 
         <LinearLayout
@@ -45,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textColor="@color/ink_primary"
+                android:textColor="@color/ra_text"
                 android:textSize="18sp" />
 
             <TextView
@@ -53,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/ink_secondary"
+                android:textColor="@color/ra_text_muted"
                 android:textSize="14sp" />
 
             <TextView
@@ -61,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/ink_secondary"
+                android:textColor="@color/ra_text_muted"
                 android:textSize="14sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -77,8 +75,8 @@
         android:id="@+id/text_empty_analytics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No spending data yet. Add expenses to generate analytics."
-        android:textColor="@color/ink_secondary"
+        android:text="No activity logged yet. Add a spend to generate damage stats."
+        android:textColor="@color/ra_text_muted"
         android:gravity="center"
         android:visibility="gone"
         android:padding="12dp" />
