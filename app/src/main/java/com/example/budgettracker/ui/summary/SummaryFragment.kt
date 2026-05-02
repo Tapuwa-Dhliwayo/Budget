@@ -55,23 +55,27 @@ class SummaryFragment : Fragment(R.layout.fragment_summary) {
                             monthText.text =
                                 DateUtils.getMonthName(overview.monthId)
                             totalSpentText.text =
-                                "Total Spent: ${CurrencyUtils.format(overview.totalSpent)}"
+                                "Damage logged: ${CurrencyUtils.format(overview.totalSpent)}"
                             totalBudgetText.text =
-                                "Budget: ${CurrencyUtils.format(overview.totalBudget)}"
+                                "Shield strength: ${CurrencyUtils.format(overview.totalBudget)}"
                             remainingText.text =
-                                "Remaining: ${CurrencyUtils.format(overview.remaining)}"
+                                "Safe spend remaining: ${CurrencyUtils.format(overview.remaining)}"
                         }
 
                         categoriesContainer.removeAllViews()
-                        state.categorySummaries.forEach { summary ->
+                        state.categorySummaries.forEachIndexed { index, summary ->
                             val categoryText = TextView(requireContext()).apply {
                                 text =
-                                    "${summary.categoryIcon} ${summary.categoryName}: " +
-                                            "${CurrencyUtils.format(summary.amount)} " +
-                                            "(${PercentageUtils.format(summary.percentage)})"
-                                textSize = 16f
-                                setTextColor(requireContext().getColor(R.color.ink_secondary))
-                                setPadding(0, 8, 0, 8)
+                                    "#${index + 1}  ${summary.categoryIcon} ${summary.categoryName}\n" +
+                                            "${CurrencyUtils.format(summary.amount)} damage · ${PercentageUtils.format(summary.percentage)} of scan"
+                                textSize = 14f
+                                setTextColor(requireContext().getColor(R.color.ra_text_muted))
+                                setBackgroundResource(R.drawable.ra_inner_panel_bg)
+                                setPadding(dp(14), dp(10), dp(14), dp(10))
+                                layoutParams = LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                ).apply { setMargins(0, 0, 0, dp(10)) }
                             }
                             categoriesContainer.addView(categoryText)
                         }
@@ -85,12 +89,18 @@ class SummaryFragment : Fragment(R.layout.fragment_summary) {
                             .joinToString("\n")
 
                         topCategoriesText.text = topText
+                        topCategoriesText.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+                        topCategoriesText.setPadding(dp(14), dp(10), dp(14), dp(10))
 
                         state.gamificationStatus?.let { gamification ->
                             streakText.text =
-                                "Current Streak: ${gamification.currentStreak} days 🔥"
+                                "Current streak: ${gamification.currentStreak} days"
+                            streakText.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+                            streakText.setPadding(dp(14), dp(10), dp(14), dp(10))
                             badgesText.text =
-                                "Badges Earned: ${gamification.badgesEarned.size}"
+                                "Badges earned: ${gamification.badgesEarned.size}"
+                            badgesText.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+                            badgesText.setPadding(dp(14), dp(10), dp(14), dp(10))
                         }
                     }
                 }
@@ -110,10 +120,14 @@ class SummaryFragment : Fragment(R.layout.fragment_summary) {
             val user = userRepo.getOrCreateUser()
 
             configureToolbar(
-                title = "Summary",
-                subtitle = "Hello, ${user.firstName}!",
+                title = "Monthly Intel",
+                subtitle = "A clear scan of this month’s recovery run, ${user.firstName}.",
                 menuRes = null
             )
         }
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 }

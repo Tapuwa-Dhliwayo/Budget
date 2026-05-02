@@ -43,7 +43,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     if (state.saveSuccess) {
                         Toast.makeText(
                             requireContext(),
-                            "Profile updated successfully!",
+                            "Pilot profile saved.",
                             Toast.LENGTH_SHORT
                         ).show()
 
@@ -69,7 +69,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             if (firstName.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
-                    "First name cannot be empty",
+                    "Add a first name for your pilot profile.",
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -96,7 +96,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onResume()
 
         configureToolbar(
-            title = "Profile",
+            title = "Pilot Profile",
             subtitle = null,
             menuRes = null
         )
@@ -105,7 +105,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun showExitConfirmation() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Exit App")
-            .setMessage("Are you sure you want to exit MiniBudget Tracker?")
+            .setMessage("Exit Mini Budget? Your local recovery data stays on this device.")
             .setPositiveButton("Exit") { _, _ ->
                 requireActivity().finishAffinity()
             }

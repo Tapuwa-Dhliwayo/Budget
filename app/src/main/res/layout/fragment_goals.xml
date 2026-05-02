@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:text="No goals yet. Create one when you are ready to plan a future need without losing sight of recovery."
+                android:text="No vaults yet. Create one when you are ready to plan a future need without losing sight of recovery."
                 android:textColor="@color/ra_text_muted"
                 android:textSize="14sp"
                 android:visibility="gone" />
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="Resource Vault (Active)"
+                android:text="Active Resource Vaults"
                 style="@style/RaText.SectionTitle"
                 android:textAllCaps="false" />
 

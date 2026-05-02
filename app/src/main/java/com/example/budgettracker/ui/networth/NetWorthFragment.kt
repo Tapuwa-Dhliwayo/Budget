@@ -64,8 +64,8 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
     override fun onResume() {
         super.onResume()
         configureToolbar(
-            title = "Net Worth",
-            subtitle = "Assets minus debts",
+            title = "Net Worth Meter",
+            subtitle = "Assets minus debt boss HP",
             menuRes = null
         )
         viewModel.load()
@@ -84,11 +84,13 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
             "\nAsset movement: $prefix${CurrencyUtils.format(it)}"
         }.orEmpty()
 
-        textView.text = "Current Net Worth\n" +
+        textView.text = "Current Net Worth Meter\n" +
                 "${CurrencyUtils.format(summary.currentNetWorth)}\n" +
                 "Assets: ${CurrencyUtils.format(summary.totalAssets)} · Debts: ${CurrencyUtils.format(summary.totalDebts)}" +
                 movement + assetMovement + debtMovement + "\n\n" +
                 summary.guidance
+        textView.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+        textView.setPadding(dp(14), dp(12), dp(14), dp(12))
     }
 
     private fun renderAssets(
@@ -118,7 +120,7 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
     private fun createAssetCard(asset: FinancialAsset): View {
         val card = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(18, 16, 18, 16)
+            setPadding(dp(18), dp(16), dp(18), dp(16))
             setBackgroundResource(R.drawable.bg_expense_filter_panel)
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -128,22 +130,31 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
             }
         }
         card.addView(TextView(requireContext()).apply {
+            text = "ASSET SCAN"
+            textSize = 10f
+            setTextColor(requireContext().getColor(R.color.ra_success))
+            setBackgroundResource(R.drawable.ra_chip_bg)
+            setPadding(dp(9), dp(4), dp(9), dp(4))
+            setTypeface(typeface, android.graphics.Typeface.BOLD)
+        })
+        card.addView(TextView(requireContext()).apply {
             text = "${asset.name} · ${asset.assetType.label}"
             textSize = 17f
-            setTextColor(requireContext().getColor(R.color.ink_primary))
+            setPadding(0, dp(8), 0, 0)
+            setTextColor(requireContext().getColor(R.color.ra_text))
             setTypeface(typeface, android.graphics.Typeface.BOLD)
         })
         card.addView(TextView(requireContext()).apply {
             text = CurrencyUtils.format(asset.currentValue)
-            textSize = 22f
-            setTextColor(requireContext().getColor(R.color.ink_primary))
+            textSize = 26f
+            setTextColor(requireContext().getColor(R.color.ra_success))
             setTypeface(typeface, android.graphics.Typeface.BOLD)
         })
         if (asset.notes.isNotBlank()) {
             card.addView(simpleText(asset.notes))
         }
         card.addView(MaterialButton(requireContext()).apply {
-            text = "Update value"
+            text = "Update Scan"
             setOnClickListener { showAssetDialog(asset) }
         })
         return card
@@ -153,8 +164,9 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
         return TextView(requireContext()).apply {
             text = textValue
             textSize = 14f
-            setTextColor(requireContext().getColor(R.color.ink_secondary))
-            setPadding(0, 8, 0, 8)
+            setTextColor(requireContext().getColor(R.color.ra_text_muted))
+            setBackgroundResource(R.drawable.ra_inner_panel_bg)
+            setPadding(dp(14), dp(10), dp(14), dp(10))
         }
     }
 
@@ -176,7 +188,7 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
         }
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(if (asset == null) "Add Asset" else "Update Asset Value")
+            .setTitle(if (asset == null) "Add Asset" else "Update Asset Scan")
             .setView(view)
             .setPositiveButton("Save") { _, _ ->
                 val amount = value.text.toString().toDoubleOrNull() ?: 0.0
@@ -203,7 +215,7 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
         val view = layoutInflater.inflate(R.layout.dialog_net_worth_snapshot, null)
         val notes = view.findViewById<EditText>(R.id.input_snapshot_notes)
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Save Net Worth Snapshot")
+            .setTitle("Save Net Worth Scan")
             .setMessage("This records today’s assets, debts, and net worth so future months can show real movement.")
             .setView(view)
             .setPositiveButton("Save") { _, _ ->
@@ -217,5 +229,9 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 }

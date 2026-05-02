@@ -42,28 +42,27 @@ class CategorySpendingAdapter :
             val progress = spending.percentageUsed.coerceIn(0.0, 100.0).toInt()
             progressBar.progress = progress
 
-            // Color code progress bar
             val progressColor = when {
-                spending.isOverBudget -> ContextCompat.getColor(itemView.context, R.color.budget_over)
-                spending.percentageUsed >= 80 -> ContextCompat.getColor(itemView.context, R.color.budget_warning)
-                else -> ContextCompat.getColor(itemView.context, R.color.budget_good)
+                spending.isOverBudget -> ContextCompat.getColor(itemView.context, R.color.ra_danger)
+                spending.percentageUsed >= 80 -> ContextCompat.getColor(itemView.context, R.color.ra_warning)
+                else -> ContextCompat.getColor(itemView.context, R.color.ra_success)
             }
             progressBar.progressTintList = android.content.res.ColorStateList.valueOf(progressColor)
 
-            spentText.text = "${CurrencyUtils.format(spending.totalSpent)} / ${CurrencyUtils.format(spending.budgetLimit)}"
+            spentText.text = "${CurrencyUtils.format(spending.totalSpent)} / ${CurrencyUtils.format(spending.budgetLimit)} shield"
 
             statusText.text = when {
                 spending.isOverBudget -> {
-                    statusText.setTextColor(ContextCompat.getColor(itemView.context, R.color.budget_over))
-                    "⚠️ ${CurrencyUtils.format(-spending.remaining)} over budget"
+                    statusText.setTextColor(ContextCompat.getColor(itemView.context, R.color.ra_danger))
+                    "${CurrencyUtils.format(-spending.remaining)} shield breach"
                 }
                 spending.remaining > 0 -> {
-                    statusText.setTextColor(ContextCompat.getColor(itemView.context, R.color.budget_good))
-                    "${PercentageUtils.formatWhole(spending.percentageUsed)} used · ${CurrencyUtils.format(spending.remaining)} remaining"
+                    statusText.setTextColor(ContextCompat.getColor(itemView.context, R.color.ra_success))
+                    "${PercentageUtils.formatWhole(spending.percentageUsed)} used · ${CurrencyUtils.format(spending.remaining)} shield strength"
                 }
                 else -> {
-                    statusText.setTextColor(ContextCompat.getColor(itemView.context, R.color.budget_warning))
-                    "Budget reached"
+                    statusText.setTextColor(ContextCompat.getColor(itemView.context, R.color.ra_warning))
+                    "Shield cap reached"
                 }
             }
         }

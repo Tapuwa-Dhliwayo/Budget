@@ -78,13 +78,13 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
             val description = descriptionInput.text.toString()
 
             when {
-                amountStr.isBlank() -> toast("Enter amount")
-                description.isBlank() -> toast("Enter description")
-                selectedCategoryId == 0L -> toast("Select category")
+                amountStr.isBlank() -> toast("Enter the damage amount")
+                description.isBlank() -> toast("Add a short log note")
+                selectedCategoryId == 0L -> toast("Select a loadout category")
                 else -> {
                     val amount = amountStr.toDoubleOrNull()
                     if (amount == null || amount <= 0) {
-                        toast("Invalid amount")
+                        toast("Enter a valid damage amount")
                         return@setOnClickListener
                     }
 
@@ -125,7 +125,7 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
         super.onResume()
 
         val title =
-            if (editingExpenseId == -1L) "Add Expense" else "Edit Expense"
+            if (editingExpenseId == -1L) "Log Spending Damage" else "Tune Damage Log"
 
         configureToolbar(
             title = title,
@@ -137,7 +137,7 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
     private fun showDatePicker(dateButton: MaterialButton) {
 
         val picker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select expense date")
+            .setTitleText("Select log date")
             .build()
 
         picker.addOnPositiveButtonClickListener { millis ->

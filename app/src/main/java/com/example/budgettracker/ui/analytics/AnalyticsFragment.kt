@@ -13,6 +13,7 @@ import com.example.budgettracker.R
 import com.example.budgettracker.adapters.CategorySpendingAdapter
 import com.example.budgettracker.data.database.AppDatabase
 import com.example.budgettracker.data.repository.AnalyticsRepository
+import com.example.budgettracker.ui.common.configureToolbar
 import com.example.budgettracker.utils.CurrencyUtils
 import kotlinx.coroutines.launch
 
@@ -48,23 +49,23 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics) {
                     (state.totalSpent / state.totalBudget) * 100
                 } else 0.0
 
-                totalSpent.text = "Total spent this month: ${CurrencyUtils.format(state.totalSpent)}"
+                totalSpent.text = "Damage logged this month: ${CurrencyUtils.format(state.totalSpent)}"
                 budgetHealth.text = when {
-                    state.totalBudget <= 0 -> "Set a monthly budget to enable budget health analytics."
-                    state.overBudgetCount > 0 -> "${state.overBudgetCount} categories are over budget · ${"%.1f".format(utilization)}% used"
-                    else -> "On track · ${"%.1f".format(utilization)}% of monthly budget used"
+                    state.totalBudget <= 0 -> "Set monthly shield strength to enable pressure intel."
+                    state.overBudgetCount > 0 -> "${state.overBudgetCount} pressure zones breached · ${"%.1f".format(utilization)}% used"
+                    else -> "Shield stable · ${"%.1f".format(utilization)}% of monthly shield used"
                 }
                 budgetHealth.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
-                        if (state.overBudgetCount > 0) R.color.budget_over else R.color.budget_good
+                        if (state.overBudgetCount > 0) R.color.ra_danger else R.color.ra_success
                     )
                 )
 
                 topInsight.text = if (state.topCategoryName != null) {
-                    "Top spend category: ${state.topCategoryName} (${CurrencyUtils.format(state.topCategoryAmount)})"
+                    "Top pressure zone: ${state.topCategoryName} (${CurrencyUtils.format(state.topCategoryAmount)})"
                 } else {
-                    "Add expenses to reveal your biggest spending category."
+                    "Add spending logs to reveal your biggest pressure zone."
                 }
 
                 emptyView.visibility = if (state.categories.isEmpty()) View.VISIBLE else View.GONE
@@ -72,5 +73,14 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics) {
         }
 
         viewModel.load()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        configureToolbar(
+            title = "Damage Report",
+            subtitle = "Category pressure scan and shield breaches",
+            menuRes = null
+        )
     }
 }

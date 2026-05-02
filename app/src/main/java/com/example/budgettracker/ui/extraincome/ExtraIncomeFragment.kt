@@ -64,7 +64,7 @@ class ExtraIncomeFragment : Fragment(R.layout.fragment_extra_income) {
     override fun onResume() {
         super.onResume()
         configureToolbar(
-            title = "Extra Income",
+            title = "Bonus Credits",
             subtitle = "See what extra effort moved forward",
             menuRes = null
         )
@@ -72,13 +72,14 @@ class ExtraIncomeFragment : Fragment(R.layout.fragment_extra_income) {
     }
 
     private fun renderSummary(textView: TextView, summary: ExtraIncomeImpactSummary) {
-        textView.text = "Extra Income This Month\n" +
+        textView.text = "Bonus Credit Vault\n" +
                 "${CurrencyUtils.format(summary.totalIncome)}\n" +
                 "Recovery: ${CurrencyUtils.format(summary.recoveryAmount)} (${PercentageUtils.formatWhole(summary.recoveryPercentage)})\n" +
                 "Debt: ${CurrencyUtils.format(summary.debtRecoveryAmount)} · Savings/goals: ${CurrencyUtils.format(summary.savingsAndGoalsAmount)}\n" +
                 "Living/personal: ${CurrencyUtils.format(summary.spendingPersonalAmount)} · Unallocated: ${CurrencyUtils.format(summary.unallocatedAmount)}\n\n" +
                 "${summary.mainImpact}\n" +
                 summary.guidance
+        stylePanel(textView)
     }
 
     private fun renderEntries(
@@ -106,32 +107,76 @@ class ExtraIncomeFragment : Fragment(R.layout.fragment_extra_income) {
             }
         }
         card.addView(TextView(requireContext()).apply {
+            text = creditStatus(entry.allocationType)
+            textSize = 10f
+            setTextColor(requireContext().getColor(colorForAllocation(entry.allocationType)))
+            setBackgroundResource(R.drawable.ra_chip_bg)
+            setPadding(dp(9), dp(4), dp(9), dp(4))
+            setTypeface(typeface, android.graphics.Typeface.BOLD)
+        })
+        card.addView(TextView(requireContext()).apply {
             text = "${entry.source} · ${entry.incomeType.label}"
             textSize = 17f
-            setTextColor(requireContext().getColor(R.color.ink_primary))
+            setTextColor(requireContext().getColor(R.color.ra_text))
+            setPadding(0, dp(8), 0, 0)
             setTypeface(typeface, android.graphics.Typeface.BOLD)
         })
         card.addView(TextView(requireContext()).apply {
             text = CurrencyUtils.format(entry.amount)
-            textSize = 22f
-            setTextColor(requireContext().getColor(R.color.ink_primary))
+            textSize = 26f
+            setTextColor(requireContext().getColor(R.color.ra_accent))
             setTypeface(typeface, android.graphics.Typeface.BOLD)
         })
         val debtText = entry.linkedDebtName?.let { " · $it" }.orEmpty()
         card.addView(TextView(requireContext()).apply {
             text = "${DateUtils.formatDateForDisplay(entry.dateReceived)} · ${entry.allocationType.label}$debtText"
             textSize = 14f
-            setTextColor(requireContext().getColor(R.color.ink_secondary))
+            setTextColor(requireContext().getColor(R.color.ra_text_muted))
         })
         if (entry.notes.isNotBlank()) {
             card.addView(TextView(requireContext()).apply {
                 text = entry.notes
                 textSize = 14f
                 setPadding(0, 8, 0, 0)
-                setTextColor(requireContext().getColor(R.color.ink_secondary))
+                setTextColor(requireContext().getColor(R.color.ra_text_muted))
             })
         }
         return card
+    }
+
+    private fun creditStatus(allocation: ExtraIncomeAllocationType): String {
+        return when (allocation) {
+            ExtraIncomeAllocationType.DEBT_PAYMENT -> "BOSS DAMAGE"
+            ExtraIncomeAllocationType.EMERGENCY_FUND -> "SHIELD BOOST"
+            ExtraIncomeAllocationType.GOAL_CONTRIBUTION -> "VAULT CREDIT"
+            ExtraIncomeAllocationType.LIVING_EXPENSES -> "RUN SUPPORT"
+            ExtraIncomeAllocationType.PERSONAL_REWARD -> "PERSONAL DROP"
+            ExtraIncomeAllocationType.BUFFER -> "BUFFER BOOST"
+            ExtraIncomeAllocationType.OTHER -> "BONUS CREDIT"
+            ExtraIncomeAllocationType.UNALLOCATED -> "UNASSIGNED"
+        }
+    }
+
+    private fun colorForAllocation(allocation: ExtraIncomeAllocationType): Int {
+        return when (allocation) {
+            ExtraIncomeAllocationType.DEBT_PAYMENT -> R.color.ra_danger
+            ExtraIncomeAllocationType.EMERGENCY_FUND,
+            ExtraIncomeAllocationType.BUFFER,
+            ExtraIncomeAllocationType.GOAL_CONTRIBUTION -> R.color.ra_success
+            ExtraIncomeAllocationType.LIVING_EXPENSES -> R.color.ra_primary
+            ExtraIncomeAllocationType.PERSONAL_REWARD -> R.color.ra_warning
+            ExtraIncomeAllocationType.UNALLOCATED,
+            ExtraIncomeAllocationType.OTHER -> R.color.ra_text_subtle
+        }
+    }
+
+    private fun stylePanel(textView: TextView) {
+        textView.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+        textView.setPadding(dp(14), dp(12), dp(14), dp(12))
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 
     private fun showAddIncomeDialog() {
@@ -149,7 +194,7 @@ class ExtraIncomeFragment : Fragment(R.layout.fragment_extra_income) {
         setupSpinner(debtSpinner, debtLabels)
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Add Extra Income")
+            .setTitle("Add Bonus Credit")
             .setView(view)
             .setPositiveButton("Save") { _, _ ->
                 val allocation = ExtraIncomeAllocationType.values()[allocationSpinner.selectedItemPosition]

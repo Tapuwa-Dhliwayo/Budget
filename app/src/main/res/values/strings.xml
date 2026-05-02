@@ -1,57 +1,57 @@
 <resources>
-    <string name="app_name">MiniBudget</string>
+    <string name="app_name">Mini Budget</string>
 
     <!-- Navigation -->
-    <string name="nav_dashboard">Dashboard</string>
-    <string name="nav_expenses">Expenses</string>
-    <string name="nav_categories">Categories</string>
+    <string name="nav_dashboard">HUD</string>
+    <string name="nav_expenses">Log</string>
+    <string name="nav_categories">Loadout</string>
     <string name="nav_summary">Summary</string>
     <string name="nav_profile">Profile</string>
 
     <!-- Dashboard -->
-    <string name="dashboard_title">Budget Dashboard</string>
+    <string name="dashboard_title">Recovery HUD</string>
     <string name="monthly_overview">Monthly Overview</string>
-    <string name="category_progress">Category Budget Progress</string>
-    <string name="edit_budget">Edit Budget</string>
-    <string name="daily_spending_trend">Daily Spending Trend</string>
-    <string name="category_breakdown_chart">Category Breakdown</string>
+    <string name="category_progress">Damage Report</string>
+    <string name="edit_budget">Tune Loadout</string>
+    <string name="daily_spending_trend">Recovery Run</string>
+    <string name="category_breakdown_chart">Damage Report</string>
 
     <!-- Expenses -->
-    <string name="add_expense">Add Expense</string>
+    <string name="add_expense">Log Spending Damage</string>
     <string name="expense_amount">Amount</string>
     <string name="expense_description">Description</string>
-    <string name="expense_category">Category</string>
+    <string name="expense_category">Loadout Category</string>
     <string name="expense_date">Date</string>
-    <string name="no_expenses">No expenses yet.\nTap + to add your first expense!</string>
+    <string name="no_expenses">No damage logs yet.\nTap + to add the first spend.</string>
 
     <!-- Categories -->
     <string name="category_name">Category Name</string>
-    <string name="category_budget">Budget Limit</string>
+    <string name="category_budget">Shield Limit</string>
     <string name="no_categories">No categories</string>
 
     <!-- Summary -->
-    <string name="monthly_summary">Monthly Summary</string>
-    <string name="category_breakdown">Category Breakdown</string>
-    <string name="top_categories">Top 3 Categories</string>
+    <string name="monthly_summary">Monthly Intel</string>
+    <string name="category_breakdown">Damage Report</string>
+    <string name="top_categories">Pressure Zones</string>
     <string name="gamification_title">Your Progress</string>
-    <string name="current_streak">Current Streak: %d days 🔥</string>
+    <string name="current_streak">Current streak: %d days</string>
     <string name="badges_earned">Badges Earned: %d</string>
 
     <!-- Profile -->
-    <string name="profile_title">User Profile</string>
+    <string name="profile_title">Pilot Profile</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="save_profile">Save Profile</string>
+    <string name="save_profile">Save Pilot</string>
     <string name="exit_app">Exit App</string>
-    <string name="profile_updated">Profile updated successfully!</string>
-    <string name="exit_confirmation">Are you sure you want to exit MiniBudget Tracker?</string>
+    <string name="profile_updated">Pilot profile saved.</string>
+    <string name="exit_confirmation">Exit Mini Budget? Your local recovery data stays on this device.</string>
     <string name="first_name_required">First name cannot be empty</string>
 
     <!-- Budget Editing -->
-    <string name="edit_budget_title">Edit Monthly Budget</string>
+    <string name="edit_budget_title">Tune Monthly Loadout</string>
     <string name="starting_funds">Starting Funds</string>
     <string name="starting_funds_hint">Enter the total amount of money you have available for this month.</string>
-    <string name="budget_updated">Budget updated successfully!</string>
+    <string name="budget_updated">Monthly loadout updated.</string>
 
     <!-- Actions -->
     <string name="save">Save</string>
@@ -61,8 +61,8 @@
     <string name="exit">Exit</string>
 
     <!-- Messages -->
-    <string name="expense_added">Expense added successfully</string>
-    <string name="expense_deleted">Expense deleted</string>
+    <string name="expense_added">Spending damage logged.</string>
+    <string name="expense_deleted">Damage log deleted.</string>
     <string name="error_loading">Failed to load data</string>
     <string name="error_saving">Failed to save</string>
 

@@ -14,6 +14,203 @@ Each change should include:
 
 ## Changes
 
+### 2026-05-02 - UI-FIX - Toolbar Inset Spacing Fix
+
+#### Summary
+Fixed shared toolbar inset handling so the toolbar height expands by the status bar inset instead of only adding top padding. This prevents Base child screen content from visually tucking under or overlapping the header area.
+
+#### Files Changed
+- `app/src/main/java/com/example/budgettracker/MainActivity.kt`
+- `docs/change-log.md`
+
+#### User-Facing Impact
+Base views such as Bonus Credits now have cleaner spacing between the app header and screen content.
+
+#### Data/Storage Impact
+None.
+
+#### Tests
+```bash
+./gradlew assembleDebug
+./gradlew test
+```
+
+Both passed on 2026-05-02.
+
+### 2026-05-02 - UI-REVAMP - Base Navigation Fix and Base Screen Upgrade
+
+#### Summary
+Fixed bottom navigation behavior for Base child screens by explicitly resetting bottom-tab navigation to tab roots and showing toolbar Up navigation for non-tab destinations. Upgraded Base hub and Base child screens with arcade panels, chips, progress/status styling, and clearer Recovery Arcade language.
+
+#### Files Changed
+- `app/src/main/java/com/example/budgettracker/MainActivity.kt`
+- `app/src/main/java/com/example/budgettracker/ui/analytics/AnalyticsFragment.kt`
+- `app/src/main/java/com/example/budgettracker/ui/extraincome/ExtraIncomeFragment.kt`
+- `app/src/main/java/com/example/budgettracker/ui/gamification/GamificationFragment.kt`
+- `app/src/main/java/com/example/budgettracker/ui/goals/GoalsFragment.kt`
+- `app/src/main/java/com/example/budgettracker/ui/networth/NetWorthFragment.kt`
+- `app/src/main/java/com/example/budgettracker/ui/privacy/DataOwnershipFragment.kt`
+- `app/src/main/java/com/example/budgettracker/ui/summary/SummaryFragment.kt`
+- `app/src/main/java/com/example/budgettracker/ui/weekly/WeeklyReviewSummaryFragment.kt`
+- `app/src/main/res/layout/fragment_more.xml`
+- `app/src/main/res/layout/fragment_profile.xml`
+- `docs/ui-ux/CHANGELOG.md`
+- `docs/change-log.md`
+
+#### User-Facing Impact
+Opening a screen from Base now provides a clear Up path back. Switching bottom navigation tabs clears Base child screens instead of leaving Base nested state active. Base child screens now look more like arcade recovery modules.
+
+#### Data/Storage Impact
+None.
+
+#### Tests
+```bash
+./gradlew assembleDebug
+./gradlew test
+```
+
+Both passed on 2026-05-02.
+
+### 2026-05-02 - UI-REVAMP - Loadout and Bosses Arcade Upgrade
+
+#### Summary
+Upgraded the Spending Loadout and Debt Bosses screens. Loadout categories now render as shield cards with readiness status, rank labels, and shield cap meters. Debt bosses now render as battle cards with threat status, HP metrics, damage progress, battle intel, warnings, and compact hit/extra/regen actions.
+
+#### Files Changed
+- `app/src/main/res/layout/fragment_category_list.xml`
+- `app/src/main/res/layout/item_category.xml`
+- `app/src/main/java/com/example/budgettracker/ui/categories/CategoryListFragment.kt`
+- `app/src/main/java/com/example/budgettracker/ui/debt/DebtBossFragment.kt`
+- `docs/ui-ux/CHANGELOG.md`
+- `docs/change-log.md`
+
+#### User-Facing Impact
+Loadout feels like configuring category defenses, and Bosses feels like tracking debt battles instead of reading plain finance rows.
+
+#### Data/Storage Impact
+None.
+
+#### Tests
+```bash
+./gradlew assembleDebug
+./gradlew test
+```
+
+Both passed on 2026-05-02.
+
+### 2026-05-02 - UI-REVAMP - Damage Log Gamified Pass
+
+#### Summary
+Upgraded the Damage Log screen with a Mission Scope filter panel, stronger arcade summary card, run-rank chip, and gamified log entries with severity labels, XP markers, auto-damage badges, and dynamic card stroke colors.
+
+#### Files Changed
+- `app/src/main/res/layout/fragment_expense_list.xml`
+- `app/src/main/res/layout/item_expense.xml`
+- `app/src/main/java/com/example/budgettracker/ui/expenses/ExpenseListFragment.kt`
+- `docs/ui-ux/CHANGELOG.md`
+- `docs/change-log.md`
+
+#### User-Facing Impact
+The Damage Log now reads as a tactical spending log with scan-friendly severity and recovery feedback instead of a plain transaction list.
+
+#### Data/Storage Impact
+None.
+
+#### Tests
+```bash
+./gradlew assembleDebug
+./gradlew test
+```
+
+Both passed on 2026-05-02.
+
+### 2026-05-02 - UI-REVAMP - Main HUD Graph and Gamified Reports
+
+#### Summary
+Upgraded the Dashboard Recovery Run, Damage Report, and Pressure Zones sections from plain generated text rows into visual HUD modules: a 7-day spending bar graph, category damage cards with progress meters, and ranked pressure-zone alert cards.
+
+#### Files Changed
+- `app/src/main/java/com/example/budgettracker/ui/dashboard/DashboardFragment.kt`
+- `docs/ui-ux/CHANGELOG.md`
+- `docs/change-log.md`
+
+#### User-Facing Impact
+The main HUD now shows trends and category pressure visually, making the app feel less like a report screen and more like a recovery game interface.
+
+#### Data/Storage Impact
+None.
+
+#### Tests
+```bash
+./gradlew assembleDebug
+./gradlew test
+```
+
+Both passed on 2026-05-02.
+
+### 2026-05-02 - UI-REVAMP - Main HUD Safe Spend Shield Upgrade
+
+#### Summary
+Reworked the Dashboard Safe Spend Shield section from a multiline text summary into a more visual HUD card with a large shield metric, circular percentage indicator, status chip, compact weekly spend intel, and guidance callout.
+
+#### Files Changed
+- `app/src/main/res/layout/fragment_dashboard.xml`
+- `app/src/main/res/drawable/ra_inner_panel_bg.xml`
+- `app/src/main/java/com/example/budgettracker/ui/dashboard/DashboardFragment.kt`
+- `docs/ui-ux/CHANGELOG.md`
+- `docs/change-log.md`
+
+#### User-Facing Impact
+The main HUD weekly allowance area is easier to scan and feels closer to the arcade prototype instead of presenting the user with a block of text.
+
+#### Data/Storage Impact
+None.
+
+#### Tests
+```bash
+./gradlew assembleDebug
+```
+
+Passed on 2026-05-02.
+
+### 2026-05-02 - UI-REVAMP - Recovery Arcade Stitch Prototype Integration
+
+#### Summary
+Adapted the supplied arcade-style HTML prototype into the native Android app. Updated shared theme/chrome, bottom navigation icons and labels, screen copy, dialog copy, and generated row/status text so the app reads as a Recovery Arcade HUD instead of a styled spreadsheet.
+
+#### Files Changed
+- `app/src/main/res/values/styles_recovery_arcade.xml`
+- `app/src/main/res/values/themes.xml`
+- `app/src/main/res/values/strings.xml`
+- `app/src/main/res/color/bottom_nav_arcade_tint.xml`
+- `app/src/main/res/drawable/ic_nav_base.xml`
+- `app/src/main/res/drawable/ic_nav_boss.xml`
+- `app/src/main/res/drawable/ic_nav_hud.xml`
+- `app/src/main/res/drawable/ic_nav_loadout.xml`
+- `app/src/main/res/drawable/ic_nav_log.xml`
+- `app/src/main/res/layout/activity_main.xml`
+- `app/src/main/res/layout/fragment_*.xml`
+- `app/src/main/res/layout/item_*.xml`
+- `app/src/main/res/menu/bottom_navigation.xml`
+- `app/src/main/java/com/example/budgettracker/ui/**/*.kt`
+- `app/src/main/java/com/example/budgettracker/adapters/CategorySpendingAdapter.kt`
+- `docs/ui-ux/CHANGELOG.md`
+- `docs/change-log.md`
+
+#### User-Facing Impact
+Navigation, headers, summaries, empty states, dialogs, generated cards, progress/status text, and button labels now use Recovery Arcade language such as Safe Spend Shield, Damage Log, Spending Loadout, Weekly Debrief, Boss Arena, Bonus Credits, Resource Vaults, Net Worth Meter, Data Vault, and Recovery XP.
+
+#### Data/Storage Impact
+None. No Room schema or storage behavior changed.
+
+#### Tests
+```bash
+./gradlew assembleDebug
+./gradlew test
+```
+
+Both passed on 2026-05-02.
+
 ### 2026-05-01 - V1.0-DOCS - Foundation Closure and Post-1.0 Roadmap
 
 #### Summary

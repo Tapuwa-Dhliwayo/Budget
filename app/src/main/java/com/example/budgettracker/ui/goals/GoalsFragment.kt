@@ -70,7 +70,7 @@ class GoalsFragment : Fragment(R.layout.fragment_goals) {
     override fun onResume() {
         super.onResume()
         configureToolbar(
-            title = "Goals",
+            title = "Resource Vaults",
             subtitle = "Plan without hurting recovery",
             menuRes = null
         )
@@ -78,11 +78,13 @@ class GoalsFragment : Fragment(R.layout.fragment_goals) {
     }
 
     private fun renderSummary(textView: TextView, summary: GoalSummary) {
-        textView.text = "Goal Plan\n" +
-                "Active goals: ${summary.activeGoals.size}\n" +
+        textView.text = "Vault Plan\n" +
+                "Active vaults: ${summary.activeGoals.size}\n" +
                 "Saved: ${CurrencyUtils.format(summary.totalCurrentAmount)} of ${CurrencyUtils.format(summary.totalTargetAmount)}\n" +
                 "Remaining: ${CurrencyUtils.format(summary.totalRemainingAmount)}\n\n" +
                 summary.guidance
+        textView.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+        textView.setPadding(dp(14), dp(12), dp(14), dp(12))
     }
 
     private fun renderGoals(container: LinearLayout, goals: List<GoalPlan>) {
@@ -105,20 +107,31 @@ class GoalsFragment : Fragment(R.layout.fragment_goals) {
             }
         }
         card.addView(TextView(requireContext()).apply {
+            text = vaultStatus(goal)
+            textSize = 10f
+            setTextColor(requireContext().getColor(colorForGoal(goal)))
+            setBackgroundResource(R.drawable.ra_chip_bg)
+            setPadding(dp(9), dp(4), dp(9), dp(4))
+            setTypeface(typeface, android.graphics.Typeface.BOLD)
+        })
+        card.addView(TextView(requireContext()).apply {
             text = "${goal.name} · ${goal.goalType.label}"
             textSize = 17f
-            setTextColor(requireContext().getColor(R.color.ink_primary))
+            setPadding(0, dp(8), 0, 0)
+            setTextColor(requireContext().getColor(R.color.ra_text))
             setTypeface(typeface, android.graphics.Typeface.BOLD)
         })
         card.addView(TextView(requireContext()).apply {
             text = "${CurrencyUtils.format(goal.currentAmount)} of ${CurrencyUtils.format(goal.targetAmount)}"
-            textSize = 22f
-            setTextColor(requireContext().getColor(R.color.ink_primary))
+            textSize = 24f
+            setTextColor(requireContext().getColor(colorForGoal(goal)))
             setTypeface(typeface, android.graphics.Typeface.BOLD)
         })
         card.addView(LinearProgressIndicator(requireContext()).apply {
             max = 100
             setProgress(goal.progressPercentage.toInt().coerceIn(0, 100), false)
+            setIndicatorColor(requireContext().getColor(colorForGoal(goal)))
+            trackColor = requireContext().getColor(R.color.ra_surface_elevated)
         })
         val requiredText = goal.requiredMonthlyContribution?.let {
             "Required: ${CurrencyUtils.format(it)}/month"
@@ -129,16 +142,38 @@ class GoalsFragment : Fragment(R.layout.fragment_goals) {
                     "Health: ${goal.healthClassification.label} · Priority: ${goal.priority.label}\n" +
                     goal.guidance
             textSize = 14f
-            setTextColor(requireContext().getColor(R.color.ink_secondary))
+            setTextColor(requireContext().getColor(R.color.ra_text_muted))
             setPadding(0, 8, 0, 0)
         })
         if (goal.status == GoalStatus.ACTIVE) {
             card.addView(MaterialButton(requireContext()).apply {
-                text = "Add contribution"
+                text = "Add Credits"
                 setOnClickListener { showContributionDialog(goal) }
             })
         }
         return card
+    }
+
+    private fun vaultStatus(goal: GoalPlan): String {
+        return when {
+            goal.status == GoalStatus.COMPLETED -> "VAULT COMPLETE"
+            goal.progressPercentage >= 75.0 -> "NEAR UNLOCK"
+            goal.progressPercentage >= 35.0 -> "BUILDING"
+            else -> "PLANNED"
+        }
+    }
+
+    private fun colorForGoal(goal: GoalPlan): Int {
+        return when {
+            goal.status == GoalStatus.COMPLETED -> R.color.ra_success
+            goal.progressPercentage >= 75.0 -> R.color.ra_primary
+            goal.progressPercentage >= 35.0 -> R.color.ra_accent
+            else -> R.color.ra_text_subtle
+        }
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 
     private fun showAddGoalDialog() {
@@ -157,7 +192,7 @@ class GoalsFragment : Fragment(R.layout.fragment_goals) {
         prioritySpinner.setSelection(GoalPriority.values().indexOf(GoalPriority.MEDIUM))
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Add Goal")
+            .setTitle("Add Resource Vault")
             .setView(view)
             .setPositiveButton("Save") { _, _ ->
                 viewModel.addGoal(
@@ -183,7 +218,7 @@ class GoalsFragment : Fragment(R.layout.fragment_goals) {
         setupSpinner(sourceSpinner, GoalContributionSourceType.values().map { it.label })
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Add contribution to ${goal.name}")
+            .setTitle("Add credits to ${goal.name}")
             .setView(view)
             .setPositiveButton("Save") { _, _ ->
                 viewModel.addContribution(

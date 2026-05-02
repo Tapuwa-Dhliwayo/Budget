@@ -11,7 +11,7 @@
         android:id="@+id/text_analytics_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Spending Damage"
+        android:text="Damage Report"
         style="@style/RaText.ScreenTitle" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="See which categories are causing pressure this run"
+        android:text="See which categories are draining shield strength this run"
         android:textColor="@color/ra_text_muted" />
 
     <com.google.android.material.card.MaterialCardView
@@ -75,7 +75,7 @@
         android:id="@+id/text_empty_analytics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No activity logged yet. Add a spend to generate damage stats."
+        android:text="No damage logged yet. Add a spend to generate pressure intel."
         android:textColor="@color/ra_text_muted"
         android:gravity="center"
         android:visibility="gone"

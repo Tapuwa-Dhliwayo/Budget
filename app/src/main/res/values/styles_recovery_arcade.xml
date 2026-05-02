@@ -1,33 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="RaText.ScreenTitle">
-        <item name="android:textSize">22sp</item>
+    <style name="RaText">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/ra_text</item>
+    </style>
+
+    <style name="RaText.ScreenTitle" parent="RaText">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/ra_text</item>
     </style>
 
-    <style name="RaText.SectionTitle">
-        <item name="android:textSize">13sp</item>
+    <style name="RaText.SectionTitle" parent="RaText">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:letterSpacing">0.06</item>
-        <item name="android:textColor">@color/ra_text_muted</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/ra_primary_soft</item>
     </style>
 
-    <style name="RaText.Body">
+    <style name="RaText.Body" parent="RaText">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/ra_text</item>
     </style>
 
-    <style name="RaText.Muted">
+    <style name="RaText.Muted" parent="RaText">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/ra_text_muted</item>
     </style>
 
-    <style name="RaContainer.Card">
+    <style name="RaText.Metric" parent="RaText">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ra_text</item>
+    </style>
+
+    <style name="RaContainer" />
+
+    <style name="RaContainer.Card" parent="RaContainer">
         <item name="android:background">@drawable/ra_card_bg</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:padding">18dp</item>
     </style>
 
     <style name="RaChip">
@@ -73,7 +89,7 @@
         <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
 
-    <style name="RaFab" parent="Widget.Material3.FloatingActionButton">
+    <style name="RaFab" parent="Widget.Material3.FloatingActionButton.Primary">
         <item name="backgroundTint">@color/ra_primary</item>
         <item name="tint">@color/ra_bg</item>
         <item name="rippleColor">@color/ra_primary_soft</item>

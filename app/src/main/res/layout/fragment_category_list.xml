@@ -18,14 +18,14 @@
 
             <TextView
                 android:id="@+id/text_category_hint"
-                android:text="Tap to edit • Long-press to delete"
-                android:textSize="12sp"
-                android:textColor="@color/ra_text_muted"
                 android:background="@drawable/bg_expense_filter_panel"
-                android:padding="12dp"
-                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:padding="14dp"
+                android:text="Loadout Armory\nTune spending shields before damage hits. Tap to tune, long-press to archive."
+                android:textColor="@color/ra_text_muted"
+                android:textSize="14sp" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_category"
-            android:contentDescription="Add Category"
+            android:contentDescription="Add loadout category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add"

@@ -54,8 +54,8 @@ class MoreFragment : Fragment(R.layout.fragment_more) {
         super.onResume()
 
         configureToolbar(
-            title = "More",
-            subtitle = "Tools, reviews, and settings",
+            title = "Command Base",
+            subtitle = "Reviews, recovery tools, and local settings",
             menuRes = null
         )
     }

@@ -17,6 +17,8 @@ import com.example.budgettracker.data.repository.UserProfileRepository
 import com.example.budgettracker.ui.common.configureToolbar
 import com.example.budgettracker.utils.CurrencyUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.launch
 
 class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
@@ -40,18 +42,37 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->
                 container.removeAllViews()
+                val strongestShield = state.categories.maxOfOrNull { it.budgetLimit }?.coerceAtLeast(1.0) ?: 1.0
 
-                state.categories.forEach { category ->
+                state.categories.forEachIndexed { index, category ->
                     val item = layoutInflater.inflate(
                         R.layout.item_category,
                         container,
                         false
                     )
 
+                    val shieldPercent = ((category.budgetLimit / strongestShield) * 100.0).toInt().coerceIn(0, 100)
+                    val statusColor = colorForShieldCap(category.budgetLimit)
+
+                    (item as MaterialCardView).apply {
+                        strokeColor = requireContext().getColor(statusColor)
+                        strokeWidth = if (category.budgetLimit <= 0.0) dp(2) else dp(1)
+                    }
                     item.findViewById<TextView>(R.id.text_icon).text = category.icon
                     item.findViewById<TextView>(R.id.text_name).text = category.name
+                    item.findViewById<TextView>(R.id.text_loadout_rank).text =
+                        "#${(index + 1).toString().padStart(2, '0')}"
+                    item.findViewById<TextView>(R.id.text_category_status).apply {
+                        text = shieldStatusLabel(category.budgetLimit)
+                        setTextColor(requireContext().getColor(statusColor))
+                    }
+                    item.findViewById<LinearProgressIndicator>(R.id.progress_category_shield).apply {
+                        progress = shieldPercent
+                        setIndicatorColor(requireContext().getColor(statusColor))
+                        trackColor = requireContext().getColor(R.color.ra_surface_elevated)
+                    }
                     item.findViewById<TextView>(R.id.text_limit).text =
-                        "Monthly limit: ${CurrencyUtils.format(category.budgetLimit)}"
+                        "Shield cap: ${CurrencyUtils.format(category.budgetLimit)} · ${loadoutAdvice(category.budgetLimit)}"
 
                     item.setOnClickListener {
                         showCategoryDialog(category)
@@ -79,8 +100,8 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
             val user = userRepo.getOrCreateUser()
 
             configureToolbar(
-                title = "Categories",
-                subtitle = "Hello, ${user.firstName}!",
+                title = "Spending Loadout",
+                subtitle = "Tune the categories that shape your recovery run, ${user.firstName}.",
                 menuRes = null
             )
         }
@@ -101,7 +122,7 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
         }
 
         AlertDialog.Builder(requireContext())
-            .setTitle(if (category == null) "Add Category" else "Edit Category")
+            .setTitle(if (category == null) "Add Loadout Category" else "Tune Loadout Category")
             .setView(dialogView)
             .setPositiveButton("Save") { _, _ ->
                 val entity = CategoryEntity(
@@ -126,14 +147,45 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
 
     private fun confirmDelete(category: CategoryEntity) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Delete category?")
-            .setMessage("This will hide the category but keep expense history.")
-            .setPositiveButton("Delete") { _, _ ->
+            .setTitle("Archive loadout category?")
+            .setMessage("This hides the category but keeps the spending log history intact.")
+            .setPositiveButton("Archive") { _, _ ->
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewModel.deleteCategory(category.id)
                 }
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    private fun shieldStatusLabel(limit: Double): String {
+        return when {
+            limit <= 0.0 -> "NO SHIELD"
+            limit >= 3000.0 -> "HEAVY SHIELD"
+            limit >= 1000.0 -> "READY"
+            else -> "LIGHT SHIELD"
+        }
+    }
+
+    private fun colorForShieldCap(limit: Double): Int {
+        return when {
+            limit <= 0.0 -> R.color.ra_danger
+            limit >= 3000.0 -> R.color.ra_primary
+            limit >= 1000.0 -> R.color.ra_success
+            else -> R.color.ra_warning
+        }
+    }
+
+    private fun loadoutAdvice(limit: Double): String {
+        return when {
+            limit <= 0.0 -> "set a cap to activate this defense"
+            limit >= 3000.0 -> "high-cap category"
+            limit >= 1000.0 -> "active defense"
+            else -> "tight cap, watch closely"
+        }
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 }

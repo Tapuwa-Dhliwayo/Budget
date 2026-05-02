@@ -1,5 +1,7 @@
 package com.example.budgettracker.ui.expenses
 
+import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -20,6 +22,7 @@ import com.example.budgettracker.utils.CurrencyUtils
 import com.example.budgettracker.utils.DateUtils
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
@@ -67,6 +70,7 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
         val totalText: TextView = view.findViewById(R.id.text_expense_total)
         val countText: TextView = view.findViewById(R.id.text_expense_count)
         val recurringTotalText: TextView = view.findViewById(R.id.text_recurring_total)
+        val logRankText: TextView = view.findViewById(R.id.text_log_rank)
         val pagingLayout: LinearLayout = view.findViewById(R.id.layout_paging)
         val previousPageButton: MaterialButton = view.findViewById(R.id.button_previous_page)
         val nextPageButton: MaterialButton = view.findViewById(R.id.button_next_page)
@@ -85,6 +89,7 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
                 totalText = totalText,
                 countText = countText,
                 recurringTotalText = recurringTotalText,
+                logRankText = logRankText,
                 pagingLayout = pagingLayout,
                 previousPageButton = previousPageButton,
                 nextPageButton = nextPageButton,
@@ -165,8 +170,8 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
             val user = userRepo.getOrCreateUser()
 
             configureToolbar(
-                title = "Expenses",
-                subtitle = "Hello, ${user.firstName}!",
+                title = "Damage Log",
+                subtitle = "Honest logs keep the run recoverable, ${user.firstName}.",
                 menuRes = null
             )
         }
@@ -178,6 +183,7 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
         totalText: TextView,
         countText: TextView,
         recurringTotalText: TextView,
+        logRankText: TextView,
         pagingLayout: LinearLayout,
         previousPageButton: MaterialButton,
         nextPageButton: MaterialButton,
@@ -204,7 +210,9 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
 
         totalText.text = CurrencyUtils.format(scopedExpenses.sumOf { it.amount })
         countText.text = expenseCountText(scopedExpenses.size)
-        recurringTotalText.text = "${CurrencyUtils.formatCompact(recurringMonthlyTotal)} monthly"
+        recurringTotalText.text = "${CurrencyUtils.formatCompact(recurringMonthlyTotal)} auto-damage"
+        logRankText.text = logRankLabel(scopedExpenses.sumOf { it.amount })
+        logRankText.setTextColor(requireContext().getColor(logRankColor(scopedExpenses.sumOf { it.amount })))
         periodControls.visibility =
             if (currentFilter == ExpenseFilter.RECURRING) View.GONE else View.VISIBLE
         periodButton.text = periodLabel()
@@ -216,7 +224,7 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
             }
 
             if (sections.recurringExpenses.isNotEmpty()) {
-                addSectionHeader(container, "Recurring monthly")
+                addSectionHeader(container, "Recurring damage")
                 sections.recurringExpenses.forEach { addExpenseCard(container, it) }
             }
         }
@@ -235,6 +243,7 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
                 totalText,
                 countText,
                 recurringTotalText,
+                logRankText,
                 pagingLayout,
                 previousPageButton,
                 nextPageButton,
@@ -255,7 +264,7 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
 
         return when (currentFilter) {
             ExpenseFilter.ALL -> ExpenseSections(
-                primaryTitle = "Recent expenses",
+                primaryTitle = "Recent damage",
                 primaryExpenses = oneOff,
                 recurringExpenses = recurring
             )
@@ -278,7 +287,7 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
             }
 
             ExpenseFilter.RECURRING -> ExpenseSections(
-                primaryTitle = "Recurring monthly",
+                primaryTitle = "Recurring damage",
                 primaryExpenses = recurring
             )
         }
@@ -286,10 +295,10 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
 
     private fun addSectionHeader(container: LinearLayout, title: String) {
         val header = TextView(requireContext()).apply {
-            text = title
+            text = ">> $title"
             textSize = 13f
-            setTextColor(resources.getColor(R.color.ink_secondary, null))
-            setTypeface(typeface, android.graphics.Typeface.BOLD)
+            setTextColor(resources.getColor(R.color.ra_primary_soft, null))
+            setTypeface(typeface, Typeface.BOLD)
             setPadding(4, 18, 4, 8)
         }
         container.addView(header)
@@ -302,11 +311,26 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
             false
         )
 
+        val cardView = card as MaterialCardView
+        val severityColor = severityColor(expense.amount)
+        cardView.strokeColor = requireContext().getColor(severityColor)
+        cardView.strokeWidth = if (expense.amount >= 300.0 || expense.isRecurring) dp(2) else dp(1)
+
         card.findViewById<TextView>(R.id.text_category_icon).text = expense.categoryIcon
         card.findViewById<TextView>(R.id.text_description).text = expense.description
-        card.findViewById<TextView>(R.id.text_category).text = expense.categoryName
-        card.findViewById<TextView>(R.id.text_date).text = formatExpenseDate(expense.date)
+        card.findViewById<TextView>(R.id.text_category).text =
+            "${expense.categoryName} loadout"
+        card.findViewById<TextView>(R.id.text_date).text = formatExpenseDate(expense.date).uppercase()
         card.findViewById<TextView>(R.id.text_amount).text = "-${CurrencyUtils.format(expense.amount)}"
+        card.findViewById<TextView>(R.id.text_log_status).apply {
+            text = severityLabel(expense.amount, expense.isRecurring)
+            setTextColor(requireContext().getColor(severityColor))
+            backgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.ra_surface_elevated))
+        }
+        card.findViewById<TextView>(R.id.text_log_label).text =
+            if (expense.isRecurring) "AUTO LOG" else "DAMAGE ENTRY"
+        card.findViewById<TextView>(R.id.text_log_xp).text =
+            if (expense.isRecurring) "+3 XP" else "+5 XP"
         card.findViewById<TextView>(R.id.text_recurring).visibility =
             if (expense.isRecurring) View.VISIBLE else View.GONE
 
@@ -324,7 +348,7 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
 
     private fun showDatePicker(onSelected: (LocalDate) -> Unit) {
         val picker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select date")
+            .setTitleText("Select log date")
             .build()
 
         picker.addOnPositiveButtonClickListener { millis ->
@@ -342,8 +366,8 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
                 "${DateUtils.formatDateForDisplay(start.toString())} - ${DateUtils.formatDateForDisplay(end.toString())}"
             }
             ExpenseFilter.DAY -> formatExpenseDate(selectedDate.toString())
-            ExpenseFilter.ALL -> "All expenses"
-            ExpenseFilter.RECURRING -> "Monthly recurring"
+            ExpenseFilter.ALL -> "All damage"
+            ExpenseFilter.RECURRING -> "Recurring damage"
         }
     }
 
@@ -355,7 +379,49 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
         }
 
     private fun expenseCountText(count: Int): String =
-        if (count == 1) "1 expense" else "$count expenses"
+        if (count == 1) "1 hit" else "$count hits"
+
+    private fun severityLabel(amount: Double, recurring: Boolean): String {
+        return when {
+            recurring -> "AUTO-DAMAGE"
+            amount >= 1000.0 -> "BOSS HIT"
+            amount >= 300.0 -> "HEAVY HIT"
+            amount >= 100.0 -> "MEDIUM HIT"
+            else -> "LIGHT HIT"
+        }
+    }
+
+    private fun severityColor(amount: Double): Int {
+        return when {
+            amount >= 1000.0 -> R.color.ra_danger
+            amount >= 300.0 -> R.color.ra_warning
+            amount >= 100.0 -> R.color.ra_accent
+            else -> R.color.ra_success
+        }
+    }
+
+    private fun logRankLabel(total: Double): String {
+        return when {
+            total <= 0.0 -> "RUN QUIET"
+            total >= 5000.0 -> "CRITICAL RUN"
+            total >= 1500.0 -> "HIGH PRESSURE"
+            total >= 500.0 -> "WATCH ZONE"
+            else -> "RUN STABLE"
+        }
+    }
+
+    private fun logRankColor(total: Double): Int {
+        return when {
+            total >= 5000.0 -> R.color.ra_danger
+            total >= 1500.0 -> R.color.ra_warning
+            total >= 500.0 -> R.color.ra_accent
+            else -> R.color.ra_success
+        }
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
+    }
 
     private fun navigateToEdit(expenseId: Long) {
         val bundle = Bundle().apply {
@@ -369,8 +435,8 @@ class ExpenseListFragment : Fragment(R.layout.fragment_expense_list) {
 
     private fun confirmDelete(expense: ExpenseWithCategory) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Delete expense?")
-            .setMessage("This cannot be undone.")
+            .setTitle("Delete damage log?")
+            .setMessage("This removes the log entry. Use it only if the entry was a mistake.")
             .setPositiveButton("Delete") { _, _ ->
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewModel.deleteExpense(expense)

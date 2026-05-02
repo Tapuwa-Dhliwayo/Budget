@@ -54,7 +54,7 @@ class GamificationFragment : Fragment(R.layout.fragment_gamification) {
     override fun onResume() {
         super.onResume()
         configureToolbar(
-            title = "Recovery Progress",
+            title = "Recovery XP",
             subtitle = "Reward recovery, not perfection",
             menuRes = null
         )
@@ -76,6 +76,8 @@ class GamificationFragment : Fragment(R.layout.fragment_gamification) {
                 "Current logging streak: ${status.currentStreak} days · Best: ${status.longestStreak} days\n" +
                 "Badges earned: ${status.badgesEarned.size}\n\n" +
                 "Useful recovery actions earn XP. Difficult weeks still count when you log honestly and review what happened."
+        textView.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+        textView.setPadding(dp(14), dp(12), dp(14), dp(12))
     }
 
     private fun renderBadges(container: LinearLayout, badges: List<Badge>) {
@@ -85,7 +87,7 @@ class GamificationFragment : Fragment(R.layout.fragment_gamification) {
             return
         }
         badges.forEach { badge ->
-            container.addView(simpleText("${badge.title}\n${badge.description}"))
+            container.addView(simpleText("BADGE UNLOCKED\n${badge.title}\n${badge.description}", R.color.ra_accent))
         }
     }
 
@@ -101,17 +103,24 @@ class GamificationFragment : Fragment(R.layout.fragment_gamification) {
                 simpleText(
                     "${event.eventType.label} · +${event.xpEarned} XP\n" +
                         "${DateUtils.formatDateForDisplay(event.occurredDate)} · ${event.message}"
+                    ,
+                    R.color.ra_success
                 )
             )
         }
     }
 
-    private fun simpleText(value: String): TextView {
+    private fun simpleText(value: String, color: Int = R.color.ra_text_muted): TextView {
         return TextView(requireContext()).apply {
             text = value
             textSize = 14f
-            setTextColor(requireContext().getColor(R.color.ink_secondary))
-            setPadding(0, 8, 0, 8)
+            setTextColor(requireContext().getColor(color))
+            setBackgroundResource(R.drawable.ra_inner_panel_bg)
+            setPadding(dp(14), dp(10), dp(14), dp(10))
         }
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 }

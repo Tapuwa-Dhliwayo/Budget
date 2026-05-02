@@ -20,7 +20,7 @@
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dashboard"
+            android:text="Recovery HUD"
             android:textColor="@color/ra_text"
             android:textSize="20sp"
             android:textStyle="bold" />

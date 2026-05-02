@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/dashboardFragment"
-        android:title="Dashboard"
-        android:icon="@android:drawable/ic_dialog_info" />
+        android:title="HUD"
+        android:icon="@drawable/ic_nav_hud" />
     <item
         android:id="@+id/expenseListFragment"
-        android:title="Expenses"
-        android:icon="@android:drawable/ic_menu_recent_history" />
+        android:title="Log"
+        android:icon="@drawable/ic_nav_log" />
     <item
         android:id="@+id/categoryListFragment"
-        android:title="Categories"
-        android:icon="@android:drawable/ic_menu_sort_by_size" />
+        android:title="Loadout"
+        android:icon="@drawable/ic_nav_loadout" />
     <item
         android:id="@+id/debtBossFragment"
-        android:title="Debts"
-        android:icon="@android:drawable/ic_menu_manage" />
+        android:title="Bosses"
+        android:icon="@drawable/ic_nav_boss" />
 
     <item
         android:id="@+id/moreFragment"
-        android:icon="@android:drawable/ic_menu_more"
-        android:title="More" />
+        android:icon="@drawable/ic_nav_base"
+        android:title="Base" />
 </menu>

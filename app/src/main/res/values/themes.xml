@@ -1,16 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.BudgetTracker" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:fontFamily">sans</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:colorAccent">@color/accent_blue</item>
-        <item name="colorPrimary">@color/accent_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/ink_secondary</item>
-        <item name="colorSurface">@color/surface_panel</item>
-        <item name="colorOnSurface">@color/ink_primary</item>
-        <item name="android:windowBackground">@color/surface_canvas</item>
+    <style name="Base.Theme.BudgetTracker" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:colorAccent">@color/ra_primary</item>
+        <item name="colorPrimary">@color/ra_primary</item>
+        <item name="colorOnPrimary">@color/ra_bg</item>
+        <item name="colorSecondary">@color/ra_primary_soft</item>
+        <item name="colorSurface">@color/ra_surface_card</item>
+        <item name="colorOnSurface">@color/ra_text</item>
+        <item name="android:windowBackground">@color/ra_bg</item>
     </style>
 
     <!-- Recovery Arcade theme (single style direction; no theme switching) -->
@@ -41,6 +41,8 @@
 
         <item name="colorError">@color/ra_danger</item>
         <item name="colorOnError">@color/ra_bg</item>
+        <item name="colorSurfaceVariant">@color/ra_surface_elevated</item>
+        <item name="colorOnSurfaceVariant">@color/ra_text_muted</item>
 
         <!-- Text fields -->
         <item name="textInputStyle">@style/RaTextInputLayout</item>

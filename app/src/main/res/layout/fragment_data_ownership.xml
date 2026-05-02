@@ -35,13 +35,13 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="14dp"
-            android:text="Create local backup" />
+            android:text="Create Local Backup" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="Backups are copied to app-controlled local storage. Keep a separate device backup if you need protection against device loss or app uninstall."
+            android:text="Backups are copied to your local data vault. Keep a separate device backup if you need protection against device loss or app uninstall."
             android:textColor="@color/ra_text_muted"
             android:textSize="14sp" />
     </LinearLayout>

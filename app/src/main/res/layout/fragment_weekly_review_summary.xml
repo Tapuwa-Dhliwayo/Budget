@@ -14,7 +14,7 @@
             android:id="@+id/text_weekly_review_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Weekly Review Summary"
+            android:text="Weekly Debrief"
             style="@style/RaText.ScreenTitle" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:text="Historical Trend"
+            android:text="Run History"
             style="@style/RaText.SectionTitle"
             android:textAllCaps="false" />
 

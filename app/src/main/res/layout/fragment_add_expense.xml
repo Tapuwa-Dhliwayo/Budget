@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Expense"
+            android:text="Log Spending Damage"
             style="@style/RaText.ScreenTitle"
             android:layout_marginBottom="24dp" />
 
@@ -23,7 +23,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Amount"
+            android:hint="Damage amount"
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -39,7 +39,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description"
+            android:hint="Log note"
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -55,7 +55,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category"
+            android:text="Loadout category"
             android:textSize="16sp"
             android:textColor="@color/ra_text"
             android:layout_marginBottom="8dp" />
@@ -83,7 +83,7 @@
             android:id="@+id/checkbox_recurring"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recurring expense"
+            android:text="Monthly recurring damage"
             android:textColor="@color/ra_text"
             android:layout_marginBottom="24dp" />
 
@@ -106,7 +106,7 @@
                 android:id="@+id/button_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save" />
+                android:text="Log Damage" />
 
         </LinearLayout>
 

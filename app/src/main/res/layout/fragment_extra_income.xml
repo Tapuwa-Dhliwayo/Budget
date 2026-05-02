@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="Entries this month"
+                android:text="Bonus Credits This Month"
                 style="@style/RaText.SectionTitle"
                 android:textAllCaps="false" />
 
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="No extra income recorded this month yet. Add overtime, bonuses, refunds, side work, or once-off money here."
+                android:text="No bonus credits recorded this month yet. Add overtime, bonuses, refunds, side work, or once-off money here."
                 android:textColor="@color/ra_text_muted"
                 android:textSize="14sp"
                 android:visibility="gone" />

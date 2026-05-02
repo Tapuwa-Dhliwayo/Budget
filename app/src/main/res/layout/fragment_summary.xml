@@ -42,7 +42,7 @@
                     android:padding="16dp">
 
                     <TextView
-                        android:text="Budget Overview"
+                        android:text="Recovery Overview"
                         style="@style/RaText.SectionTitle"
                         android:textAllCaps="false"
                         android:layout_marginBottom="8dp"
@@ -77,7 +77,7 @@
 
             <!-- Category Breakdown -->
             <TextView
-                android:text="Spending Damage"
+                android:text="Damage Report"
                 style="@style/RaText.SectionTitle"
                 android:textAllCaps="false"
                 android:layout_marginBottom="12dp"
@@ -93,7 +93,7 @@
 
             <!-- Top 3 Categories -->
             <TextView
-                android:text="Top Pressure Areas"
+                android:text="Pressure Zones"
                 style="@style/RaText.SectionTitle"
                 android:textAllCaps="false"
                 android:layout_marginBottom="12dp"

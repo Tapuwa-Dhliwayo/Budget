@@ -59,9 +59,10 @@
             <!-- ✅ Edit Budget Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_edit_budget"
+                style="@style/RaButton.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit Budget"
+                android:text="Tune Loadout"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp" />
 
@@ -94,24 +95,115 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Weekly Allowance"
+                        android:text="Safe Spend Shield"
                         style="@style/RaText.SectionTitle"
                         android:textAllCaps="false" />
 
-                    <TextView
-                        android:id="@+id/text_weekly_allowance_summary"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/ra_text"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="12dp"
+                        android:baselineAligned="false"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_weekly_allowance_summary"
+                                style="@style/RaText.Metric"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="R0" />
+
+                            <TextView
+                                android:id="@+id/text_weekly_shield_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:background="@drawable/ra_chip_bg"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingEnd="10dp"
+                                android:paddingBottom="5dp"
+                                android:text="SHIELD NOT SET"
+                                android:textColor="@color/ra_text_muted"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:layout_width="92dp"
+                            android:layout_height="92dp"
+                            android:layout_marginStart="16dp">
+
+                            <com.google.android.material.progressindicator.CircularProgressIndicator
+                                android:id="@+id/progress_weekly_shield"
+                                android:layout_width="92dp"
+                                android:layout_height="92dp"
+                                android:layout_gravity="center"
+                                android:progress="0"
+                                app:indicatorColor="@color/ra_primary"
+                                app:indicatorSize="88dp"
+                                app:trackColor="@color/ra_surface_elevated"
+                                app:trackThickness="8dp" />
+
+                            <TextView
+                                android:id="@+id/text_weekly_shield_percent"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="0%"
+                                android:textColor="@color/ra_primary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/ra_inner_panel_bg"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:id="@+id/text_weekly_shield_spent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/ra_text"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_weekly_shield_daily"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/ra_text_muted"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/text_weekly_shield_window"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/ra_text_subtle"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/text_weekly_allowance_guidance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/ra_inner_panel_bg"
+                        android:padding="12dp"
                         android:textColor="@color/ra_text_muted"
                         android:textSize="14sp" />
 
@@ -157,7 +249,7 @@
                             style="@style/RaButton.Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Complete Review" />
+                            android:text="Complete Debrief" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_weekly_summary"
@@ -165,7 +257,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Summary" />
+                            android:text="Intel" />
 
                     </LinearLayout>
 
@@ -180,7 +272,7 @@
                             style="@style/RaButton.Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Category Limits" />
+                            android:text="Damage Caps" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_edit_weekly_allowance"
@@ -188,14 +280,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                        android:text="Set Allowance" />
+                        android:text="Set Shield" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- ✅ Daily Spending Trend -->
             <TextView
-                android:text="Recovery Trend"
+                android:text="Recovery Run"
                 style="@style/RaText.SectionTitle"
                 android:textAllCaps="false"
                 android:layout_marginTop="24dp"
@@ -211,7 +303,7 @@
 
             <!-- ✅ Category Breakdown -->
             <TextView
-                android:text="Spending Damage"
+                android:text="Damage Report"
                 style="@style/RaText.SectionTitle"
                 android:textAllCaps="false"
                 android:layout_marginTop="24dp"
@@ -228,7 +320,7 @@
             <!-- Top Categories -->
             <TextView
                 android:id="@+id/text_top_categories"
-                android:text="Category Pressure"
+                android:text="Pressure Zones"
                 style="@style/RaText.SectionTitle"
                 android:textAllCaps="false"
                 android:layout_marginTop="24dp"

@@ -1,5 +1,6 @@
 package com.example.budgettracker.ui.debt
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
@@ -22,6 +23,7 @@ import com.example.budgettracker.data.repository.DebtRepository
 import com.example.budgettracker.ui.common.configureToolbar
 import com.example.budgettracker.utils.CurrencyUtils
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -62,7 +64,7 @@ class DebtBossFragment : Fragment(R.layout.fragment_debt_boss) {
         super.onResume()
         configureToolbar(
             title = "Debt Bosses",
-            subtitle = "Defeat debt one payment at a time",
+            subtitle = "Deal real damage one payment at a time",
             menuRes = null
         )
         viewModel.load()
@@ -70,77 +72,147 @@ class DebtBossFragment : Fragment(R.layout.fragment_debt_boss) {
 
     private fun renderSummary(textView: TextView, summary: DebtBattleSummary?) {
         if (summary == null) {
-            textView.text = "Debt Battle Summary\nAdd a debt boss to begin tracking progress."
+            textView.text = "Boss Arena\nAdd a debt boss to begin tracking progress."
             return
         }
         val strongest = summary.strongestAttack ?: "No extra attacks logged yet"
-        textView.text = "Debt Battle Summary\n" +
+        textView.text = "Boss Arena\n" +
                 "Total HP: ${CurrencyUtils.format(summary.totalCurrentBalance)}\n" +
-                "Damage dealt: ${CurrencyUtils.format(summary.totalDamageDealt)}\n" +
-                "This month net damage: ${CurrencyUtils.format(summary.netDamage)}\n" +
+                "Lifetime damage: ${CurrencyUtils.format(summary.totalDamageDealt)}\n" +
+                "This month: ${CurrencyUtils.format(summary.netDamage)} net damage\n" +
                 "Minimum: ${CurrencyUtils.format(summary.minimumPayments)} · Extra: ${CurrencyUtils.format(summary.extraPayments)} · Interest/fees: ${CurrencyUtils.format(summary.interestAndFees)}\n" +
                 "Strongest attack: $strongest"
     }
 
     private fun createDebtCard(debt: DebtBoss): View {
-        val card = LinearLayout(requireContext()).apply {
+        val card = MaterialCardView(requireContext()).apply {
+            radius = dp(22).toFloat()
+            cardElevation = 0f
+            setCardBackgroundColor(requireContext().getColor(R.color.ra_surface_card))
+            strokeColor = requireContext().getColor(colorForDebt(debt))
+            strokeWidth = dp(1)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(0, dp(12), 0, 0) }
+        }
+
+        val content = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(18, 16, 18, 16)
-            setBackgroundResource(R.drawable.bg_expense_filter_panel)
-            val params = LinearLayout.LayoutParams(
+            setPadding(dp(18), dp(16), dp(18), dp(16))
+            layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            params.setMargins(0, 12, 0, 0)
-            layoutParams = params
         }
 
-        val title = TextView(requireContext()).apply {
-            text = "${debt.name} · ${debt.debtType.label}"
-            textSize = 18f
-            setTextColor(requireContext().getColor(R.color.ink_primary))
-            setTypeface(typeface, android.graphics.Typeface.BOLD)
+        val header = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = android.view.Gravity.CENTER_VERTICAL
         }
-        val hp = TextView(requireContext()).apply {
-            text = "Boss HP: ${CurrencyUtils.format(debt.currentBalance)} of ${CurrencyUtils.format(debt.startingBalance)}\n" +
-                    "Damage dealt: ${CurrencyUtils.format(debt.damageDealt)} (${String.format("%.0f", debt.progressPercentage)}%)\n" +
-                    "Minimum damage: ${CurrencyUtils.format(debt.minimumPayment)} · Strategy: ${debt.strategy.label}\n" +
-                    debt.projectedPayoffLabel
+        header.addView(TextView(requireContext()).apply {
+            text = debt.name
+            textSize = 20f
+            setTextColor(requireContext().getColor(R.color.ra_text))
+            setTypeface(typeface, Typeface.BOLD)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        })
+        header.addView(TextView(requireContext()).apply {
+            text = threatLabel(debt).uppercase()
+            textSize = 10f
+            setTypeface(typeface, Typeface.BOLD)
+            setTextColor(requireContext().getColor(colorForDebt(debt)))
+            setBackgroundResource(R.drawable.ra_chip_bg)
+            setPadding(dp(9), dp(4), dp(9), dp(4))
+        })
+
+        val type = TextView(requireContext()).apply {
+            text = "${debt.debtType.label} · ${debt.strategy.label} strategy"
+            textSize = 13f
+            setTextColor(requireContext().getColor(R.color.ra_text_subtle))
+            setPadding(0, dp(4), 0, 0)
+        }
+
+        val hpRow = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = android.view.Gravity.BOTTOM
+            setPadding(0, dp(14), 0, 0)
+        }
+        hpRow.addView(TextView(requireContext()).apply {
+            text = CurrencyUtils.format(debt.currentBalance)
+            textSize = 28f
+            setTextColor(requireContext().getColor(R.color.ra_text))
+            setTypeface(typeface, Typeface.BOLD)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        })
+        hpRow.addView(TextView(requireContext()).apply {
+            text = "${String.format("%.0f", debt.progressPercentage)}% DMG"
             textSize = 14f
-            setTextColor(requireContext().getColor(R.color.ink_secondary))
-        }
+            setTextColor(requireContext().getColor(colorForDebt(debt)))
+            setTypeface(typeface, Typeface.BOLD)
+        })
+
         val progress = LinearProgressIndicator(requireContext()).apply {
             max = 100
             setProgress(debt.progressPercentage.toInt().coerceIn(0, 100), false)
+            setIndicatorColor(requireContext().getColor(colorForDebt(debt)))
+            trackColor = requireContext().getColor(R.color.ra_surface_elevated)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(0, dp(10), 0, dp(10)) }
         }
+
+        val battleIntel = TextView(requireContext()).apply {
+            text = "Starting HP: ${CurrencyUtils.format(debt.startingBalance)} · Damage dealt: ${CurrencyUtils.format(debt.damageDealt)}\n" +
+                    "Minimum hit: ${CurrencyUtils.format(debt.minimumPayment)} · Due day: ${debt.paymentDueDay}\n" +
+                    debt.projectedPayoffLabel
+            textSize = 14f
+            setTextColor(requireContext().getColor(R.color.ra_text_muted))
+            setBackgroundResource(R.drawable.ra_inner_panel_bg)
+            setPadding(dp(12), dp(10), dp(12), dp(10))
+        }
+
         val warning = TextView(requireContext()).apply {
             text = debt.warning.orEmpty()
             visibility = if (debt.warning == null) View.GONE else View.VISIBLE
             textSize = 13f
-            setTextColor(requireContext().getColor(R.color.red_700))
+            setTextColor(requireContext().getColor(R.color.ra_danger))
+            setPadding(0, dp(10), 0, 0)
         }
         val actions = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.HORIZONTAL
-            setPadding(0, 10, 0, 0)
+            setPadding(0, dp(12), 0, 0)
         }
         actions.addView(MaterialButton(requireContext()).apply {
-            text = "Log Payment"
+            text = "Hit"
+            minWidth = 0
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             setOnClickListener { showPaymentDialog(debt, DebtPaymentType.MINIMUM) }
         })
         actions.addView(MaterialButton(requireContext()).apply {
             text = "Extra"
+            minWidth = 0
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                setMargins(dp(8), 0, dp(8), 0)
+            }
             setOnClickListener { showPaymentDialog(debt, DebtPaymentType.EXTRA) }
         })
         actions.addView(MaterialButton(requireContext()).apply {
-            text = "Interest/Fee"
+            text = "Regen"
+            minWidth = 0
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             setOnClickListener { showPaymentDialog(debt, DebtPaymentType.INTEREST) }
         })
 
-        card.addView(title)
-        card.addView(hp)
-        card.addView(progress)
-        card.addView(warning)
-        card.addView(actions)
+        content.addView(header)
+        content.addView(type)
+        content.addView(hpRow)
+        content.addView(progress)
+        content.addView(battleIntel)
+        content.addView(warning)
+        content.addView(actions)
+        card.addView(content)
         return card
     }
 
@@ -191,7 +263,7 @@ class DebtBossFragment : Fragment(R.layout.fragment_debt_boss) {
         typeSpinner.setSelection(DebtPaymentType.values().indexOf(defaultType))
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Log action for ${debt.name}")
+            .setTitle("Log boss action for ${debt.name}")
             .setView(view)
             .setPositiveButton("Save") { _, _ ->
                 viewModel.recordPayment(
@@ -209,5 +281,29 @@ class DebtBossFragment : Fragment(R.layout.fragment_debt_boss) {
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
+    }
+
+    private fun threatLabel(debt: DebtBoss): String {
+        return when {
+            debt.warning != null -> "Threat Alert"
+            debt.progressPercentage >= 75.0 -> "Near Defeat"
+            debt.progressPercentage >= 40.0 -> "Weakened"
+            debt.progressPercentage > 0.0 -> "Engaged"
+            else -> "Unscouted"
+        }
+    }
+
+    private fun colorForDebt(debt: DebtBoss): Int {
+        return when {
+            debt.warning != null -> R.color.ra_danger
+            debt.progressPercentage >= 75.0 -> R.color.ra_success
+            debt.progressPercentage >= 40.0 -> R.color.ra_primary
+            debt.progressPercentage > 0.0 -> R.color.ra_warning
+            else -> R.color.ra_text_subtle
+        }
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 }

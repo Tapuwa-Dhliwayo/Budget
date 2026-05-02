@@ -1,5 +1,96 @@
 # UI/UX Changelog
 
+## 2026-05-02 — Base Navigation Fix and Base Screen Upgrade
+
+### Changed
+- Replaced default bottom navigation wiring with explicit tab-root navigation so Base child screens are cleared when switching tabs.
+- Added toolbar Up navigation for non-tab destinations, including Base child screens.
+- Upgraded Base hub and child screens with arcade panels, chips, progress/status styling, and stronger Recovery Arcade copy.
+- Added explicit Damage Report toolbar configuration when opened from Base.
+
+### Why
+- Base child screens previously had no clean way back and could remain visually selected when switching bottom tabs.
+- Base screens should feel like recovery command modules, not plain report pages.
+
+### Tests
+- `./gradlew assembleDebug` passed.
+- `./gradlew test` passed.
+
+## 2026-05-02 — Loadout and Bosses Arcade Upgrade
+
+### Changed
+- Rebuilt Loadout category rows as shield cards with readiness chips, ranked labels, dynamic shield meters, and cap guidance.
+- Reworked the Loadout intro into an armory-style panel.
+- Rebuilt Debt Boss cards as battle cards with threat chips, HP metrics, damage percentage, progress meters, battle intel, warnings, and compact action buttons.
+
+### Why
+- Loadout and Bosses are core game-metaphor screens and should carry the arcade HUD visual language as strongly as the main dashboard.
+- The new cards give users scan-friendly status without changing financial logic.
+
+### Tests
+- `./gradlew assembleDebug` passed.
+- `./gradlew test` passed.
+
+## 2026-05-02 — Damage Log Gamified Pass
+
+### Changed
+- Updated the Damage Log top panel into a Mission Scope control area with a stronger damage summary and run-rank chip.
+- Reworked log cards into arcade-style damage entries with severity labels, XP markers, auto-damage badges, and dynamic stroke colors.
+- Improved empty-state presentation so the screen does not fall back to plain text.
+
+### Why
+- The Damage Log should feel like an honest tactical recovery log, not a bank transaction list.
+- Entry severity gives spending logs a quick scan hierarchy without shaming the user.
+
+### Tests
+- `./gradlew assembleDebug` passed.
+- `./gradlew test` passed.
+
+## 2026-05-02 — Main HUD Graph and Gamified Reports
+
+### Changed
+- Replaced Recovery Run text rows with a 7-day arcade-style spending bar graph.
+- Replaced Damage Report text rows with category cards, progress meters, status labels, and shield remaining/breach summaries.
+- Replaced Pressure Zones text rows with ranked gamified alert cards and recovery-oriented guidance.
+
+### Why
+- The dashboard sections now communicate patterns visually instead of reading like text reports.
+- Keeps the main HUD closer to the supplied arcade prototype while preserving the same local financial data.
+
+### Tests
+- `./gradlew assembleDebug` passed.
+- `./gradlew test` passed.
+
+## 2026-05-02 — Main HUD Safe Spend Shield Upgrade
+
+### Changed
+- Rebuilt the Dashboard Safe Spend Shield section from a multiline text block into a HUD card.
+- Added a large remaining-shield metric, status chip, circular shield percentage indicator, compact spend intel panel, and separate guidance callout.
+
+### Why
+- The first Recovery Arcade pass changed language, but this section still read like a spreadsheet summary.
+- The main HUD now surfaces weekly allowance status visually and makes the next useful spending signal easier to scan.
+
+### Tests
+- `./gradlew assembleDebug` passed.
+
+## 2026-05-02 — Recovery Arcade Stitch Prototype Integration
+
+### Changed
+- Adapted the supplied Google Stitch prototype direction into native Android resources and screens.
+- Updated bottom navigation labels/icons to HUD, Log, Loadout, Bosses, and Base.
+- Expanded Recovery Arcade typography and reinforced dark HUD chrome.
+- Reworked screen and dialog copy around Safe Spend Shield, Damage Log, Spending Loadout, Weekly Debrief, Bonus Credits, Resource Vaults, Net Worth Meter, Data Vault, and Recovery XP.
+- Updated generated Kotlin UI text and status colors to use Recovery Arcade tokens instead of leftover light-theme tokens.
+
+### Why
+- Moves the app further away from a styled spreadsheet and toward a cohesive financial recovery game HUD.
+- Keeps the language practical and non-shaming while making recurring workflows feel more motivating.
+
+### Tests
+- `./gradlew assembleDebug` passed.
+- `./gradlew test` passed.
+
 ## 2026-05-01 — UI/UX Audit + Token Baseline
 
 ### Changed

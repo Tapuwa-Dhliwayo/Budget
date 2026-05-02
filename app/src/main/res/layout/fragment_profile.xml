@@ -13,11 +13,21 @@
         android:gravity="center_horizontal">
 
         <TextView
-            android:text="User Profile"
+            android:text="Pilot Profile"
             style="@style/RaText.ScreenTitle"
             android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/ra_inner_panel_bg"
+            android:padding="14dp"
+            android:text="Pilot Identity\nThis local profile personalizes recovery prompts without creating an account."
+            android:textColor="@color/ra_text_muted"
+            android:textSize="14sp" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -39,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:hint="First Name">
+                    android:hint="First name">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_first_name"
@@ -52,7 +62,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Last Name">
+                    android:hint="Last name">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_last_name"
@@ -68,7 +78,7 @@
             android:id="@+id/btn_save_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Profile"
+            android:text="Save Pilot"
             android:textSize="16sp"
             android:padding="14dp"
             android:layout_marginBottom="16dp" />

@@ -50,7 +50,7 @@ class DataOwnershipFragment : Fragment(R.layout.fragment_data_ownership) {
     override fun onResume() {
         super.onResume()
         configureToolbar(
-            title = "Data Ownership",
+            title = "Data Vault",
             subtitle = "Local-first and private",
             menuRes = null
         )
@@ -58,18 +58,26 @@ class DataOwnershipFragment : Fragment(R.layout.fragment_data_ownership) {
     }
 
     private fun renderSummary(textView: TextView) {
-        textView.text = "Your financial recovery data stays on this device.\n\n" +
+        textView.text = "Your recovery data stays in this local vault.\n\n" +
                 "Mini Budget does not require an account, internet connection, bank sync, or cloud service for core features."
+        textView.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+        textView.setPadding(dp(14), dp(12), dp(14), dp(12))
     }
 
     private fun renderBackupStatus(textView: TextView, status: BackupStatus) {
         val lastBackup = status.lastBackupDate?.let { DateUtils.formatDateForDisplay(it) } ?: "No backup yet"
         val days = status.daysSinceBackup?.let { "$it days ago" } ?: "Not available"
         val path = status.lastBackupPath ?: "Create a backup to record the local file path."
-        textView.text = "Backup Status\n" +
+        textView.text = "Vault Backup Status\n" +
                 "Last backup: $lastBackup\n" +
                 "Age: $days\n" +
                 "Location: $path\n\n" +
                 status.guidance
+        textView.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+        textView.setPadding(dp(14), dp(12), dp(14), dp(12))
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 }

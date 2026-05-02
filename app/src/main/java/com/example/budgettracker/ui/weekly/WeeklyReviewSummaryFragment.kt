@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.content.res.ColorStateList
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -43,9 +44,13 @@ class WeeklyReviewSummaryFragment : Fragment(R.layout.fragment_weekly_review_sum
             val history = repository.getRecentWeekSummaries(limit = 8)
 
             overview.text = formatOverview(current)
+            stylePanel(overview)
             notes.text = formatNotes(current)
+            stylePanel(notes)
             categories.text = formatCategories(current)
+            stylePanel(categories)
             actions.text = formatActions(current)
+            stylePanel(actions)
             renderTrend(trend, history)
         }
     }
@@ -53,37 +58,37 @@ class WeeklyReviewSummaryFragment : Fragment(R.layout.fragment_weekly_review_sum
     override fun onResume() {
         super.onResume()
         configureToolbar(
-            title = "Weekly Review",
-            subtitle = "Pressure, actions, and history",
+            title = "Weekly Debrief",
+            subtitle = "Shield pressure, recovery actions, and history",
             menuRes = null
         )
     }
 
     private fun formatOverview(summary: WeeklyAllowanceSummary): String {
         val result = if (summary.remaining >= 0.0) {
-            "${CurrencyUtils.format(summary.remaining)} left"
+            "${CurrencyUtils.format(summary.remaining)} shield strength"
         } else {
-            "${CurrencyUtils.format(-summary.remaining)} over plan"
+            "${CurrencyUtils.format(-summary.remaining)} shield breach"
         }
         return "Week ${summary.weekStartDate} to ${summary.weekEndDate}\n" +
-                "${CurrencyUtils.format(summary.spent)} spent of ${CurrencyUtils.format(summary.allowanceAmount)}\n" +
+                "${CurrencyUtils.format(summary.spent)} damage of ${CurrencyUtils.format(summary.allowanceAmount)} shield\n" +
                 "$result\nStatus: ${summary.status.label}"
     }
 
     private fun formatNotes(summary: WeeklyAllowanceSummary): String {
-        val review = summary.review ?: return "Review notes: not completed yet."
+        val review = summary.review ?: return "Debrief notes: not completed yet."
         return "What went well: ${review.wentWell.ifBlank { "Not captured" }}\n" +
                 "Challenge: ${review.challenge.ifBlank { "Not captured" }}\n" +
                 "Next adjustment: ${review.nextWeekAdjustment.ifBlank { "Not captured" }}"
     }
 
     private fun formatCategories(summary: WeeklyAllowanceSummary): String {
-        if (summary.categoryPressures.isEmpty()) return "Category pressure: no weekly spending yet."
+        if (summary.categoryPressures.isEmpty()) return "Pressure zones: no weekly spending yet."
         return summary.categoryPressures.joinToString(separator = "\n") { pressure ->
             val limit = pressure.weeklyLimit?.let {
-                " / ${CurrencyUtils.format(it)} limit"
+                " / ${CurrencyUtils.format(it)} cap"
             }.orEmpty()
-            val status = if (pressure.isOverLimit) " over limit" else ""
+            val status = if (pressure.isOverLimit) " over cap" else ""
             "${pressure.categoryIcon} ${pressure.categoryName}: ${CurrencyUtils.format(pressure.amount)}$limit$status"
         }
     }
@@ -103,7 +108,9 @@ class WeeklyReviewSummaryFragment : Fragment(R.layout.fragment_weekly_review_sum
         if (history.isEmpty()) {
             container.addView(TextView(requireContext()).apply {
                 text = "No weekly history yet."
-                setTextColor(requireContext().getColor(R.color.ink_secondary))
+                setTextColor(requireContext().getColor(R.color.ra_text_muted))
+                setBackgroundResource(R.drawable.ra_inner_panel_bg)
+                setPadding(dp(14), dp(10), dp(14), dp(10))
             })
             return
         }
@@ -114,13 +121,34 @@ class WeeklyReviewSummaryFragment : Fragment(R.layout.fragment_weekly_review_sum
             } else 0
             container.addView(TextView(requireContext()).apply {
                 text = "${week.weekStartDate}: ${CurrencyUtils.format(week.spent)} of ${CurrencyUtils.format(week.allowanceAmount)} (${week.status.label})"
-                setTextColor(requireContext().getColor(R.color.ink_secondary))
+                setTextColor(requireContext().getColor(R.color.ra_text_muted))
                 textSize = 13f
+                setBackgroundResource(R.drawable.ra_inner_panel_bg)
+                setPadding(dp(12), dp(8), dp(12), dp(8))
             })
             container.addView(ProgressBar(requireContext(), null, android.R.attr.progressBarStyleHorizontal).apply {
                 max = 150
                 progress = percent
+                progressTintList = ColorStateList.valueOf(requireContext().getColor(colorForPercent(percent)))
+                progressBackgroundTintList = ColorStateList.valueOf(requireContext().getColor(R.color.ra_surface_elevated))
             })
         }
+    }
+
+    private fun stylePanel(textView: TextView) {
+        textView.setBackgroundResource(R.drawable.ra_inner_panel_bg)
+        textView.setPadding(dp(14), dp(10), dp(14), dp(10))
+    }
+
+    private fun colorForPercent(percent: Int): Int {
+        return when {
+            percent >= 100 -> R.color.ra_danger
+            percent >= 80 -> R.color.ra_warning
+            else -> R.color.ra_success
+        }
+    }
+
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
     }
 }
