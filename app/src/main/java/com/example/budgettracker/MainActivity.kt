@@ -9,11 +9,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.appbar.MaterialToolbar
+import com.example.budgettracker.utils.AppPreferences
+import com.example.budgettracker.utils.DateUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        when (AppPreferences.getTheme(this)) {
+            "soft_recovery" -> setTheme(R.style.Theme_BudgetTracker_SoftRecovery)
+            else -> setTheme(R.style.Theme_BudgetTracker_RecoveryArcade)
+        }
+        DateUtils.budgetStartDay = AppPreferences.getBudgetStartDay(this)
         super.onCreate(savedInstanceState)
 
         // Enable edge-to-edge

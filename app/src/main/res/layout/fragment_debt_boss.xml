@@ -25,15 +25,28 @@
                 android:textColor="@color/ra_text"
                 android:textSize="16sp" />
 
-            <TextView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_empty_debts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/ra_surface_card"
+                app:cardCornerRadius="22dp"
+                app:strokeColor="@color/ra_primary_soft"
+                app:strokeWidth="1dp">
+
+                <TextView
                 android:id="@+id/text_empty_debts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="No debt bosses yet. Add one when you are ready to face it clearly."
                 android:textColor="@color/ra_text_muted"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:padding="16dp"
+                android:text="🎮 Arena is clear. Add your first Debt Boss to begin your recovery battle and track real progress."
+                />
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 

@@ -21,17 +21,21 @@ class UserProfileRepository(
             id = 1,
             firstName = "User",
             lastName = "",
-            createdDate = LocalDate.now().toString()
+            createdDate = LocalDate.now().toString(),
+            budgetStartDay = 1,
+            themeKey = "recovery_arcade"
         )
         dao.insertUser(defaultUser)
         return defaultUser
     }
 
-    suspend fun updateUser(firstName: String, lastName: String) {
+    suspend fun updateUser(firstName: String, lastName: String, budgetStartDay: Int, themeKey: String) {
         val user = getUser() ?: createDefaultUser()
         val updatedUser = user.copy(
             firstName = firstName,
-            lastName = lastName
+            lastName = lastName,
+            budgetStartDay = budgetStartDay.coerceIn(1, 28),
+            themeKey = themeKey
         )
         dao.updateUser(updatedUser)
     }

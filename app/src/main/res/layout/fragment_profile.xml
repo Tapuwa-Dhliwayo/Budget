@@ -71,6 +71,34 @@
                         android:inputType="textPersonName"
                         android:textColor="@color/ra_text" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Budget cycle starts on day (1-28)">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_budget_start_day"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textColor="@color/ra_text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Theme"
+                    android:textColor="@color/ra_text_muted" />
+
+                <Spinner
+                    android:id="@+id/spinner_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

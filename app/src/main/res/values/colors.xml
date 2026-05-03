@@ -58,4 +58,16 @@
     <!-- Note: Android colors.xml cannot represent rgba() directly. -->
     <color name="ra_border_glow">#5938BDF8</color>
 
+
+    <color name="sr_bg">#F5F7FA</color>
+    <color name="sr_surface_deep">#E8EEF5</color>
+    <color name="sr_surface_card">#FFFFFF</color>
+    <color name="sr_surface_elevated">#DCE6F0</color>
+    <color name="sr_primary">#6B8CAE</color>
+    <color name="sr_primary_soft">#8FAAC5</color>
+    <color name="sr_accent">#7FBFA6</color>
+    <color name="sr_text">#1F2A37</color>
+    <color name="sr_text_muted">#4B5D70</color>
+    <color name="sr_border">#C8D5E3</color>
+
 </resources>

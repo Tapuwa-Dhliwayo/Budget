@@ -52,5 +52,22 @@
         <item name="floatingActionButtonStyle">@style/RaFab</item>
     </style>
 
+    
+    <style name="Theme.BudgetTracker.SoftRecovery" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="colorPrimary">@color/sr_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/sr_primary_soft</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSurface">@color/sr_surface_card</item>
+        <item name="colorOnSurface">@color/sr_text</item>
+        <item name="android:colorBackground">@color/sr_bg</item>
+        <item name="android:windowBackground">@color/sr_bg</item>
+        <item name="android:textColorPrimary">@color/sr_text</item>
+        <item name="android:textColorSecondary">@color/sr_text_muted</item>
+    </style>
+
     <style name="Theme.BudgetTracker" parent="Theme.BudgetTracker.RecoveryArcade" />
 </resources>

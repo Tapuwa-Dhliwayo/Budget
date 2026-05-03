@@ -29,7 +29,9 @@ class ProfileViewModel(
                     isLoading = false,
                     firstName = user.firstName,
                     lastName = user.lastName,
-                    fullName = "${user.firstName} ${user.lastName}".trim()
+                    fullName = "${user.firstName} ${user.lastName}".trim(),
+                    budgetStartDay = user.budgetStartDay,
+                    themeKey = user.themeKey
                 )
             } catch (e: Exception) {
                 _uiState.value = ProfileUiState(
@@ -40,16 +42,18 @@ class ProfileViewModel(
         }
     }
 
-    fun updateProfile(firstName: String, lastName: String) {
+    fun updateProfile(firstName: String, lastName: String, budgetStartDay: Int, themeKey: String) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, saveSuccess = false)
             try {
-                userProfileRepository.updateUser(firstName, lastName)
+                userProfileRepository.updateUser(firstName, lastName, budgetStartDay, themeKey)
                 _uiState.value = ProfileUiState(
                     isLoading = false,
                     firstName = firstName,
                     lastName = lastName,
                     fullName = "$firstName $lastName".trim(),
+                    budgetStartDay = budgetStartDay,
+                    themeKey = themeKey,
                     saveSuccess = true
                 )
             } catch (e: Exception) {

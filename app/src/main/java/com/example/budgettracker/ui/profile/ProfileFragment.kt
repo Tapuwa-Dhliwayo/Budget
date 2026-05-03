@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import android.widget.Spinner
+import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +16,8 @@ import com.example.budgettracker.R
 import com.example.budgettracker.data.database.AppDatabase
 import com.example.budgettracker.data.repository.UserProfileRepository
 import com.example.budgettracker.ui.common.configureToolbar
+import com.example.budgettracker.utils.AppPreferences
+import com.example.budgettracker.utils.DateUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
@@ -31,14 +35,21 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val firstNameInput: EditText = view.findViewById(R.id.edit_first_name)
         val lastNameInput: EditText = view.findViewById(R.id.edit_last_name)
+        val budgetStartDayInput: EditText = view.findViewById(R.id.edit_budget_start_day)
+        val themeSpinner: Spinner = view.findViewById(R.id.spinner_theme)
         val saveButton: Button = view.findViewById(R.id.btn_save_profile)
         val exitButton: Button = view.findViewById(R.id.btn_exit_app)
+
+        val themeValues = listOf("Recovery Arcade", "Soft Recovery")
+        themeSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, themeValues)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->
                 if (!state.isLoading) {
                     firstNameInput.setText(state.firstName)
                     lastNameInput.setText(state.lastName)
+                    budgetStartDayInput.setText(state.budgetStartDay.toString())
+                    themeSpinner.setSelection(if (state.themeKey == "soft_recovery") 1 else 0)
 
                     if (state.saveSuccess) {
                         Toast.makeText(
@@ -75,7 +86,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 return@setOnClickListener
             }
 
-            viewModel.updateProfile(firstName, lastName)
+            val day = budgetStartDayInput.text.toString().toIntOrNull()?.coerceIn(1, 28) ?: 1
+            val theme = if (themeSpinner.selectedItemPosition == 1) "soft_recovery" else "recovery_arcade"
+            AppPreferences.setBudgetStartDay(requireContext(), day)
+            AppPreferences.setTheme(requireContext(), theme)
+            DateUtils.budgetStartDay = day
+            viewModel.updateProfile(firstName, lastName, day, theme)
+            requireActivity().recreate()
         }
 
         exitButton.setOnClickListener {
