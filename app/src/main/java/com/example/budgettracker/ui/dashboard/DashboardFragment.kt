@@ -129,7 +129,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 )
 
                 summary.text =
-                    "Shield used ${com.example.budgettracker.utils.CurrencyUtils.format(state.totalSpent)} / ${com.example.budgettracker.utils.CurrencyUtils.format(state.totalBudget)}\nSafe spend remaining ${com.example.budgettracker.utils.CurrencyUtils.format(state.remaining)}"
+                    "Budget used ${com.example.budgettracker.utils.CurrencyUtils.format(state.totalSpent)} / ${com.example.budgettracker.utils.CurrencyUtils.format(state.totalBudget)}\nSafe spend remaining ${com.example.budgettracker.utils.CurrencyUtils.format(state.remaining)}"
 
                 categoriesLayout.removeAllViews()
                 if (state.topCategories.isEmpty()) {
@@ -165,7 +165,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     weeklyShieldWindow.text = formatWeeklyShieldWindow(allowance)
                     weeklyGuidance.text = allowance.guidance
                     editWeeklyAllowanceBtn.text =
-                        if (allowance.allowanceSet) "Update Shield" else "Set Shield"
+                        if (allowance.allowanceSet) "Update Weekly Plan" else "Set Weekly Plan"
                     weeklyGuidance.setTextColor(
                         requireContext().getColor(colorForWeeklyStatus(allowance.status))
                     )
@@ -173,7 +173,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     renderRecoveryActions(weeklyActions, allowance)
                     weeklyReview.text = formatWeeklyReview(allowance)
                     reviewWeeklyAllowanceBtn.text =
-                        if (allowance.review == null) "Complete Debrief" else "Update Debrief"
+                        if (allowance.review == null) "Complete Weekly Review" else "Update Weekly Review"
                 }
 
                 weeklyHistory.text = formatWeeklyHistory(state.weeklyAllowanceHistory)
@@ -189,8 +189,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val budgetInput = dialogView.findViewById<EditText>(R.id.edit_budget_amount)
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Tune Monthly Loadout")
-            .setMessage("Tune the starting funds that power this month’s recovery run.")
+            .setTitle("Edit Monthly Budget")
+            .setMessage("Set the starting funds for this budget window.")
             .setView(dialogView)
             .setPositiveButton("Save") { _, _ ->
                 val budget = budgetInput.text.toString().toDoubleOrNull()
@@ -242,7 +242,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             ?.let { allowanceInput.setText(it.allowanceAmount.toString()) }
 
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Set Safe Spend Shield")
+            .setTitle("Set Weekly Spending Plan")
             .setView(dialogView)
             .setPositiveButton("Save") { _, _ ->
                 val allowance = allowanceInput.text.toString().toDoubleOrNull()
