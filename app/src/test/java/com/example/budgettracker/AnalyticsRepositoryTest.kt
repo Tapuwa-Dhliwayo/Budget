@@ -100,4 +100,46 @@ class AnalyticsRepositoryTest {
         assertEquals(600.0, spending[0].budgetLimit, 0.01)
         assertFalse(spending[0].isOverBudget)
     }
+    @Test
+    fun getMonthlyOverview_usesConfiguredStartDateWindow() = runTest {
+        val categoryId = fakeCategoryDao.insertCategory(
+            com.example.budgettracker.data.entity.CategoryEntity(
+                name = "General",
+                color = 0xFF4CAF50.toInt(),
+                icon = "•",
+                budgetLimit = 1000.0
+            )
+        )
+
+        fakeMonthlyBudgetDao.insertMonth(
+            com.example.budgettracker.data.entity.MonthlyBudgetEntity(
+                monthId = "2026-05",
+                startDate = "2026-04-27",
+                startingFunds = 1000.0
+            )
+        )
+
+        fakeExpenseDao.insertExpense(
+            com.example.budgettracker.data.entity.ExpenseEntity(
+                amount = 120.0,
+                description = "Included",
+                date = "2026-05-01",
+                categoryId = categoryId
+            )
+        )
+        fakeExpenseDao.insertExpense(
+            com.example.budgettracker.data.entity.ExpenseEntity(
+                amount = 80.0,
+                description = "Excluded",
+                date = "2026-05-28",
+                categoryId = categoryId
+            )
+        )
+
+        val overview = repository.getMonthlyOverview("2026-05")
+
+        assertEquals(120.0, overview.totalSpent, 0.01)
+        assertEquals(880.0, overview.remaining, 0.01)
+    }
+
 }

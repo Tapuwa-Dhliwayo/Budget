@@ -170,11 +170,12 @@ class AnalyticsRepository(
      * Helper to get start and end dates for a month
      */
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getMonthDateRange(monthId: String): Pair<String, String> {
+    private suspend fun getMonthDateRange(monthId: String): Pair<String, String> {
         val yearMonth = YearMonth.parse(monthId, DateTimeFormatter.ofPattern("yyyy-MM"))
-        val startDate = yearMonth.atDay(1).toString()
-        val endDate = yearMonth.atEndOfMonth().toString()
-        return startDate to endDate
+        val configuredStart = monthlyBudgetDao.getMonth(monthId)?.startDate
+        val start = configuredStart?.let { LocalDate.parse(it) } ?: yearMonth.atDay(1)
+        val end = start.plusMonths(1).minusDays(1)
+        return start.toString() to end.toString()
     }
 
     /**
