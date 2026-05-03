@@ -5,20 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ra_bg">
+    android:background="?attr/colorBackground">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/ra_surface_deep"
+        android:background="?attr/colorSurfaceVariant"
         android:theme="@style/ThemeOverlay.Material3.ActionBar"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        app:navigationIconTint="@color/ra_primary"
+        app:navigationIconTint="?attr/colorPrimary"
         app:titleCentered="false"
-        app:titleTextColor="@color/ra_primary"
-        app:subtitleTextColor="@color/ra_text_muted"
+        app:titleTextColor="?attr/colorPrimary"
+        app:subtitleTextColor="?attr/colorOnSurfaceVariant"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"  />
@@ -39,7 +39,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/ra_surface_deep"
+        android:background="?attr/colorSurfaceVariant"
         app:itemIconTint="@color/bottom_nav_arcade_tint"
         app:itemTextColor="@color/bottom_nav_arcade_tint"
         app:labelVisibilityMode="labeled"

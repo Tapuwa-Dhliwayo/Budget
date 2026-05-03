@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="@color/ra_surface_card"
+    app:cardBackgroundColor="?attr/colorSurface"
     app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
-    app:strokeColor="@color/ra_border"
+    app:strokeColor="?attr/colorOutline"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -28,7 +28,7 @@
                 android:textSize="24sp"
                 android:gravity="center"
                 android:background="@drawable/bg_expense_icon"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_width="48dp"
                 android:layout_height="48dp" />
 
@@ -58,7 +58,7 @@
                     android:textStyle="bold"
                     android:textSize="17sp"
                     android:layout_marginTop="6dp"
-                    android:textColor="@color/ra_text"
+                    android:textColor="?attr/colorOnSurface"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -67,7 +67,7 @@
                 android:id="@+id/text_loadout_rank"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:textColor="@color/ra_primary"
+                android:textColor="?attr/colorPrimary"
                 android:text="#01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -79,13 +79,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:max="100"
-            app:indicatorColor="@color/ra_primary"
-            app:trackColor="@color/ra_surface_elevated" />
+            app:indicatorColor="?attr/colorPrimary"
+            app:trackColor="?attr/colorSurfaceVariant" />
 
         <TextView
             android:id="@+id/text_limit"
             android:textSize="13sp"
-            android:textColor="@color/ra_text_muted"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

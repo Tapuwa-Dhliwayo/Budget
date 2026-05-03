@@ -13,7 +13,7 @@
 - Base screens should feel like recovery command modules, not plain report pages.
 
 ### Tests
-- `./gradlew assembleDebug` passed.
+- `./gradlew assembleDebug` failed in this environment (Android SDK location not configured).
 - `./gradlew test` passed.
 
 ## 2026-05-02 — Loadout and Bosses Arcade Upgrade
@@ -28,7 +28,7 @@
 - The new cards give users scan-friendly status without changing financial logic.
 
 ### Tests
-- `./gradlew assembleDebug` passed.
+- `./gradlew assembleDebug` failed in this environment (Android SDK location not configured).
 - `./gradlew test` passed.
 
 ## 2026-05-02 — Damage Log Gamified Pass
@@ -230,3 +230,31 @@
 
 ### Tests
 - Not run in this environment (Gradle dependency resolution blocked).
+
+## 2026-05-03 — Theme Contrast Split + Spinner Readability Fix
+
+### Changed
+- Reworked the Soft Recovery palette to a warm paper/orange-teal style so it is visually distinct from the dark neon Recovery Arcade theme.
+- Added explicit Soft Recovery surface/outline variant roles to keep components consistent with the updated palette.
+- Added dedicated theme-aware spinner item/dropdown layouts and switched all spinner adapters to these layouts.
+
+### Why
+- Soft Recovery was too close to the neon arcade feel and did not read as a clear alternate visual mode.
+- Theme picker and other spinner selected text could become too dark to read after theme swaps.
+
+### Tests
+- `./gradlew assembleDebug` failed in this environment (Android SDK location not configured).
+
+## 2026-05-03 — Soft Recovery Full-Light Pass (Theme Attr Migration)
+
+### Changed
+- Replaced hardcoded Recovery Arcade color refs in core layouts/drawables with theme attributes (`?attr/colorBackground`, `?attr/colorSurface`, `?attr/colorOnSurface`, `?attr/colorOutline`, etc.).
+- Converted Recovery Arcade reusable styles to theme-attribute-based color mapping so shared text/button/input styles render correctly in both themes.
+- Kept danger/success/accent status colors for financial state cues while allowing base chrome to fully switch with the selected theme.
+
+### Why
+- Soft Recovery still appeared dark because many screens were pinned to `ra_*` resources instead of theme roles.
+- Migrating to theme attrs makes the entire app visibly switch theme, not just a small subset of controls.
+
+### Tests
+- `./gradlew assembleDebug` failed in this environment (Android SDK location not configured).

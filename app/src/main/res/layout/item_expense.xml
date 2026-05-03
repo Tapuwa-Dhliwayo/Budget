@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="@color/ra_surface_card"
+    app:cardBackgroundColor="?attr/colorSurface"
     app:cardElevation="0dp"
     app:cardCornerRadius="20dp"
-    app:strokeColor="@color/ra_border"
+    app:strokeColor="?attr/colorOutline"
     app:strokeWidth="1dp"
     app:cardUseCompatPadding="true">
 
@@ -31,7 +31,7 @@
                 android:layout_marginEnd="14dp"
                 android:background="@drawable/bg_expense_icon"
                 android:gravity="center"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="24sp" />
 
             <LinearLayout
@@ -50,7 +50,7 @@
                     android:paddingEnd="8dp"
                     android:paddingBottom="3dp"
                     android:text="DAMAGE ENTRY"
-                    android:textColor="@color/ra_primary"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="10sp"
                     android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:textColor="@color/ra_text"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -78,7 +78,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/ra_border" />
+            android:background="?attr/colorOutline" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,14 +91,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/ra_text_muted"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/text_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/ra_text_subtle"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -135,7 +135,7 @@
                 android:paddingEnd="8dp"
                 android:paddingBottom="3dp"
                 android:text="AUTO-DAMAGE"
-                android:textColor="@color/ra_primary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -161,7 +161,7 @@
                     android:layout_marginStart="8dp"
                     android:src="@drawable/ic_photo"
                     android:visibility="gone"
-                    app:tint="@color/ra_text_subtle" />
+                    app:tint="?attr/colorOnSurfaceVariant" />
         </LinearLayout>
 
     </LinearLayout>

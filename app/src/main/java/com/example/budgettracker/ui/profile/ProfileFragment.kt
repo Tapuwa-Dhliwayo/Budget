@@ -41,7 +41,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val exitButton: Button = view.findViewById(R.id.btn_exit_app)
 
         val themeValues = listOf("Recovery Arcade", "Soft Recovery")
-        themeSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, themeValues)
+        themeSpinner.adapter = ArrayAdapter(requireContext(), R.layout.spinner_dropdown_item_theme, themeValues)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ra_bg"
+    android:background="?attr/colorBackground"
     android:fillViewport="true">
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:background="@drawable/ra_inner_panel_bg"
             android:padding="14dp"
             android:text="Review progress, check patterns, and manage your local recovery base."
-            android:textColor="@color/ra_text_muted"
+            android:textColor="?attr/colorOnSurfaceVariant"
             android:textSize="14sp" />
 
         <LinearLayout
@@ -44,10 +44,10 @@
                 android:layout_height="52dp"
                 android:gravity="center_vertical"
                 android:text="Monthly Intel"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@android:drawable/ic_menu_month"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_weekly_review"
@@ -57,10 +57,10 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Weekly Debrief"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@android:drawable/ic_menu_agenda"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_analytics"
@@ -70,10 +70,10 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Damage Report"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@android:drawable/ic_menu_sort_by_size"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_net_worth"
@@ -83,10 +83,10 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Net Worth Meter"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@android:drawable/ic_menu_compass"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_extra_income"
@@ -96,10 +96,10 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Bonus Credits"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@android:drawable/ic_menu_upload"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_goals"
@@ -109,10 +109,10 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Resource Vaults"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@android:drawable/ic_menu_myplaces"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_recovery_progress"
@@ -122,10 +122,10 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Recovery XP"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@android:drawable/ic_menu_upload"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
         </LinearLayout>
 
         <TextView
@@ -151,10 +151,10 @@
                 android:layout_height="52dp"
                 android:gravity="center_vertical"
                 android:text="Pilot Profile"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@drawable/ic_profile"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_more_data_ownership"
@@ -164,10 +164,10 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:text="Data Vault"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 app:icon="@android:drawable/ic_menu_save"
                 app:iconGravity="textStart"
-                app:iconTint="@color/ra_text_muted" />
+                app:iconTint="?attr/colorOnSurfaceVariant" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ra_bg">
+    android:background="?attr/colorBackground">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_expense_filter_panel"
                 android:padding="16dp"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="16sp" />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="No bonus credits recorded this month yet. Add overtime, bonuses, refunds, side work, or once-off money here."
-                android:textColor="@color/ra_text_muted"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="14sp"
                 android:visibility="gone" />
 

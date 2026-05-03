@@ -159,10 +159,10 @@ class AddExpenseFragment : Fragment(R.layout.fragment_add_expense) {
             val names = categories.map { "${it.icon} ${it.name}" }
             val adapter = ArrayAdapter(
                 requireContext(),
-                android.R.layout.simple_spinner_item,
+                R.layout.spinner_item_theme,
                 names
             )
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_theme)
             spinner.adapter = adapter
 
             spinner.onItemSelectedListener =
