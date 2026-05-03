@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    app:cardBackgroundColor="@color/ra_surface_card"
+    app:cardBackgroundColor="?attr/colorSurface"
     app:cardElevation="0dp"
-    app:strokeColor="@color/ra_border"
+    app:strokeColor="?attr/colorOutline"
     app:strokeWidth="1dp"
     app:cardCornerRadius="24dp">
 
@@ -25,7 +25,7 @@
             android:textSize="20sp"
             android:gravity="center"
             android:background="@drawable/bg_expense_icon"
-            android:textColor="@color/ra_text"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginEnd="12dp" />
 
         <LinearLayout
@@ -40,7 +40,7 @@
                 android:text="Groceries"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 android:layout_marginBottom="4dp" />
 
             <ProgressBar
@@ -50,7 +50,7 @@
                 android:layout_height="8dp"
                 android:max="100"
                 android:progress="75"
-                android:progressTint="@color/ra_primary"
+                android:progressTint="?attr/colorPrimary"
                 android:layout_marginBottom="4dp" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="R450 / R600"
                 android:textSize="14sp"
-                android:textColor="@color/ra_text_muted"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_marginBottom="2dp" />
 
             <TextView

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ra_bg"
+    android:background="?attr/colorBackground"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -20,16 +20,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="See which categories are draining shield strength this run"
-        android:textColor="@color/ra_text_muted" />
+        android:textColor="?attr/colorOnSurfaceVariant" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:cardBackgroundColor="@color/ra_surface_card"
+        app:cardBackgroundColor="?attr/colorSurface"
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
-        app:strokeColor="@color/ra_border"
+        app:strokeColor="?attr/colorOutline"
         app:strokeWidth="1dp">
 
         <LinearLayout
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="18sp" />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/ra_text_muted"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="14sp" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/ra_text_muted"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="14sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No damage logged yet. Add a spend to generate pressure intel."
-        android:textColor="@color/ra_text_muted"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:gravity="center"
         android:visibility="gone"
         android:padding="12dp" />

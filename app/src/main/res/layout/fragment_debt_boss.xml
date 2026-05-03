@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ra_bg">
+    android:background="?attr/colorBackground">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_expense_filter_panel"
                 android:padding="14dp"
-                android:textColor="@color/ra_text"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="16sp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -31,9 +31,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:visibility="gone"
-                app:cardBackgroundColor="@color/ra_surface_card"
+                app:cardBackgroundColor="?attr/colorSurface"
                 app:cardCornerRadius="22dp"
-                app:strokeColor="@color/ra_primary_soft"
+                app:strokeColor="?attr/colorSecondary"
                 app:strokeWidth="1dp">
 
                 <TextView
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textColor="@color/ra_text_muted"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="16sp"
                 android:padding="16dp"
                 android:text="🎮 Arena is clear. Add your first Debt Boss to begin your recovery battle and track real progress."

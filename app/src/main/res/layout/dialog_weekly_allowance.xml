@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/ra_surface_card"
+    android:background="?attr/colorSurface"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:textColor="@color/ra_text" />
+            android:textColor="?attr/colorOnSurface" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -24,6 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Set the amount you can safely spend this week. Mini Budget can suggest one later once income, debts, and commitments are set up."
-        android:textColor="@color/ra_text_muted"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:textSize="12sp" />
 </LinearLayout>
