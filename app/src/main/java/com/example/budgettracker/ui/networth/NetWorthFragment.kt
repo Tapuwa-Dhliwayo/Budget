@@ -226,8 +226,8 @@ class NetWorthFragment : Fragment(R.layout.fragment_net_worth) {
     }
 
     private fun setupSpinner(spinner: Spinner, items: List<String>) {
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_theme, items)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item_theme)
         spinner.adapter = adapter
     }
 
