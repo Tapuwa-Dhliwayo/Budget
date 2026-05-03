@@ -10,6 +10,8 @@ import java.util.*
 
 object DateUtils {
 
+    var budgetStartDay: Int = 1
+
     private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     private val displayFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy")
     private val monthFormatter = DateTimeFormatter.ofPattern("yyyy-MM")
@@ -19,7 +21,9 @@ object DateUtils {
     }
 
     fun getCurrentMonthId(): String {
-        return YearMonth.now().format(monthFormatter)
+        val today = LocalDate.now()
+        val anchor = if (today.dayOfMonth >= budgetStartDay) today else today.minusMonths(1)
+        return YearMonth.from(anchor).format(monthFormatter)
     }
 
     fun formatDateForDisplay(isoDate: String): String {
@@ -44,12 +48,13 @@ object DateUtils {
 
     fun getMonthStartDate(monthId: String): String {
         val yearMonth = YearMonth.parse(monthId, monthFormatter)
-        return yearMonth.atDay(1).toString()
+        return yearMonth.atDay(budgetStartDay.coerceIn(1, 28)).toString()
     }
 
     fun getMonthEndDate(monthId: String): String {
         val yearMonth = YearMonth.parse(monthId, monthFormatter)
-        return yearMonth.atEndOfMonth().toString()
+        val start = yearMonth.atDay(budgetStartDay.coerceIn(1, 28))
+        return start.plusMonths(1).minusDays(1).toString()
     }
 
     fun isToday(isoDate: String): Boolean {
