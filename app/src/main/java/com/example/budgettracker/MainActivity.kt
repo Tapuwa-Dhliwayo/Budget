@@ -10,10 +10,15 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.budgettracker.utils.UserPreferences
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        when (UserPreferences.getTheme(this)) {
+            UserPreferences.THEME_SOFT -> setTheme(R.style.Theme_BudgetTracker_SoftRecovery)
+            else -> setTheme(R.style.Theme_BudgetTracker_RecoveryArcade)
+        }
         super.onCreate(savedInstanceState)
 
         // Enable edge-to-edge

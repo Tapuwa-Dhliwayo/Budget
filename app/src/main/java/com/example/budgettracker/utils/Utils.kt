@@ -52,6 +52,19 @@ object DateUtils {
         return yearMonth.atEndOfMonth().toString()
     }
 
+
+    fun getCurrentBudgetCycleRange(startDay: Int): Pair<String, String> {
+        val safeDay = startDay.coerceIn(1, 28)
+        val today = LocalDate.now()
+        val cycleStart = if (today.dayOfMonth >= safeDay) {
+            today.withDayOfMonth(safeDay)
+        } else {
+            today.minusMonths(1).withDayOfMonth(safeDay)
+        }
+        val cycleEnd = cycleStart.plusMonths(1).minusDays(1)
+        return cycleStart.toString() to cycleEnd.toString()
+    }
+
     fun isToday(isoDate: String): Boolean {
         return isoDate == getCurrentDate()
     }

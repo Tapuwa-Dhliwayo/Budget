@@ -58,4 +58,21 @@
     <!-- Note: Android colors.xml cannot represent rgba() directly. -->
     <color name="ra_border_glow">#5938BDF8</color>
 
+
+    <!-- Soft recovery theme -->
+    <color name="sr_bg">#F6F5F8</color>
+    <color name="sr_surface_deep">#EAE7EF</color>
+    <color name="sr_surface_card">#FFFFFF</color>
+    <color name="sr_surface_elevated">#F0ECF6</color>
+    <color name="sr_primary">#7C82D9</color>
+    <color name="sr_primary_soft">#B3B7F0</color>
+    <color name="sr_accent">#8EC5A4</color>
+    <color name="sr_success">#4E9F74</color>
+    <color name="sr_warning">#C48B3A</color>
+    <color name="sr_danger">#C77474</color>
+    <color name="sr_text">#2F3343</color>
+    <color name="sr_text_muted">#61677A</color>
+    <color name="sr_text_subtle">#7E8496</color>
+    <color name="sr_border">#D8DCEA</color>
+
 </resources>
