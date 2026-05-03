@@ -3,7 +3,7 @@ package com.example.budgettracker.ui.profile
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -31,6 +31,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         val firstNameInput: EditText = view.findViewById(R.id.edit_first_name)
         val lastNameInput: EditText = view.findViewById(R.id.edit_last_name)
+        val budgetStartDayInput: EditText = view.findViewById(R.id.edit_budget_start_day)
+        val themeArcade: RadioButton = view.findViewById(R.id.radio_theme_arcade)
+        val themeSoft: RadioButton = view.findViewById(R.id.radio_theme_soft)
         val saveButton: Button = view.findViewById(R.id.btn_save_profile)
         val exitButton: Button = view.findViewById(R.id.btn_exit_app)
 
@@ -39,6 +42,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 if (!state.isLoading) {
                     firstNameInput.setText(state.firstName)
                     lastNameInput.setText(state.lastName)
+
+                    budgetStartDayInput.setText(UserPreferences.getBudgetStartDay(requireContext()).toString())
+                    val theme = UserPreferences.getTheme(requireContext())
+                    themeArcade.isChecked = theme == UserPreferences.THEME_ARCADE
+                    themeSoft.isChecked = theme == UserPreferences.THEME_SOFT
 
                     if (state.saveSuccess) {
                         Toast.makeText(
@@ -75,7 +83,22 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 return@setOnClickListener
             }
 
+            val startDay = budgetStartDayInput.text.toString().toIntOrNull()?.coerceIn(1, 28) ?: 1
+            val previousDay = UserPreferences.getBudgetStartDay(requireContext())
+            UserPreferences.setBudgetStartDay(requireContext(), startDay)
+            val selectedTheme = if (themeSoft.isChecked) UserPreferences.THEME_SOFT else UserPreferences.THEME_ARCADE
+            val previousTheme = UserPreferences.getTheme(requireContext())
+            UserPreferences.setTheme(requireContext(), selectedTheme)
+
             viewModel.updateProfile(firstName, lastName)
+
+            if (previousDay != startDay) {
+                val range = DateUtils.getCurrentBudgetCycleRange(startDay)
+                Toast.makeText(requireContext(), "Budget cycle updated retroactively: ${range.first} to ${range.second}", Toast.LENGTH_LONG).show()
+            }
+            if (previousTheme != selectedTheme) {
+                requireActivity().recreate()
+            }
         }
 
         exitButton.setOnClickListener {

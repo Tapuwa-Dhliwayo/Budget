@@ -230,3 +230,20 @@
 
 ### Tests
 - Not run in this environment (Gradle dependency resolution blocked).
+
+## 2026-05-03 — Profile budgeting cycle + dual-theme toggle + Debt Boss empty-state pass
+
+### Changed
+- Added Profile controls for budget cycle start day (1-28) and theme selection (Neon Arcade / Soft Recovery).
+- Added runtime theme application on app launch from user preference.
+- Upgraded Debt Boss empty state to a styled, game-like arena prompt.
+
+### Why
+- User needs payday-aligned budgeting windows and a softer alternative visual mode.
+- Debt Boss empty state should still feel motivating and game-inspired.
+
+### Tests
+- Attempted unit test run via Gradle (blocked by missing Android SDK in CI container).
+
+### Notes
+- Budget-cycle update currently confirms retroactive date window in profile save flow.
