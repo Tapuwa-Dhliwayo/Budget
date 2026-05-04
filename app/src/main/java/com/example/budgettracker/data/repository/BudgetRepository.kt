@@ -2,6 +2,7 @@ package com.example.budgettracker.data.repository
 
 import com.example.budgettracker.data.dao.MonthlyBudgetDao
 import com.example.budgettracker.data.entity.MonthlyBudgetEntity
+import com.example.budgettracker.utils.DateUtils
 
 class BudgetRepository(
     private val dao: MonthlyBudgetDao
@@ -18,7 +19,7 @@ class BudgetRepository(
 
         val newMonth = MonthlyBudgetEntity(
             monthId = monthId,
-            startDate = "$monthId-01",
+            startDate = DateUtils.getMonthStartDate(monthId),
             startingFunds = startingFunds
         )
 
@@ -36,5 +37,21 @@ class BudgetRepository(
 
     suspend fun getMonth(monthId: String): MonthlyBudgetEntity? {
         return dao.getMonth(monthId)
+    }
+
+    suspend fun moveBudgetWindowIfNeeded(fromMonthId: String, toMonthId: String) {
+        if (fromMonthId.isBlank() || toMonthId.isBlank() || fromMonthId == toMonthId) return
+
+        val from = dao.getMonth(fromMonthId) ?: return
+        val existingTarget = dao.getMonth(toMonthId)
+        if (existingTarget != null) return
+
+        dao.insertMonth(
+            MonthlyBudgetEntity(
+                monthId = toMonthId,
+                startDate = DateUtils.getMonthStartDate(toMonthId),
+                startingFunds = from.startingFunds
+            )
+        )
     }
 }

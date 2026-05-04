@@ -14,12 +14,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.budgettracker.R
 import com.example.budgettracker.data.database.AppDatabase
+import com.example.budgettracker.data.repository.BudgetRepository
 import com.example.budgettracker.data.repository.UserProfileRepository
 import com.example.budgettracker.ui.common.configureToolbar
 import com.example.budgettracker.utils.AppPreferences
 import com.example.budgettracker.utils.DateUtils
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -88,11 +90,20 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             val day = budgetStartDayInput.text.toString().toIntOrNull()?.coerceIn(1, 28) ?: 1
             val theme = if (themeSpinner.selectedItemPosition == 1) "soft_recovery" else "recovery_arcade"
+            val oldDay = DateUtils.budgetStartDay
+            val today = LocalDate.now()
+            val oldMonthId = DateUtils.getMonthIdFor(today, oldDay)
+            val newMonthId = DateUtils.getMonthIdFor(today, day)
             AppPreferences.setBudgetStartDay(requireContext(), day)
             AppPreferences.setTheme(requireContext(), theme)
             DateUtils.budgetStartDay = day
             viewModel.updateProfile(firstName, lastName, day, theme)
-            requireActivity().recreate()
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                val budgetRepository = BudgetRepository(AppDatabase.getInstance(requireContext()).monthlyBudgetDao())
+                budgetRepository.moveBudgetWindowIfNeeded(oldMonthId, newMonthId)
+                requireActivity().recreate()
+            }
         }
 
         exitButton.setOnClickListener {

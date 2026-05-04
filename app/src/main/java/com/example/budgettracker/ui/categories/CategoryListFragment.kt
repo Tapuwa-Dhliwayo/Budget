@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -125,6 +126,10 @@ class CategoryListFragment : Fragment(R.layout.fragment_category_list) {
             .setTitle(if (category == null) "Add Loadout Category" else "Tune Loadout Category")
             .setView(dialogView)
             .setPositiveButton("Save") { _, _ ->
+                if (name.text.toString().isBlank()) {
+                    Toast.makeText(requireContext(), "Category name is required.", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
                 val entity = CategoryEntity(
                     id = category?.id ?: 0,
                     name = name.text.toString(),

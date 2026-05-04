@@ -21,8 +21,12 @@ object DateUtils {
     }
 
     fun getCurrentMonthId(): String {
-        val today = LocalDate.now()
-        val anchor = if (today.dayOfMonth >= budgetStartDay) today else today.minusMonths(1)
+        return getMonthIdFor(LocalDate.now(), budgetStartDay)
+    }
+
+    fun getMonthIdFor(date: LocalDate, startDay: Int): String {
+        val clampedStartDay = startDay.coerceIn(1, 28)
+        val anchor = if (date.dayOfMonth >= clampedStartDay) date else date.minusMonths(1)
         return YearMonth.from(anchor).format(monthFormatter)
     }
 
