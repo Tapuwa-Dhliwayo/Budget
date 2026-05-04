@@ -39,7 +39,7 @@ class BudgetRepository(
         return dao.getMonth(monthId)
     }
 
-    suspend fun moveBudgetWindowIfNeeded(fromMonthId: String, toMonthId: String) {
+    suspend fun initializeReanchoredCycleIfMissing(fromMonthId: String, toMonthId: String) {
         if (fromMonthId.isBlank() || toMonthId.isBlank() || fromMonthId == toMonthId) return
 
         val from = dao.getMonth(fromMonthId) ?: return

@@ -137,3 +137,4 @@ Instrumentation tests were audited but not run during Task 02 because no emulato
 | Goals | V1.0 foundation closed / Post-1.0 planned | Goal storage, contributions, progress, monthly requirement, feasibility status, health classification, and a More-accessible screen exist. Follow-up work is tracked in `TASK-018`. |
 | Gamification | V1.0 foundation closed / Post-1.0 planned | Recovery XP, levels/titles, event history, expanded badges, and Recovery Progress screen exist. Follow-up work is tracked in `TASK-019`. |
 | Backup/export/import | V1.0 foundation closed / Post-1.0 planned | Local backup copy creation, backup status, and backup XP exist. Follow-up work is tracked in `TASK-020`, `TASK-021`, and `TASK-022`. |
+\n## 2026-05-04 Budget Cycle Hardening\n- Added canonical budget period contract doc and unified resolver adoption work in progress.

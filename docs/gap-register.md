@@ -37,3 +37,4 @@ The remaining items below are not unfinished v1.0 work. They are planned post-v1
 | GAP-015 | Weekly Reviews | Weekly review exists but guided reflection and generated insight can be deeper. | Weekly allowance should help the user recover and learn without shame. | High | Planned | TASK-014 |
 | GAP-016 | Gamification | Recovery XP event wiring across all recovery flows and monthly battle reports remain. | Gamification should reward useful recovery behavior throughout the app. | Medium | Planned | TASK-019 |
 | GAP-017 | Dashboard and Navigation Integration | Secondary recovery systems need better dashboard presence while bottom navigation remains limited. | The app must stay scalable as features grow. | Medium | Planned | TASK-025 |
+\n## 2026-05-04 Budget Cycle Hardening\n- Added canonical budget period contract doc and unified resolver adoption work in progress.

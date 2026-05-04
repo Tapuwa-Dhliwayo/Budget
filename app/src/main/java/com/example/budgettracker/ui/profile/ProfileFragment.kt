@@ -94,15 +94,28 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val today = LocalDate.now()
             val oldMonthId = DateUtils.getMonthIdFor(today, oldDay)
             val newMonthId = DateUtils.getMonthIdFor(today, day)
-            AppPreferences.setBudgetStartDay(requireContext(), day)
-            AppPreferences.setTheme(requireContext(), theme)
-            DateUtils.budgetStartDay = day
-            viewModel.updateProfile(firstName, lastName, day, theme)
+            val applyUpdate = {
+                AppPreferences.setBudgetStartDay(requireContext(), day)
+                AppPreferences.setTheme(requireContext(), theme)
+                DateUtils.budgetStartDay = day
+                viewModel.updateProfile(firstName, lastName, day, theme)
 
-            viewLifecycleOwner.lifecycleScope.launch {
-                val budgetRepository = BudgetRepository(AppDatabase.getInstance(requireContext()).monthlyBudgetDao())
-                budgetRepository.moveBudgetWindowIfNeeded(oldMonthId, newMonthId)
-                requireActivity().recreate()
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val budgetRepository = BudgetRepository(AppDatabase.getInstance(requireContext()).monthlyBudgetDao())
+                    budgetRepository.initializeReanchoredCycleIfMissing(oldMonthId, newMonthId)
+                    requireActivity().recreate()
+                }
+            }
+
+            if (oldDay != day) {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Apply Budget Cycle Start Day Change?")
+                    .setMessage("Changing to day $day means dates May 1–May 27 remain in Apr 28–May 27 cycle. Historical cycles are preserved and only future cycles are re-anchored.")
+                    .setPositiveButton("Apply") { _, _ -> applyUpdate() }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+            } else {
+                applyUpdate()
             }
         }
 
