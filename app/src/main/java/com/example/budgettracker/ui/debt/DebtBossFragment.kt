@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -56,6 +57,7 @@ class DebtBossFragment : Fragment(R.layout.fragment_debt_boss) {
                 state.debts.forEach { debt ->
                     container.addView(createDebtCard(debt))
                 }
+                state.error?.let { Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show() }
             }
         }
     }
@@ -237,6 +239,10 @@ class DebtBossFragment : Fragment(R.layout.fragment_debt_boss) {
             .setTitle("Add Debt Boss")
             .setView(view)
             .setPositiveButton("Save") { _, _ ->
+                if (name.text.toString().isBlank()) {
+                    Toast.makeText(requireContext(), "Debt name is required.", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
                 viewModel.addDebt(
                     name = name.text.toString(),
                     debtType = DebtType.values()[typeSpinner.selectedItemPosition],
