@@ -8,6 +8,8 @@ import com.example.budgettracker.data.dao.MonthlyBudgetDao
 import com.example.budgettracker.data.model.CategorySpending
 import com.example.budgettracker.data.model.CategorySummary
 import com.example.budgettracker.data.model.MonthlyOverview
+import com.example.budgettracker.utils.BudgetPeriodResolver
+import com.example.budgettracker.utils.DateUtils
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -116,17 +118,18 @@ class AnalyticsRepository(
 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getDailySpendingTrend(monthId: String, days: Int = 7): List<Pair<String, Double>> {
-        val today = LocalDate.now()
-        val results = mutableListOf<Pair<String, Double>>()
+        val (startDate, endDate) = getMonthDateRange(monthId)
+        val cycleStart = LocalDate.parse(startDate)
+        val cycleEnd = LocalDate.parse(endDate)
+        val rangeDays = java.time.temporal.ChronoUnit.DAYS.between(cycleStart, cycleEnd).toInt() + 1
+        val window = days.coerceIn(1, rangeDays)
+        val trendStart = cycleEnd.minusDays((window - 1).toLong())
 
-        for (i in (days - 1) downTo 0) {
-            val date = today.minusDays(i.toLong())
+        return (0 until window).map { i ->
+            val date = trendStart.plusDays(i.toLong())
             val dateString = date.toString()
-            val spending = expenseDao.getTotalSpendingForPeriod(dateString, dateString) ?: 0.0
-            results.add(dateString to spending)
+            dateString to (expenseDao.getTotalSpendingForPeriod(dateString, dateString) ?: 0.0)
         }
-
-        return results
     }
 
     /**
@@ -171,10 +174,9 @@ class AnalyticsRepository(
      */
     @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun getMonthDateRange(monthId: String): Pair<String, String> {
-        val yearMonth = YearMonth.parse(monthId, DateTimeFormatter.ofPattern("yyyy-MM"))
-        val configuredStart = monthlyBudgetDao.getMonth(monthId)?.startDate
-        val start = configuredStart?.let { LocalDate.parse(it) } ?: yearMonth.atDay(1)
-        val end = start.plusMonths(1).minusDays(1)
+        val configuredStart = monthlyBudgetDao.getMonth(monthId)?.startDate?.let { LocalDate.parse(it) }
+        val startDay = configuredStart?.dayOfMonth ?: DateUtils.budgetStartDay
+        val (start, end) = BudgetPeriodResolver.resolveRange(monthId, startDay)
         return start.toString() to end.toString()
     }
 

@@ -68,3 +68,4 @@ For each future task:
 - [ ] Add or update tests for behavior changes.
 - [ ] Run the relevant test command.
 - [ ] Keep the app offline-first.
+\n## 2026-05-04 Budget Cycle Hardening\n- Added canonical budget period contract doc and unified resolver adoption work in progress.

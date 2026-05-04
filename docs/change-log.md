@@ -795,3 +795,4 @@ Instrumentation tests were audited but not run because they require an emulator 
 
 #### Documentation
 Added baseline, vision alignment, gap register, task log, change log, and testing checklist documents.
+\n## 2026-05-04 Budget Cycle Hardening\n- Added canonical budget period contract doc and unified resolver adoption work in progress.

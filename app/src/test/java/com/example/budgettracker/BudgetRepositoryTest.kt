@@ -10,40 +10,40 @@ import org.junit.Test
 class BudgetRepositoryTest {
 
     @Test
-    fun moveBudgetWindowIfNeeded_copiesBudgetToNewWindowWhenMissing() = runTest {
+    fun initializeReanchoredCycleIfMissing_copiesBudgetToNewWindowWhenMissing() = runTest {
         val dao = FakeMonthlyBudgetDao()
         val repository = BudgetRepository(dao)
 
         repository.loadOrCreateMonth("2026-05", 4500.0)
 
-        repository.moveBudgetWindowIfNeeded("2026-05", "2026-04")
+        repository.initializeReanchoredCycleIfMissing("2026-05", "2026-04")
 
         assertNotNull(dao.getMonth("2026-04"))
         assertEquals(4500.0, dao.getMonth("2026-04")?.startingFunds ?: 0.0, 0.01)
     }
 
     @Test
-    fun moveBudgetWindowIfNeeded_doesNothingWhenTargetExists() = runTest {
+    fun initializeReanchoredCycleIfMissing_doesNothingWhenTargetExists() = runTest {
         val dao = FakeMonthlyBudgetDao()
         val repository = BudgetRepository(dao)
 
         repository.loadOrCreateMonth("2026-05", 4500.0)
         repository.loadOrCreateMonth("2026-04", 3000.0)
 
-        repository.moveBudgetWindowIfNeeded("2026-05", "2026-04")
+        repository.initializeReanchoredCycleIfMissing("2026-05", "2026-04")
 
         assertEquals(3000.0, dao.getMonth("2026-04")?.startingFunds ?: 0.0, 0.01)
     }
 
     @Test
-    fun moveBudgetWindowIfNeeded_ignoresBlankOrSameMonthIds() = runTest {
+    fun initializeReanchoredCycleIfMissing_ignoresBlankOrSameMonthIds() = runTest {
         val dao = FakeMonthlyBudgetDao()
         val repository = BudgetRepository(dao)
 
         repository.loadOrCreateMonth("2026-05", 4500.0)
 
-        repository.moveBudgetWindowIfNeeded("", "2026-04")
-        repository.moveBudgetWindowIfNeeded("2026-05", "2026-05")
+        repository.initializeReanchoredCycleIfMissing("", "2026-04")
+        repository.initializeReanchoredCycleIfMissing("2026-05", "2026-05")
 
         assertNull(dao.getMonth("2026-04"))
         assertEquals(4500.0, dao.getMonth("2026-05")?.startingFunds ?: 0.0, 0.01)
